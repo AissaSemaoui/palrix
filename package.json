@@ -7,7 +7,7 @@
     "@server": "./src/server"
   },
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon | npx pino-pretty",
     "dev:next": "next dev",
     "build": "next build",
     "start": "next start",
@@ -33,6 +33,7 @@
     "next": "14.1.4",
     "passport": "0.5",
     "passport-google-oauth20": "^2.0.0",
+    "pino": "^8.19.0",
     "postgres": "^3.4.4",
     "react": "^18",
     "react-dom": "^18",
@@ -56,6 +57,7 @@
     "module-alias": "^2.2.3",
     "nodemon": "^3.1.0",
     "pg": "^8.11.3",
+    "pino-pretty": "^11.0.0",
     "postcss": "^8",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.12",

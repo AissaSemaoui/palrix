@@ -9,6 +9,7 @@ import { passportConfig } from "@server/config/passport";
 import { nextApp, nextHandler } from "@server/next_app";
 import { authRoutes } from "@server/routes";
 import env from "@environments";
+import { logger } from "./utils/logger";
 
 const PORT = process.env.PORT || 3000;
 
@@ -35,6 +36,6 @@ app.use((req, res) => nextHandler(req, res));
 
 nextApp.prepare().then(() => {
   app.listen(PORT, () => {
-    console.log("server is up and running");
+    logger.info("Server is up and running");
   });
 });

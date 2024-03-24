@@ -11,11 +11,6 @@ router.get(
   passport.authenticate("google", {
     scope: ["email", "profile"],
   }),
-  (req, res) => {
-    res.json({
-      message: "I am Authorized",
-    });
-  },
 );
 
 router.get("/test", (req, res) => {
