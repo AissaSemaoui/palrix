@@ -3,7 +3,7 @@ const env = {
   port: process.env.PORT,
 
   db: {
-    url: process.env.DATABASE_URL,
+    url: process.env.DATABASE_URL!,
   },
 
   auth: {
