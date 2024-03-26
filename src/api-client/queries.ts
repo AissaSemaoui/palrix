@@ -6,10 +6,11 @@ import { requests, Requests } from "./requests";
 
 const makeQueries = (requests: Requests, config?: QueryOptions) => {
   return {
-    useUserGetList: useQuery({
-      queryFn: () => requests.userGetList({}),
-      queryKey: [],
-    }),
+    useUserGetList: () =>
+      useQuery({
+        queryFn: () => requests.userGetList({}),
+        queryKey: [],
+      }),
   };
 };
 

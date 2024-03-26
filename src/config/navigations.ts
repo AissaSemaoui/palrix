@@ -1,5 +1,5 @@
 export const paths = {
-  landing: "/",
+  marketing: "/",
   dashboard: "/dashboard",
   auth: {
     base: "/auth",

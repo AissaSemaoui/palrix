@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { queryClient } from "@/api-client";
 
 import "./globals.css";
+import clsx from "clsx";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <QueryClientProvider client={queryClient}>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={clsx(inter.className, "flex min-h-screen flex-col")}>{children}</body>
       </html>
     </QueryClientProvider>
   );
