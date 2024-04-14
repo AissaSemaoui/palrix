@@ -1,5 +1,7 @@
 import { MainNav } from "@/components/main-nav";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { paths } from "@/config/navigations";
+import Link from "next/link";
 
 export default function RootLayout({
   children,
@@ -12,8 +14,13 @@ export default function RootLayout({
         <MainNav items={[{ title: "Marketing", href: "/" }]} />
 
         <div className="flex gap-2">
-          <Button variant="secondary">Login</Button>
-          <Button variant="default">Register</Button>
+          <Link href={paths.auth.login} className={buttonVariants({ variant: "secondary" })}>
+            Login
+          </Link>
+
+          <Link href={paths.auth.register} className={buttonVariants({ variant: "default" })}>
+            Register
+          </Link>
         </div>
       </header>
       {children}

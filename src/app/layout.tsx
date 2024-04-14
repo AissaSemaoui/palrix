@@ -6,6 +6,7 @@ import { queryClient } from "@/api-client";
 
 import "./globals.css";
 import clsx from "clsx";
+import AuthProvider from "@/lib/providers/authProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <QueryClientProvider client={queryClient}>
       <html lang="en">
-        <body className={clsx(inter.className, "flex min-h-screen flex-col")}>{children}</body>
+        <body className={clsx(inter.className, "flex min-h-screen flex-col")}>
+          <AuthProvider>{children}</AuthProvider>
+        </body>
       </html>
     </QueryClientProvider>
   );

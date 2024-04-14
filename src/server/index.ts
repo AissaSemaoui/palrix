@@ -30,7 +30,7 @@ passportConfig(passport);
 app.use(passport.session());
 app.use(passport.initialize());
 
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 
 app.use((req, res) => nextHandler(req, res));
 

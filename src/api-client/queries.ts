@@ -1,21 +1,20 @@
 "use client";
 
-import { QueryOptions, useQuery } from "@tanstack/react-query";
+import { QueryOptions, useQuery, UseQueryResult } from "@tanstack/react-query";
 
-import { requests, Requests } from "./requests";
+import { queryKeys, requests, type Response, type Requests } from "./requests";
+
+type QueryResponse<T extends keyof typeof requests> = UseQueryResult<Response<T>>;
 
 const makeQueries = (requests: Requests, config?: QueryOptions) => {
   return {
-    useUserGetList: () =>
+    useUserMe: (options?: QueryOptions): QueryResponse<"userMe"> =>
       useQuery({
-        queryFn: () => requests.userGetList({}),
-        queryKey: [],
+        queryFn: () => requests.userMe(),
+        queryKey: queryKeys.userMe(),
+        ...options,
       }),
   };
-};
-
-export const queryKeys = {
-  userGetList: () => ["userGetList"],
 };
 
 export const queries = makeQueries(requests);

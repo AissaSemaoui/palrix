@@ -1,14 +1,21 @@
 "use client";
 
 import { axiosInstance } from "@/lib/axios";
+import { UserMe } from "@/types";
 import { AxiosInstance, AxiosRequestConfig } from "axios";
 
 const makeRequests = (axios: AxiosInstance, config?: AxiosRequestConfig) => {
   return {
-    userGetList: async (params?: AxiosRequestConfig) => axios.get("/users", { ...config, ...params }),
+    userMe: (params?: AxiosRequestConfig) => axios.get<UserMe>("api/auth/me", { ...params }).then((res) => res.data),
   };
+};
+
+export const queryKeys = {
+  userMe: () => ["me"],
 };
 
 export const requests = makeRequests(axiosInstance);
 
-export type Requests = ReturnType<typeof makeRequests>;
+export type Response<T extends keyof typeof requests> = Awaited<ReturnType<(typeof requests)[T]>>;
+
+export type Requests = typeof requests;
