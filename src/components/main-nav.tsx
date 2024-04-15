@@ -14,10 +14,10 @@ import { paths } from "@/config/navigations";
 import { siteConfig } from "@/config/site";
 import { useUserMe } from "@/hooks/use-user";
 
-import type { MainNavItem } from "@/types";
+import type { NavItem } from "@/types";
 
 interface MainNavProps {
-  items?: MainNavItem[];
+  items?: NavItem[];
   children?: React.ReactNode;
 }
 

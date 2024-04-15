@@ -1,9 +1,11 @@
 type Maybe<T> = T | undefined;
 
-export interface MainNavItem {
+export interface NavItem {
+  icon?: JSX.Element;
   title: string;
   href: string;
   disabled?: boolean;
+  fullMatch?: boolean;
 }
 
 export interface UserMe {

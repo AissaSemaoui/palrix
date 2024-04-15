@@ -7,10 +7,10 @@ import { useLockBody } from "@/hooks/use-lock-body";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
-import { MainNavItem } from "@/types";
+import { NavItem } from "@/types";
 
 interface MobileNavProps {
-  items: MainNavItem[];
+  items: NavItem[];
   children?: React.ReactNode;
 }
 

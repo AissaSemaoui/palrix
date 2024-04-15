@@ -19,22 +19,26 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const { mutate: googleMutate, isPending: isGoogleLoading, isError: isGoogleError } = mutations.useSignIn({});
-
   const signInWithGoogle = () => {
+    setIsLoading(true);
     window.location.href = "/api/auth/google";
   };
 
   return (
     <div className={cn(className)} {...props}>
       <Button
-        type="button"
-        className={cn("w-full", " font-bold")}
+        variant="outline"
+        size="lg"
+        className="mt-6 flex w-full items-center justify-center gap-2"
         onClick={signInWithGoogle}
-        disabled={isLoading || isGoogleLoading}
+        disabled={isLoading}
       >
-        {isGoogleLoading && <Icons.loader className="mr-2 h-4 w-4 animate-spin" />}
-        Google
+        {isLoading ? (
+          <Icons.loader className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <img src={`https://www.material-tailwind.com/logos/logo-google.png`} alt="google" className="h-6 w-6" />
+        )}
+        sign in with google
       </Button>
     </div>
   );
