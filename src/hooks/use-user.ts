@@ -1,3 +1,5 @@
+"use client";
+
 import { create } from "zustand";
 
 import type { UserMe } from "@/types";
@@ -12,8 +14,4 @@ export const useUser = create<UseUser>((set) => ({
   setUserMe: (userMe) => set(() => ({ userMe })),
 }));
 
-export const useUserMe = () =>
-  useUser((state) => ({
-    userMe: state.userMe,
-    setUserMe: state.setUserMe,
-  }));
+export const useUserMe = () => useUser((state) => state.userMe);

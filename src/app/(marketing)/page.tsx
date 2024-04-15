@@ -3,7 +3,7 @@
 import { useUserMe } from "@/hooks/use-user";
 
 export default function Home() {
-  const { userMe } = useUserMe();
+  const userMe = useUserMe();
 
   return (
     <main className="h-full w-full flex-1">
