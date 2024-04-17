@@ -1,18 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { useSearchParams } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+
+import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/icons";
 
 import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { toast } from "@/components/ui/use-toast";
-import { Icons } from "@/components/icons";
-import { mutations, requests } from "@/api-client";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 

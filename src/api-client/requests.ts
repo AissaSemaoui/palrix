@@ -1,12 +1,10 @@
-"use client";
-
 import { axiosInstance } from "@/lib/axios";
 import { UserMe } from "@/types";
 import { AxiosInstance, AxiosRequestConfig } from "axios";
 
 const makeRequests = (axios: AxiosInstance, config?: AxiosRequestConfig) => {
   return {
-    userMe: (params?: AxiosRequestConfig) => axios.get<UserMe>("api/auth/me", { ...params }).then((res) => res.data),
+    userMe: (params?: AxiosRequestConfig) => axios.get<UserMe>("/api/auth/me", { ...params }).then((res) => res?.data),
   };
 };
 

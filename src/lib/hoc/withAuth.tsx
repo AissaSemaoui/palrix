@@ -1,7 +1,6 @@
-import React from "react";
+import axios from "axios";
+import { cookies } from "next/headers";
 
-const withAuth = () => {
-  return <div>withAuth</div>;
+export const requireSession = async () => {
+  return null;
 };
-
-export default withAuth;

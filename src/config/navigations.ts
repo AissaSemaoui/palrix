@@ -1,8 +1,14 @@
 export const paths = {
   marketing: "/",
-  dashboard: "/dashboard",
+  dashboard: {
+    root: "/dashboard",
+    home: "/dashboard/home",
+    playground: "/dashboard/playground",
+    settings: "/dashboard/settings",
+    profile: "/dashboard/profile",
+  },
   auth: {
-    base: "/auth",
+    root: "/auth",
     login: "/auth/login",
     register: "/auth/register",
   },

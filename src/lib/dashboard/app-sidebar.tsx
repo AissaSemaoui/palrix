@@ -1,30 +1,42 @@
 "use client";
 
 import React from "react";
-
-import { Button } from "@/components/ui/button";
-
-import type { NavItem } from "@/types";
 import { usePathname } from "next/navigation";
-import { Anchor } from "./ui/anchor";
+
+import { Anchor } from "@/components/ui/anchor";
+import { Icons } from "@/components/icons";
+
 import { cn } from "@/lib/utils";
+import { paths } from "@/config/navigations";
+
+import type { NavItem, WithRequired } from "@/types";
 
 interface AppSidebarProps {}
 
+type SidebarNavItem = WithRequired<NavItem, "Icon">;
+
 interface SidebarItemProps {
-  item: NavItem;
+  item: SidebarNavItem;
   active?: boolean;
 }
 
-const items: NavItem[] = [
+const items: SidebarNavItem[] = [
   {
-    title: "Dashboard",
-    href: "/dashboard",
+    Icon: Icons.home,
+    title: "Home",
+    href: paths.dashboard.root,
     fullMatch: false,
   },
   {
-    title: "Tools",
-    href: "/tools",
+    Icon: Icons.playground,
+    title: "Playground",
+    href: paths.dashboard.playground,
+    fullMatch: false,
+  },
+  {
+    Icon: Icons.settings,
+    title: "Settings",
+    href: paths.dashboard.settings,
     fullMatch: false,
   },
 ];
@@ -49,7 +61,7 @@ const SidebarItem = ({ item, active }: SidebarItemProps) => {
       variant={activeStyle?.variant}
       className={cn("w-full justify-start", activeStyle?.className)}
     >
-      {item.title}
+      <item.Icon className="mr-2 h-5 w-5" /> {item.title}
     </Anchor>
   );
 };

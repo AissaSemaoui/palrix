@@ -16,12 +16,10 @@ const verifyCallback = (accessToken: string, refreshToken: string, profile: Prof
 
 export const passportConfig = (passport: PassportStatic) => {
   passport.serializeUser((user, done) => {
-    console.log("serialize : ", user);
     done(null, { id: (user as Profile).id });
   });
 
   passport.deserializeUser((obj: { id: string }, done) => {
-    console.log("deserialize : ", obj);
     done(null, obj);
   });
 

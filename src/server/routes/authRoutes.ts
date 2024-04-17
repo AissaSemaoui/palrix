@@ -15,9 +15,9 @@ router.get(
 );
 
 router.get("/me", (req, res) => {
-  console.log(req.user);
+  console.log("user from /me : ", req.user);
 
-  res.json(req.user);
+  res.status(201).json(req.user);
 });
 
 router.get(
