@@ -1,9 +1,12 @@
 import express from "express";
 import passport from "passport";
-import httpStatus from "http-status";
 
 import { routes } from "@server/config/routes";
+import { lucia } from "@server/config/lucia";
+import { verifySession } from "@server/middlewares/auth.middleware";
 import env from "@environments";
+import httpStatus from "http-status";
+import { paths } from "@/config/navigations";
 
 export const router = express.Router();
 
@@ -14,30 +17,27 @@ router.get(
   }),
 );
 
-router.get("/me", (req, res) => {
-  console.log("user from /me : ", req.user);
+router.get("/me", verifySession, async (req, res) => {
+  if (!res.locals.session) {
+    res.status(httpStatus.UNAUTHORIZED).redirect(paths.auth.login);
+  }
 
-  res.status(201).json(req.user);
+  res.status(httpStatus.OK).json(res.locals);
 });
 
 router.get(
   env.auth.googleCallbackUrl.replace("/api/auth", ""),
   passport.authenticate("google", {
     failureRedirect: "/auth/failed",
-    successRedirect: "/",
-    session: true,
+    // successRedirect: "/",
+    session: false,
   }),
+  async (req, res) => {
+    const session = await lucia.createSession(req?.user?.id ?? "", {});
+    const sessionCookie = lucia.createSessionCookie(session.id);
+
+    res.cookie(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+
+    return res.redirect(paths.dashboard.root);
+  },
 );
-
-router.get(routes.auth.logout, (req, res) => {
-  console.log("we got a request");
-
-  req.logOut(
-    {
-      keepSessionInfo: false,
-    },
-    (err) => {
-      res.sendStatus(httpStatus.BAD_REQUEST);
-    },
-  );
-});

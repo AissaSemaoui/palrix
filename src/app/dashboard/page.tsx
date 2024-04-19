@@ -2,7 +2,8 @@ import React from "react";
 import { notFound } from "next/navigation";
 
 import AppPage from "@/lib/dashboard/app-page";
-import { requireSession } from "@/lib/hoc/withAuth";
+
+import { requireSession } from "@/lib/auth/require-session";
 
 const DashboardPage = async () => {
   const session = await requireSession();

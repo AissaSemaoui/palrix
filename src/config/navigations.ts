@@ -13,5 +13,3 @@ export const paths = {
     register: "/auth/register",
   },
 } as const;
-
-console.log(paths);
