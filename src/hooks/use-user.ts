@@ -2,11 +2,11 @@
 
 import { create } from "zustand";
 
-import type { UserMe } from "@/types";
+import type { User } from "@/types";
 
 interface UseUser {
-  userMe: UserMe | null;
-  setUserMe: (userMe: UserMe | null) => void;
+  userMe: User | null;
+  setUserMe: (userMe: User | null) => void;
 }
 
 export const useUser = create<UseUser>((set) => ({

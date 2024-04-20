@@ -1,9 +1,19 @@
 import type { NextFunction, Request, Response } from "express";
 import type { Session } from "lucia";
 
-import { lucia } from "@/config/lucia";
+import { lucia } from "@server/config/lucia";
 
-import type { UserMe } from "@/types";
+export enum UserRole {
+  USER = "user",
+  ADMIN = "admin",
+}
+export interface DbUser {
+  id: string;
+  email: string;
+  displayName: string;
+  avatar_url?: string;
+  role: UserRole;
+}
 
 export type ExpressMiddleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
 
@@ -14,14 +24,13 @@ declare global {
       session: Session | null;
     }
 
-    interface User {
-      id: string;
-    }
+    interface User extends DbUser {}
   }
 }
 
 declare module "lucia" {
   interface Register {
     Lucia: typeof lucia;
+    DatabaseUserAttributes: DbUser;
   }
 }

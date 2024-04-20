@@ -14,8 +14,9 @@ export const lucia = new Lucia(luciaAdapter, {
   },
   getUserAttributes: (dbUser) => ({
     id: dbUser.id,
-    firstName: dbUser.firstName,
-    lastName: dbUser.lastName,
     email: dbUser.email,
+    displayName: dbUser.id,
+    role: dbUser.role,
+    avatar_url: dbUser?.avatar_url,
   }),
 });
