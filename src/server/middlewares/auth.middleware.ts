@@ -1,5 +1,6 @@
-import { lucia } from "@server/config/lucia";
 import type { Session } from "lucia";
+
+import { lucia } from "@server/config/lucia";
 
 import type { ExpressMiddleware } from "@/server/types";
 

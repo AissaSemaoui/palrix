@@ -1,17 +1,8 @@
 import React from "react";
-import { notFound } from "next/navigation";
 
 import AppPage from "@/lib/dashboard/app-page";
 
-import { requireSession } from "@/lib/auth/require-session";
-
 const DashboardPage = async () => {
-  const session = await requireSession();
-
-  if (!session) {
-    notFound();
-  }
-
   return (
     <React.Fragment>
       <AppPage.Header title="Dashboard Page" description="Next.js starter kit is here :/" />

@@ -16,7 +16,7 @@ const AuthProvider = ({ children }: React.PropsWithChildren) => {
     } else if (isError) {
       setUserMe(null);
     }
-  }, [isError, isSuccess]);
+  }, [setUserMe, isError, isSuccess]);
 
   return <>{children}</>;
 };

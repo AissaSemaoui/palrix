@@ -1,11 +1,12 @@
 import express from "express";
 import passport from "passport";
+import httpStatus from "http-status";
 
+import { verifySession } from "@server/middlewares/auth.middleware";
 import { routes } from "@server/config/routes";
 import { lucia } from "@server/config/lucia";
-import { verifySession } from "@server/middlewares/auth.middleware";
+import { AuthError } from "@server/utils/api";
 import env from "@environments";
-import httpStatus from "http-status";
 import { paths } from "@/config/navigations";
 
 export const router = express.Router();
@@ -17,18 +18,18 @@ router.get(
   }),
 );
 
-router.get("/me", verifySession, async (req, res) => {
+router.get(routes.auth.me, verifySession, async (req, res) => {
   if (!res.locals.session) {
-    res.status(httpStatus.UNAUTHORIZED).redirect(paths.auth.login);
+    return new AuthError("Session not found");
   }
 
-  res.status(httpStatus.OK).json(res.locals);
+  return res.status(httpStatus.OK).json(res.locals);
 });
 
 router.get(
   env.auth.googleCallbackUrl.replace("/api/auth", ""),
   passport.authenticate("google", {
-    failureRedirect: "/auth/failed",
+    failureRedirect: `${paths.auth.login}?error=true`,
     // successRedirect: "/",
     session: false,
   }),

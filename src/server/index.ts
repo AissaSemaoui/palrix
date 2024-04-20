@@ -10,19 +10,6 @@ import { nextApp, nextHandler } from "@server/next_app";
 import { authRoutes } from "@server/routes";
 import { logger } from "@server/utils/logger";
 
-declare global {
-  namespace Express {
-    interface Locals {
-      user: User | null;
-      session: Session | null;
-    }
-
-    interface User {
-      id: string;
-    }
-  }
-}
-
 const PORT = process.env.PORT || 3000;
 
 const app = express();

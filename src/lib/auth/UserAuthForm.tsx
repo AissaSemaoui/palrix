@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 

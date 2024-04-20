@@ -1,4 +1,4 @@
-import { Lucia } from "lucia";
+import { Lucia, User } from "lucia";
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 
 import { db } from "@server/db";
@@ -12,4 +12,10 @@ export const lucia = new Lucia(luciaAdapter, {
       secure: process.env.NODE_ENV === "production",
     },
   },
+  getUserAttributes: (dbUser) => ({
+    id: dbUser.id,
+    firstName: dbUser.firstName,
+    lastName: dbUser.lastName,
+    email: dbUser.email,
+  }),
 });

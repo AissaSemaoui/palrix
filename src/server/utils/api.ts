@@ -1,9 +1,9 @@
-import { Response } from "express";
+import httpStatus from "http-status";
 
 export class DatabaseError extends Error {
   status: number;
 
-  constructor(status: number, message: string) {
+  constructor(message: string, status: number) {
     super(message);
     this.status = status;
     this.message = message;
@@ -13,7 +13,7 @@ export class DatabaseError extends Error {
 export class ApiError extends Error {
   status: number;
 
-  constructor(status: number, message: string) {
+  constructor(message: string, status: number) {
     super(message);
     this.status = status;
     this.message = message;
@@ -25,7 +25,7 @@ export class ValidationError extends Error {
 
   constructor(message: string) {
     super(message);
-    this.status = 400;
+    this.status = httpStatus.BAD_REQUEST;
     this.message = message;
   }
 }
@@ -33,9 +33,9 @@ export class ValidationError extends Error {
 export class AuthError extends Error {
   status: number;
 
-  constructor(message: string) {
+  constructor(message: string, status?: number) {
     super(message);
-    this.status = 401;
+    this.status = status ?? httpStatus.UNAUTHORIZED;
     this.message = message;
   }
 }
