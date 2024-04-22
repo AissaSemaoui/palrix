@@ -1,17 +1,25 @@
-import { relations } from "drizzle-orm";
-import { pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core";
+import { InferSelectModel, relations } from "drizzle-orm";
+import { pgEnum, pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core";
 
-export const userTable = pgTable("user", {
-  id: text("id").primaryKey(),
+import { UserRoles } from "@server/types";
+
+export const rolesEnum = pgEnum("role", [UserRoles.ADMIN, UserRoles.USER]);
+
+export const users = pgTable("user", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   email: text("email").notNull(),
-  name: text("name").notNull(),
+  displayName: text("name").notNull(),
+  avatar_url: text("avatar_url"),
+  role: rolesEnum("role").notNull().default(UserRoles.USER),
 });
 
-export const sessionTable = pgTable("session", {
+export const sessions = pgTable("session", {
   id: text("id").primaryKey(),
   userId: text("user_id")
     .notNull()
-    .references(() => userTable.id),
+    .references(() => users.id),
 
   expiresAt: timestamp("expires_at", {
     withTimezone: true,
@@ -19,29 +27,29 @@ export const sessionTable = pgTable("session", {
   }).notNull(),
 });
 
-export const oauthTable = pgTable(
+export const auth_providers = pgTable(
   "oauth_account",
   {
     providerId: text("provider_id").notNull(),
     providerUserId: text("provider_user_id").notNull(),
     userId: text("user_id")
       .notNull()
-      .references(() => userTable.id),
+      .references(() => users.id),
   },
   (table) => ({
     pk: primaryKey({ columns: [table.providerId, table.userId] }),
   }),
 );
 
-export const userRelations = relations(userTable, ({ one }) => ({
-  session: one(sessionTable, {
-    fields: [userTable.id],
-    references: [sessionTable.userId],
+export const userRelations = relations(users, ({ one }) => ({
+  session: one(sessions, {
+    fields: [users.id],
+    references: [sessions.userId],
     relationName: "user_session",
   }),
-  oauth_account: one(oauthTable, {
-    fields: [userTable.id],
-    references: [oauthTable.userId],
+  oauth_account: one(auth_providers, {
+    fields: [users.id],
+    references: [auth_providers.userId],
     relationName: "oauth_account",
   }),
 }));

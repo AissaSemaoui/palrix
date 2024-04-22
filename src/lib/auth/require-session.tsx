@@ -1,15 +1,16 @@
-import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { verifyNextSession } from "@/server/middlewares/auth.middleware";
 import { paths } from "@/config/navigations";
+import { verifyNextSession } from "@/server/middlewares/auth.middleware";
+import { cookies } from "next/headers";
+import { AppSession } from "@/types";
 
-export const requireSession = async () => {
-  const { session } = await verifyNextSession(cookies().toString());
+export const requireSession = async (): Promise<AppSession> => {
+  const { session, user } = await verifyNextSession(cookies().toString());
 
-  if (!session) {
+  if (!session || !user) {
     return redirect(paths.auth.login);
   }
 
-  return session;
+  return { session, user };
 };

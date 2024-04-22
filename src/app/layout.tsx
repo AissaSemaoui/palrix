@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { QueryClientProvider } from "@tanstack/react-query";
+import clsx from "clsx";
 import { Inter } from "next/font/google";
 
+import AuthProvider from "@/lib/providers/authProvider";
 import { queryClient } from "@/api-client";
 
 import "./globals.css";
-import clsx from "clsx";
-import AuthProvider from "@/lib/providers/authProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 

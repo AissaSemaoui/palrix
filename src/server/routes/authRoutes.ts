@@ -6,8 +6,8 @@ import { verifySession } from "@server/middlewares/auth.middleware";
 import { routes } from "@server/config/routes";
 import { lucia } from "@server/config/lucia";
 import { AuthError } from "@server/utils/api";
-import env from "@environments";
 import { paths } from "@/config/navigations";
+import env from "@environments";
 
 export const router = express.Router();
 

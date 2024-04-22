@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import { WithRequired } from "@tanstack/react-query";
-import { DbUser } from "@/server/types";
+
+import { Session, User } from "@/server/types";
 
 type Maybe<T> = T | undefined;
 
@@ -13,6 +14,9 @@ interface NavItem {
   fullMatch?: boolean;
 }
 
-type User = DbUser;
+interface AppSession {
+  user: User;
+  session: Session;
+}
 
-export { Maybe, NavItem, User, WithRequired };
+export { Maybe, NavItem, User, WithRequired, AppSession };

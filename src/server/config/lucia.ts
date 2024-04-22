@@ -1,10 +1,10 @@
-import { Lucia, User } from "lucia";
+import { Lucia } from "lucia";
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 
 import { db } from "@server/db";
-import { sessionTable, userTable } from "@server/db/schema";
+import { sessions, users } from "@server/db/schema";
 
-const luciaAdapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);
+const luciaAdapter = new DrizzlePostgreSQLAdapter(db, sessions, users);
 
 export const lucia = new Lucia(luciaAdapter, {
   sessionCookie: {
@@ -17,6 +17,6 @@ export const lucia = new Lucia(luciaAdapter, {
     email: dbUser.email,
     displayName: dbUser.id,
     role: dbUser.role,
-    avatar_url: dbUser?.avatar_url,
+    avatar_url: dbUser?.avatar_url || null,
   }),
 });

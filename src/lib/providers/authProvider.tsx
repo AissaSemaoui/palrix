@@ -2,13 +2,20 @@
 
 import React, { useEffect } from "react";
 
-import { queries } from "@/api-client";
 import { useUser } from "@/hooks/use-user";
+import { queries } from "@/api-client";
 
-const AuthProvider = ({ children }: React.PropsWithChildren) => {
+import type { AppSession } from "@/types";
+
+interface AuthProviderProps {
+  initialSession?: AppSession;
+  children: React.ReactNode;
+}
+
+const AuthProvider = ({ children, initialSession }: AuthProviderProps) => {
   const setUserMe = useUser((state) => state.setUserMe);
 
-  const { data, isError, isSuccess } = queries.useUserMe({ retry: false });
+  const { data, isError, isSuccess } = queries.useUserMe({ initialData: initialSession, retry: false });
 
   useEffect(() => {
     if (isSuccess) {
