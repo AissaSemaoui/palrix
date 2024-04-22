@@ -5,6 +5,7 @@ import passport from "passport";
 import cookieParser from "cookie-parser";
 
 import { verifySession } from "@server/middlewares/auth.middleware";
+import { errorHandler } from "@server/middlewares/errorHandler.middleware";
 import { authRoutes } from "@server/routes";
 import { nextApp, nextHandler } from "@server/next_app";
 import { logger } from "@server/utils/logger";
@@ -23,6 +24,8 @@ app.use("/api/*", passport.initialize(), verifySession);
 app.use("/api/auth", authRoutes);
 
 app.use((req, res) => nextHandler(req, res));
+
+app.use(errorHandler);
 
 nextApp.prepare().then(() => {
   app.listen(PORT, () => {

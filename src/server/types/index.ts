@@ -19,7 +19,7 @@ export type User = DbUser;
 
 export type Session = LuciaSession;
 
-export type ExpressMiddleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
+export type ExpressMiddleware = (req: Request, res: Response, next: NextFunction) => Promise<any>;
 
 declare global {
   namespace Express {

@@ -1,41 +1,16 @@
-import httpStatus from "http-status";
+import type { NextFunction, Request, Response } from "express";
 
-export class DatabaseError extends Error {
-  status: number;
+import { logger } from "@server/utils/logger";
+import type { ExpressMiddleware } from "@server/types";
 
-  constructor(message: string, status: number) {
-    super(message);
-    this.status = status;
-    this.message = message;
-  }
-}
-
-export class ApiError extends Error {
-  status: number;
-
-  constructor(message: string, status: number) {
-    super(message);
-    this.status = status;
-    this.message = message;
-  }
-}
-
-export class ValidationError extends Error {
-  status: number;
-
-  constructor(message: string) {
-    super(message);
-    this.status = httpStatus.BAD_REQUEST;
-    this.message = message;
-  }
-}
-
-export class AuthError extends Error {
-  status: number;
-
-  constructor(message: string, status?: number) {
-    super(message);
-    this.status = status ?? httpStatus.UNAUTHORIZED;
-    this.message = message;
-  }
-}
+export const catchController =
+  (controller: ExpressMiddleware, trace?: string) => async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log("within the controller");
+      await controller(req, res, next);
+    } catch (error) {
+      logger.error(error, trace);
+      console.log("within the controller error");
+      next(new Error((error as Error).message, { cause: trace }));
+    }
+  };

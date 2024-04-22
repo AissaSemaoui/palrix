@@ -6,16 +6,21 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 
 import { cn } from "@/lib/utils";
+import { useUserMe } from "@/hooks/use-user";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const user = useUserMe();
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const signInWithGoogle = () => {
     setIsLoading(true);
     window.location.href = "/api/auth/google";
   };
+
+  console.log(user?.id);
 
   return (
     <div className={cn(className)} {...props}>

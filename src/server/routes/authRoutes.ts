@@ -3,30 +3,36 @@ import passport from "passport";
 import httpStatus from "http-status";
 
 import { logoutController } from "@server/controllers/auth";
-import { AuthError } from "@server/utils/api";
+import { AuthError } from "@server/utils/errors";
 import { routes } from "@server/config/routes";
 import { lucia } from "@server/config/lucia";
 import { paths } from "@/config/navigations";
 import env from "@environments";
+import { catchController } from "../utils/api";
 
 export const router = express.Router();
 
 router.get(
   routes.auth.google,
-  passport.authenticate("google", {
-    scope: ["email", "profile"],
-  }),
+  catchController(
+    passport.authenticate("google", {
+      scope: ["email", "profile"],
+    }),
+  ),
 );
 
-router.get(routes.auth.me, async (req, res) => {
-  console.log("we  got a me request!");
+router.get(
+  routes.auth.me,
+  catchController(async (_req, res) => {
+    console.log("we  got a me request!");
 
-  if (!res.locals.session) {
-    throw new AuthError("Session not found");
-  }
+    if (!res.locals.session) {
+      throw new AuthError("Session not found");
+    }
 
-  return res.status(httpStatus.OK).json(res.locals);
-});
+    return res.status(httpStatus.OK).json(res.locals);
+  }),
+);
 
 router.get(
   env.auth.googleCallbackUrl.replace("/api/auth", ""),
@@ -45,4 +51,4 @@ router.get(
   },
 );
 
-router.post(routes.auth.logout, logoutController);
+router.post(routes.auth.logout, catchController(logoutController));

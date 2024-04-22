@@ -1,10 +1,15 @@
-import { mutations, queryClient, queryKeys } from "@/api-client";
+"use client";
+
+import { useRouter } from "next/navigation";
+
+import { mutations } from "@/api-client";
 
 export const useSignOut = () => {
+  const router = useRouter();
+
   return mutations.useSignOut({
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.userMe(),
-      }),
+    onSuccess: () => {
+      router.refresh();
+    },
   });
 };
