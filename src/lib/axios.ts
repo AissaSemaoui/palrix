@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import httpStatus from "http-status";
 
-import { paths } from "@/config/navigations";
+import { queryClient, queryKeys } from "@/api-client";
 
 export const axiosInstance = axios.create({
   withCredentials: true,
@@ -9,9 +9,5 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error: AxiosError) => {
-    // if (error.status === httpStatus.UNAUTHORIZED) {
-    //   window.location.href = paths.auth.login;
-    // }
-  },
+  (error: AxiosError) => {},
 );

@@ -22,6 +22,13 @@
       "when": 1713729988327,
       "tag": "0002_bumpy_infant_terrible",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1713783065517,
+      "tag": "0003_open_garia",
+      "breakpoints": true
     }
   ]
 }

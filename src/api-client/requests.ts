@@ -1,10 +1,13 @@
+import type { AxiosInstance, AxiosRequestConfig } from "axios";
+
 import { axiosInstance } from "@/lib/axios";
-import { User } from "@/types";
-import { AxiosInstance, AxiosRequestConfig } from "axios";
+import { AppSession } from "@/types";
 
 const makeRequests = (axios: AxiosInstance, config?: AxiosRequestConfig) => {
   return {
-    userMe: (params?: AxiosRequestConfig) => axios.get<User>("/api/auth/me", { ...params }).then((res) => res?.data),
+    userMe: (params?: AxiosRequestConfig) =>
+      axios.get<AppSession>("/api/auth/me", { ...params }).then((res) => res?.data),
+    signOut: (params?: AxiosRequestConfig) => axios.post<void>("/api/auth/logout", {}, { ...params }),
   };
 };
 

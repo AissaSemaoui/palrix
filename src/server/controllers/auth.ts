@@ -2,9 +2,11 @@ import type { Request, Response } from "express";
 
 import { lucia } from "@server/config/lucia";
 import { AuthError } from "@server/utils/api";
-import { paths } from "@/config/navigations";
+import httpStatus from "http-status";
 
 const logoutController = async (req: Request, res: Response) => {
+  console.log("received logout request");
+
   const sessionId = res.locals.session?.id;
 
   if (!sessionId) {
@@ -16,7 +18,7 @@ const logoutController = async (req: Request, res: Response) => {
   const { name, value, attributes } = lucia.createBlankSessionCookie();
   res.cookie(name, value, attributes);
 
-  return res.redirect(paths.auth.login);
+  return res.status(httpStatus.OK).end();
 };
 
 export { logoutController };

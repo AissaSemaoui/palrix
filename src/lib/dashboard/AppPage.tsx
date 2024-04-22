@@ -17,7 +17,7 @@ const PageHeader = ({ title, description }: PageHeaderProps) => {
   return (
     <section className="mb-6">
       <Heading type={1}>{title}</Heading>
-      <p className="text-light text-base">{description}</p>
+      <p className="text-base text-light">{description}</p>
     </section>
   );
 };

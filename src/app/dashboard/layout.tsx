@@ -1,8 +1,8 @@
 import React from "react";
 
-import AppNav from "@/lib/dashboard/app-nav";
-import AppPage from "@/lib/dashboard/app-page";
-import AppSidebar from "@/lib/dashboard/app-sidebar";
+import AppNav from "@/lib/dashboard/AppNav";
+import AppPage from "@/lib/dashboard/AppPage";
+import AppSidebar from "@/lib/dashboard/AppSidebar";
 
 import { requireSession } from "@/lib/auth/require-session";
 import AuthProvider from "@/lib/providers/authProvider";

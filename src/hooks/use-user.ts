@@ -14,4 +14,5 @@ export const useUser = create<UseUser>((set) => ({
   setUserMe: (userMe) => set(() => ({ userMe })),
 }));
 
-export const useUserMe = () => useUser((state) => state.userMe);
+export const useUserMe = <AlwaysAvailable extends boolean = false>() =>
+  useUser((state) => state.userMe as AlwaysAvailable extends true ? User : User | null);

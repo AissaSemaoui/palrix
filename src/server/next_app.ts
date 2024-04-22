@@ -8,3 +8,5 @@ export const nextApp = next({
 });
 
 export const nextHandler = nextApp.getRequestHandler();
+
+export const closeNextApp = () => nextApp.close();

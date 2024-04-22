@@ -1,4 +1,4 @@
-import { InferSelectModel, relations } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import { pgEnum, pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core";
 
 import { UserRoles } from "@server/types";
@@ -10,7 +10,7 @@ export const users = pgTable("user", {
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   email: text("email").notNull(),
-  displayName: text("name").notNull(),
+  displayName: text("display_name").notNull(),
   avatar_url: text("avatar_url"),
   role: rolesEnum("role").notNull().default(UserRoles.USER),
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 
 import { useUser } from "@/hooks/use-user";
 import { queries } from "@/api-client";
@@ -15,11 +15,21 @@ interface AuthProviderProps {
 const AuthProvider = ({ children, initialSession }: AuthProviderProps) => {
   const setUserMe = useUser((state) => state.setUserMe);
 
-  const { data, isError, isSuccess } = queries.useUserMe({ initialData: initialSession, retry: false });
+  const { data, isError, isSuccess, isPending } = queries.useUserMe({
+    initialData: initialSession,
+    retry: false,
+  });
+
+  const initialRender = useRef(true);
+
+  if (isPending && initialRender.current && initialSession?.user) {
+    setUserMe(initialSession.user);
+    initialRender.current = false;
+  }
 
   useEffect(() => {
     if (isSuccess) {
-      setUserMe(data);
+      setUserMe(data.user);
     } else if (isError) {
       setUserMe(null);
     }

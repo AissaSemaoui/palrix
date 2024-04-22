@@ -2,10 +2,10 @@ import express from "express";
 import passport from "passport";
 import httpStatus from "http-status";
 
-import { verifySession } from "@server/middlewares/auth.middleware";
+import { logoutController } from "@server/controllers/auth";
+import { AuthError } from "@server/utils/api";
 import { routes } from "@server/config/routes";
 import { lucia } from "@server/config/lucia";
-import { AuthError } from "@server/utils/api";
 import { paths } from "@/config/navigations";
 import env from "@environments";
 
@@ -18,9 +18,11 @@ router.get(
   }),
 );
 
-router.get(routes.auth.me, verifySession, async (req, res) => {
+router.get(routes.auth.me, async (req, res) => {
+  console.log("we  got a me request!");
+
   if (!res.locals.session) {
-    return new AuthError("Session not found");
+    throw new AuthError("Session not found");
   }
 
   return res.status(httpStatus.OK).json(res.locals);
@@ -42,3 +44,5 @@ router.get(
     return res.redirect(paths.dashboard.root);
   },
 );
+
+router.post(routes.auth.logout, logoutController);

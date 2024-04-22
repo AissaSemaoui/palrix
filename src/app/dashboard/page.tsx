@@ -1,6 +1,6 @@
 import React from "react";
 
-import AppPage from "@/lib/dashboard/app-page";
+import AppPage from "@/lib/dashboard/AppPage";
 
 const DashboardPage = async () => {
   return (

@@ -1,4 +1,13 @@
-import { XIcon, Loader2Icon, MenuIcon, PaletteIcon, HomeIcon, SettingsIcon, SwatchBookIcon } from "lucide-react";
+import {
+  XIcon,
+  Loader2Icon,
+  MenuIcon,
+  PaletteIcon,
+  HomeIcon,
+  SettingsIcon,
+  SwatchBookIcon,
+  LogOutIcon,
+} from "lucide-react";
 
 export const Icons = {
   logo: PaletteIcon,
@@ -8,4 +17,5 @@ export const Icons = {
   home: HomeIcon,
   playground: SwatchBookIcon,
   settings: SettingsIcon,
+  logout: LogOutIcon,
 } as const;

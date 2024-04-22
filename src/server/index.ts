@@ -3,12 +3,12 @@ import "module-alias/register";
 import express from "express";
 import passport from "passport";
 import cookieParser from "cookie-parser";
-import type { Session } from "lucia";
 
-import { passportConfig } from "@server/config/passport";
-import { nextApp, nextHandler } from "@server/next_app";
+import { verifySession } from "@server/middlewares/auth.middleware";
 import { authRoutes } from "@server/routes";
+import { nextApp, nextHandler } from "@server/next_app";
 import { logger } from "@server/utils/logger";
+import { passportConfig } from "@server/config/passport";
 
 const PORT = process.env.PORT || 3000;
 
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 passportConfig(passport);
-app.use("/api/*", passport.initialize());
+app.use("/api/*", passport.initialize(), verifySession);
 
 app.use("/api/auth", authRoutes);
 
@@ -28,4 +28,13 @@ nextApp.prepare().then(() => {
   app.listen(PORT, () => {
     logger.info("Server is up and running");
   });
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  logger.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
+
+process.on("uncaughtException", (error) => {
+  console.error("Uncaught Exception:", error);
+  process.exit(1);
 });
