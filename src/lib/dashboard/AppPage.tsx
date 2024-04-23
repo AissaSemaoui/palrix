@@ -6,6 +6,7 @@ import Heading from "../../components/heading";
 interface PageHeaderProps {
   title: string;
   description?: string;
+  className?: string;
 }
 
 interface AppPageProps {
@@ -13,11 +14,11 @@ interface AppPageProps {
   className?: string;
 }
 
-const PageHeader = ({ title, description }: PageHeaderProps) => {
+const PageHeader = ({ title, description, className }: PageHeaderProps) => {
   return (
-    <section className="mb-6">
+    <section className={cn("mb-6", className)}>
       <Heading type={1}>{title}</Heading>
-      <p className="text-base text-light">{description}</p>
+      <p className="text-lg text-light">{description}</p>
     </section>
   );
 };

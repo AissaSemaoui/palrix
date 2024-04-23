@@ -38,4 +38,4 @@ const AuthProvider = ({ children, initialSession }: AuthProviderProps) => {
   return <>{children}</>;
 };
 
-export default AuthProvider;
+export default React.memo(AuthProvider);

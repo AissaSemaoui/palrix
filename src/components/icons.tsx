@@ -7,6 +7,8 @@ import {
   SettingsIcon,
   SwatchBookIcon,
   LogOutIcon,
+  SendHorizontalIcon,
+  DicesIcon,
 } from "lucide-react";
 
 export const Icons = {
@@ -18,4 +20,7 @@ export const Icons = {
   playground: SwatchBookIcon,
   settings: SettingsIcon,
   logout: LogOutIcon,
+  palette: PaletteIcon,
+  sendHorizontal: SendHorizontalIcon,
+  dices: DicesIcon,
 } as const;

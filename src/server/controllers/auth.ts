@@ -1,8 +1,8 @@
+import httpStatus from "http-status";
 import type { Request, Response } from "express";
 
 import { lucia } from "@server/config/lucia";
 import { AuthError } from "@server/utils/errors";
-import httpStatus from "http-status";
 
 const logoutController = async (req: Request, res: Response) => {
   console.log("received logout request");
