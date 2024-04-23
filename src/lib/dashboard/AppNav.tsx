@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import { Icons } from "@/components/Icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import {
   DropdownMenu,
@@ -10,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
-import { Icons } from "@/components/Icons";
+import { ModeToggle } from "@/components/ModeToggle";
 
 import { siteConfig } from "@/config/site";
 import { useUserMe } from "@/hooks/use-user";
@@ -52,7 +53,8 @@ const AppNav = ({}: AppNavProps) => {
         {siteConfig.name}
       </div>
 
-      <div>
+      <div className="flex items-center gap-2">
+        <ModeToggle />
         <AvatarMenu user={user} />
       </div>
     </nav>

@@ -4,8 +4,9 @@ import * as React from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
-import { MobileNav } from "@/components/MainMobileNav";
 import { buttonVariants } from "@/components/ui/Button";
+import { MobileNav } from "@/components/MainMobileNav";
+import { ModeToggle } from "@/components/ModeToggle";
 import { Icons } from "@/components/Icons";
 import Show from "./Show";
 
@@ -60,6 +61,8 @@ export function MainNav({ items, children }: MainNavProps) {
         </button>
         {showMobileMenu && items && <MobileNav items={items}>{children}</MobileNav>}
       </div>
+
+      <ModeToggle />
 
       <div className="flex gap-2">
         <Show>

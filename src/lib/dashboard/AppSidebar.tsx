@@ -44,7 +44,7 @@ const items: SidebarNavItem[] = [
 const SidebarItem = ({ item, active }: SidebarItemProps) => {
   const sidebarItemVariants = {
     active: {
-      className: "text-accent-600 bg-accent-50",
+      className: "text-accent-600 dark:text-accent-50 bg-accent-50 dark:bg-accent-950",
       variant: "secondary",
     },
     inactive: {

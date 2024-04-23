@@ -9,6 +9,8 @@ import {
   LogOutIcon,
   SendHorizontalIcon,
   DicesIcon,
+  MoonIcon,
+  SunIcon,
 } from "lucide-react";
 
 export const Icons = {
@@ -23,4 +25,6 @@ export const Icons = {
   palette: PaletteIcon,
   sendHorizontal: SendHorizontalIcon,
   dices: DicesIcon,
+  moon: MoonIcon,
+  sun: SunIcon,
 } as const;

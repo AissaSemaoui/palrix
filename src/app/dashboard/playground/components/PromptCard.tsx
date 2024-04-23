@@ -18,7 +18,7 @@ const PromptInput = ({}: PromptInputProps) => {
       <Button
         variant="default"
         size="icon"
-        className="h-11 w-11 bg-accent-600 shadow hover:bg-accent-700 active:bg-accent-800"
+        className="h-11 w-11 bg-accent-700/90 text-accent-50 shadow hover:bg-accent-700  dark:bg-accent-600 dark:hover:bg-accent-600/90"
       >
         <Icons.sendHorizontal className="h-5 w-5" />
       </Button>
@@ -29,7 +29,7 @@ const PromptInput = ({}: PromptInputProps) => {
 const PromptCard = ({}: PromptCardProps) => {
   return (
     <Card className="flex w-3/4 items-center bg-muted">
-      <Illustrations.paint className="h-56" />
+      <Illustrations.paint className="h-56 text-red-800" />
 
       <div className="h-max w-full bg-muted">
         <CardHeader className="pb-2">
