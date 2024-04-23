@@ -5,7 +5,7 @@ import AppPage from "@/lib/dashboard/AppPage";
 import AppSidebar from "@/lib/dashboard/AppSidebar";
 
 import { requireSession } from "@/lib/auth/require-session";
-import AuthProvider from "@/lib/providers/authProvider";
+import AuthProvider from "@/lib/providers/AuthProvider";
 
 const DashboardLayout = async ({ children }: React.PropsWithChildren) => {
   const appSession = await requireSession();

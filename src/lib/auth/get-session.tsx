@@ -3,11 +3,15 @@ import { cookies } from "next/headers";
 import { verifyNextSession } from "@/server/middlewares/auth.middleware";
 
 export const getSession = async () => {
-  const { session } = await verifyNextSession(cookies().toString());
+  try {
+    const { session } = await verifyNextSession(cookies().toString());
 
-  if (!session) {
+    if (!session) {
+      return null;
+    }
+
+    return session;
+  } catch (error) {
     return null;
   }
-
-  return session;
 };

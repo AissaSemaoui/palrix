@@ -3,7 +3,8 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import clsx from "clsx";
 import { Inter } from "next/font/google";
 
-import AuthProvider from "@/lib/providers/authProvider";
+import AuthProvider from "@/lib/providers/AuthProvider";
+import ThemeProvider from "@/lib/providers/ThemeProvider";
 import { queryClient } from "@/api-client";
 
 import "./globals.css";
@@ -23,9 +24,11 @@ export default function RootLayout({
   return (
     <QueryClientProvider client={queryClient}>
       <html lang="en">
-        <body className={clsx(inter.className, "flex min-h-screen flex-col")}>
-          <AuthProvider>{children}</AuthProvider>
-        </body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <body className={clsx(inter.className, "flex min-h-screen flex-col")}>
+            <AuthProvider>{children}</AuthProvider>
+          </body>
+        </ThemeProvider>
       </html>
     </QueryClientProvider>
   );

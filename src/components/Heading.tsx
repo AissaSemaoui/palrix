@@ -1,7 +1,5 @@
-import { cn } from "@/lib/utils";
-import { cva } from "class-variance-authority";
-import { ClassValue } from "class-variance-authority/types";
 import React from "react";
+import { cva } from "class-variance-authority";
 
 type HeadingProps = {
   type?: 1 | 2 | 3 | 4 | 5 | 6;

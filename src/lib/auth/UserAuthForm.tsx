@@ -2,8 +2,8 @@
 
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
-import { Icons } from "@/components/icons";
+import { Icons } from "@/components/Icons";
+import { Button } from "@/components/ui/Button";
 
 import { cn } from "@/lib/utils";
 import { useUserMe } from "@/hooks/use-user";

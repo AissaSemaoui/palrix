@@ -1,4 +1,4 @@
-import { Icons } from "@/components/icons";
+import { Icons } from "@/components/Icons";
 import { siteConfig } from "@/config/site";
 
 import { UserAuthForm } from "@/lib/auth/UserAuthForm";

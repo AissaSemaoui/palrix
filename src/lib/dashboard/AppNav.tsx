@@ -2,22 +2,21 @@
 
 import React from "react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Icons } from "@/components/icons";
+} from "@/components/ui/DropdownMenu";
+import { Icons } from "@/components/Icons";
 
 import { siteConfig } from "@/config/site";
 import { useUserMe } from "@/hooks/use-user";
 
 import type { User } from "@/types";
 
-import { requests } from "@/api-client";
 import { useSignOut } from "@/hooks/use-sign-out";
 
 type AppNavProps = {};

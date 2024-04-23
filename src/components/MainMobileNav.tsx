@@ -1,7 +1,7 @@
 import * as React from "react";
 import Link from "next/link";
 
-import { Icons } from "@/components/icons";
+import { Icons } from "@/components/Icons";
 
 import { useLockBody } from "@/hooks/use-lock-body";
 import { siteConfig } from "@/config/site";

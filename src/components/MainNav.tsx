@@ -4,10 +4,10 @@ import * as React from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
-import { MobileNav } from "@/components/main-mobile-nav";
-import { buttonVariants } from "@/components/ui/button";
-import { Icons } from "@/components/icons";
-import Show from "./show";
+import { MobileNav } from "@/components/MainMobileNav";
+import { buttonVariants } from "@/components/ui/Button";
+import { Icons } from "@/components/Icons";
+import Show from "./Show";
 
 import { cn } from "@/lib/utils";
 import { paths } from "@/config/navigations";

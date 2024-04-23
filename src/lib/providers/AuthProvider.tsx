@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { useUser } from "@/hooks/use-user";
 import { queries } from "@/api-client";

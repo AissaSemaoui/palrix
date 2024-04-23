@@ -3,8 +3,8 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 
-import { Anchor } from "@/components/ui/anchor";
-import { Icons } from "@/components/icons";
+import { Anchor } from "@/components/ui/Anchor";
+import { Icons } from "@/components/Icons";
 
 import { cn } from "@/lib/utils";
 import { paths } from "@/config/navigations";

@@ -1,11 +1,11 @@
 import React from "react";
 
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Illustrations } from "@/components/illustrations";
-import { Icons } from "@/components/icons";
-import Heading from "@/components/heading";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/Card";
+import { Illustrations } from "@/components/Illustrations";
+import { Icons } from "@/components/Icons";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
+import Heading from "@/components/Heading";
 
 type PromptInputProps = {};
 
