@@ -2,13 +2,13 @@ import express from "express";
 import passport from "passport";
 import httpStatus from "http-status";
 
-import { logoutController } from "@server/controllers/auth";
+import { logoutController } from "@server/controllers/auth.controller";
 import { AuthError } from "@server/utils/errors";
 import { routes } from "@server/config/routes";
 import { lucia } from "@server/config/lucia";
+import { catchController } from "@server/utils/api";
 import { paths } from "@/config/navigations";
 import env from "@environments";
-import { catchController } from "../utils/api";
 
 export const router = express.Router();
 
@@ -26,7 +26,7 @@ router.get(
   catchController(async (_req, res) => {
     console.log("we  got a me request!");
 
-    if (!res.locals.session) {
+    if (!res.locals.session || !res.locals.user) {
       throw new AuthError("Session not found");
     }
 

@@ -8,8 +8,8 @@ import { verifySession } from "@server/middlewares/auth.middleware";
 import { errorHandler } from "@server/middlewares/errorHandler.middleware";
 import { authRoutes } from "@server/routes";
 import { nextApp, nextHandler } from "@server/next_app";
-import { logger } from "@server/utils/logger";
 import { passportConfig } from "@server/config/passport";
+import { logger } from "@server/utils/logger";
 
 const PORT = process.env.PORT || 3000;
 

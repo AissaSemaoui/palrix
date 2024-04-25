@@ -1,14 +1,13 @@
 import { relations } from "drizzle-orm";
-import { pgEnum, pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, primaryKey, text, timestamp, jsonb, boolean } from "drizzle-orm/pg-core";
 
-import { UserRoles } from "@server/types";
+import { createId } from "@server/utils/generics";
+import { type Shade, UserRoles } from "@server/types";
 
 export const rolesEnum = pgEnum("role", [UserRoles.ADMIN, UserRoles.USER]);
 
 export const users = pgTable("user", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+  id: text("id").primaryKey().$defaultFn(createId),
   email: text("email").notNull(),
   displayName: text("display_name").notNull(),
   avatar_url: text("avatar_url"),
@@ -41,6 +40,27 @@ export const auth_providers = pgTable(
   }),
 );
 
+export const palettes = pgTable("palette", {
+  id: text("id").primaryKey().$defaultFn(createId),
+  name: text("name").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id),
+  colors: jsonb("colors").array().notNull().$type<Shade[]>(),
+  isPublic: boolean("is_public").notNull().default(false),
+
+  createdAt: timestamp("createdAt", {
+    withTimezone: true,
+    mode: "date",
+  }).defaultNow(),
+  updatedAt: timestamp("updatedAt", {
+    withTimezone: true,
+    mode: "date",
+  })
+    .notNull()
+    .defaultNow(),
+});
+
 export const userRelations = relations(users, ({ one }) => ({
   session: one(sessions, {
     fields: [users.id],
@@ -51,5 +71,10 @@ export const userRelations = relations(users, ({ one }) => ({
     fields: [users.id],
     references: [auth_providers.userId],
     relationName: "oauth_account",
+  }),
+  palette: one(palettes, {
+    fields: [users.id],
+    references: [palettes.userId],
+    relationName: "palette",
   }),
 }));

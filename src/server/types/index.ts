@@ -1,19 +1,23 @@
 import type { NextFunction, Request, Response } from "express";
 import { Session as LuciaSession } from "lucia";
 
+import { users, palettes } from "@server/db/schema";
 import { lucia } from "@server/config/lucia";
 
 export enum UserRoles {
   USER = "user",
   ADMIN = "admin",
 }
-export interface DbUser {
-  id: string;
-  email: string;
-  displayName: string;
-  avatar_url: string | null;
-  role: UserRoles;
+
+export interface Shade {
+  name: string;
+  primary_color: number;
+  shades: string[];
 }
+
+export type DbPalette = typeof palettes.$inferSelect;
+
+export type DbUser = typeof users.$inferSelect;
 
 export type User = DbUser;
 
