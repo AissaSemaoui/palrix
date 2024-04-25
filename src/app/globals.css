@@ -80,3 +80,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+@function lighten-color($color, $amount) {
+  @if type-of($color) == color {
+    $r: red($color);
+    $g: green($color);
+    $b: blue($color);
+    $a: alpha($color);
+
+    $r: $r + round($amount * 2.55);
+    $g: $g + round($amount * 2.55);
+    $b: $b + round($amount * 2.55);
+
+    @return rgba(min(255, max(0, $r)), min(255, max(0, $g)), min(255, max(0, $b)), $a);
+  } @else  {
+    @error "Invalid color value: #{$color}";
+  }
+}

@@ -62,9 +62,8 @@ export function MainNav({ items, children }: MainNavProps) {
         {showMobileMenu && items && <MobileNav items={items}>{children}</MobileNav>}
       </div>
 
-      <ModeToggle />
-
       <div className="flex gap-2">
+        <ModeToggle />
         <Show>
           <Show.If condition={!isAuthenticated}>
             <Link href={paths.auth.login} className={buttonVariants({ variant: "secondary" })}>

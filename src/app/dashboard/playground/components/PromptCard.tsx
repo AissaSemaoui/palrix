@@ -28,10 +28,10 @@ const PromptInput = ({}: PromptInputProps) => {
 
 const PromptCard = ({}: PromptCardProps) => {
   return (
-    <Card className="flex w-3/4 items-center bg-muted">
-      <Illustrations.paint className="h-56 text-red-800" />
+    <Card className="flex items-center bg-secondary">
+      <Illustrations.paint className="hidden h-56 text-red-800 md:block" />
 
-      <div className="h-max w-full bg-muted">
+      <div className="h-max w-full bg-secondary">
         <CardHeader className="pb-2">
           <Heading type={3} order={3} className="font-semibold">
             Describe your website in a few words

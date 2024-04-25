@@ -15,11 +15,11 @@ const Heading = ({ type, order, className, children }: HeadingProps) => {
     variants: {
       type: {
         1: "text-2xl font-bold tracking-tight",
-        2: "text-xl font-bold tracking-tight",
-        3: "text-lg font-bold tracking-tight",
-        4: "text-base font-bold tracking-tight",
-        5: "text-sm font-bold tracking-tight",
-        6: "text-xs font-bold tracking-tight",
+        2: "text-xl font-semibold tracking-tight",
+        3: "text-lg font-medium tracking-tight",
+        4: "text-base font-medium tracking-tight",
+        5: "text-sm font-normal tracking-tight",
+        6: "text-xs font-normal tracking-tight",
       },
     },
   });
