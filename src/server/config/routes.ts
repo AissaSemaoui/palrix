@@ -5,5 +5,5 @@ export const routes = {
     logout: "/logout",
     me: "/me",
   },
-  palette: "/palettes",
+  palette: "/palette",
 } as const;

@@ -11,11 +11,10 @@ export enum UserRoles {
 
 export interface Shade {
   name: string;
-  primary_color: number;
   shades: string[];
 }
 
-export type DbPalette = typeof palettes.$inferSelect;
+export type Palette = typeof palettes.$inferSelect;
 
 export type DbUser = typeof users.$inferSelect;
 

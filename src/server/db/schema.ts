@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgEnum, pgTable, primaryKey, text, timestamp, jsonb, boolean } from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, primaryKey, text, timestamp, jsonb, boolean, integer } from "drizzle-orm/pg-core";
 
 import { createId } from "@server/utils/generics";
 import { type Shade, UserRoles } from "@server/types";
@@ -46,6 +46,7 @@ export const palettes = pgTable("palette", {
   userId: text("user_id")
     .notNull()
     .references(() => users.id),
+  maxShades: integer("max_shades").notNull(),
   colors: jsonb("colors").array().notNull().$type<Shade[]>(),
   isPublic: boolean("is_public").notNull().default(false),
 

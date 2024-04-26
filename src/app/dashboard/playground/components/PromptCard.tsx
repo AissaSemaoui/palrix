@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/Card";
@@ -6,6 +8,7 @@ import { Icons } from "@/components/Icons";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import Heading from "@/components/Heading";
+import { requests } from "@/api-client";
 
 type PromptInputProps = {};
 
@@ -27,6 +30,23 @@ const PromptInput = ({}: PromptInputProps) => {
 };
 
 const PromptCard = ({}: PromptCardProps) => {
+  const handleCreatePalette = () => {
+    requests
+      .createPalette({
+        name: "Best Color Palette",
+        userId: "45c0e6mo52sig",
+        maxShades: 6,
+        colors: [
+          {
+            name: "Blue_cyan",
+            shades: ["#fffff", "#0000"],
+          },
+        ],
+      })
+      .then(console.log)
+      .catch(console.error);
+  };
+
   return (
     <Card className="flex items-center bg-secondary">
       <Illustrations.paint className="hidden h-56 text-red-800 md:block" />
@@ -43,7 +63,7 @@ const PromptCard = ({}: PromptCardProps) => {
         </CardContent>
 
         <CardFooter className="space-x-2">
-          <Button variant="outline">
+          <Button variant="outline" onClick={handleCreatePalette}>
             <Icons.dices className="mr-2 h-5 w-5" />
             Random
           </Button>

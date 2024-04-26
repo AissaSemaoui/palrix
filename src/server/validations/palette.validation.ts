@@ -7,7 +7,6 @@ export const paletteInsertSchema = createInsertSchema(palettes, {
   colors: z.array(
     z.object({
       name: z.string(),
-      primary_color: z.number(),
       shades: z.string().array(),
     }),
   ),
