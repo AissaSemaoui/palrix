@@ -10,7 +10,6 @@ import { authRoutes, paletteRoutes } from "@server/routes";
 import { nextApp, nextHandler } from "@server/next_app";
 import { passportConfig } from "@server/config/passport";
 import { logger } from "@server/utils/logger";
-import { routes } from "./config/routes";
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,7 +23,7 @@ app.use("/api/*", passport.initialize(), verifySession);
 
 app.use("/api/auth", authRoutes);
 
-app.use(`/api${routes.palette}`, paletteRoutes);
+app.use("/api/palette", paletteRoutes);
 
 app.use((req, res) => nextHandler(req, res));
 

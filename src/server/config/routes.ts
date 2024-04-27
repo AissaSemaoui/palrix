@@ -7,3 +7,5 @@ export const routes = {
   },
   palette: "/palette",
 } as const;
+
+export const createRoutePath = (path: string) => `/api${path}` as const;

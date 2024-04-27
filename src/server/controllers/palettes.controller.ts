@@ -1,8 +1,9 @@
-import { ExpressMiddleware } from "@server/types";
-import { catchController } from "@server/utils/api";
-import { CreatePaletteValidation } from "../validations/palette.validation";
-import { createPalette } from "../services/palette.service";
 import httpStatus from "http-status";
+
+import { createPalette } from "@server/services/palettes.service";
+import { CreatePaletteValidation } from "@server/validations/palettes.validation";
+import { catchController } from "@server/utils/api";
+import type { ExpressMiddleware } from "@server/types";
 
 export const createPaletteController: ExpressMiddleware = catchController(async (req, res) => {
   console.log("received a request from palette controller");

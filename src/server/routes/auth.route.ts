@@ -4,7 +4,6 @@ import httpStatus from "http-status";
 
 import { logoutController } from "@server/controllers/auth.controller";
 import { AuthError } from "@server/utils/errors";
-import { routes } from "@server/config/routes";
 import { lucia } from "@server/config/lucia";
 import { catchController } from "@server/utils/api";
 import { paths } from "@/config/navigations";
@@ -13,7 +12,7 @@ import env from "@environments";
 export const router = express.Router();
 
 router.get(
-  routes.auth.google,
+  "/google",
   catchController(
     passport.authenticate("google", {
       scope: ["email", "profile"],
@@ -22,7 +21,7 @@ router.get(
 );
 
 router.get(
-  routes.auth.me,
+  "/me",
   catchController(async (_req, res) => {
     console.log("we  got a me request!");
 
@@ -51,4 +50,4 @@ router.get(
   },
 );
 
-router.post(routes.auth.logout, catchController(logoutController));
+router.post("/logout", catchController(logoutController));

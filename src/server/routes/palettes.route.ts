@@ -1,7 +1,7 @@
 import express from "express";
 
-import { createPaletteController } from "@server/controllers/palette.controller";
-import { createPaletteValidation } from "@server/validations/palette.validation";
+import { createPaletteController } from "@server/controllers/palettes.controller";
+import { createPaletteValidation } from "@server/validations/palettes.validation";
 import { validate } from "@server/middlewares/validate.middleware";
 
 export const router = express.Router();
