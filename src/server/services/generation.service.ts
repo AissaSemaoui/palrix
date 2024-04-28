@@ -6,7 +6,7 @@ import type { Palette, Shade } from "@server/types";
 
 interface PaletteGenerationAiResponse {
   name: string;
-  primary_shade: number;
+  primaryShade: number;
   colors: Shade[];
 }
 
@@ -22,7 +22,7 @@ export const generatePalette = async ({ userPrompt }: GeneratePaletteValidation[
   return {
     id,
     name: paletteObj.name,
-    primaryShade: paletteObj.primary_shade,
+    primaryShade: paletteObj.primaryShade,
     colors: paletteObj.colors,
     isPublic: true,
     maxShades: paletteObj.colors.sort((p, n) => p.shades.length - n.shades.length)[0].shades.length,
