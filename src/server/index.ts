@@ -24,6 +24,7 @@ app.use("/api/*", passport.initialize(), verifySession);
 app.use("/api/auth", authRoutes);
 
 app.use("/api/palette", paletteRoutes);
+app.use("/api/generate", paletteRoutes);
 
 app.use((req, res) => nextHandler(req, res));
 

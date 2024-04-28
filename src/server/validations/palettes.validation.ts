@@ -12,7 +12,7 @@ export const paletteInsertSchema = createInsertSchema(palettes, {
   ),
 });
 
-export const createPaletteValidation = z.object({
+export const savePaletteValidation = z.object({
   body: paletteInsertSchema,
 });
 
@@ -37,7 +37,7 @@ export const deletePaletteValidation = z.object({
   }),
 });
 
-export type CreatePaletteValidation = z.infer<typeof createPaletteValidation>;
+export type SavePaletteValidation = z.infer<typeof savePaletteValidation>;
 export type GetPalettesValidation = z.infer<typeof getPalettesValidation>;
 export type GetPaletteValidation = z.infer<typeof getPaletteValidation>;
 export type UpdatePaletteValidation = z.infer<typeof updatePaletteValidation>;

@@ -31,20 +31,7 @@ const PromptInput = ({}: PromptInputProps) => {
 
 const PromptCard = ({}: PromptCardProps) => {
   const handleCreatePalette = () => {
-    requests
-      .createPalette({
-        name: "Best Color Palette",
-        userId: "45c0e6mo52sig",
-        maxShades: 6,
-        colors: [
-          {
-            name: "Blue_cyan",
-            shades: ["#fffff", "#0000"],
-          },
-        ],
-      })
-      .then(console.log)
-      .catch(console.error);
+    requests.generatePalette({}).then(console.log).catch(console.error);
   };
 
   return (
