@@ -4,7 +4,6 @@ import { axiosInstance } from "@/lib/axios";
 import { AppSession } from "@/types";
 import { Palette } from "@/server/types";
 
-import { SavePaletteValidation } from "@/server/validations/palettes.validation";
 import { GeneratePaletteValidation } from "@/server/validations/generation.validation";
 
 const makeRequests = (axios: AxiosInstance, config?: AxiosRequestConfig) => {
@@ -12,7 +11,7 @@ const makeRequests = (axios: AxiosInstance, config?: AxiosRequestConfig) => {
     userMe: (params?: AxiosRequestConfig) => axios.get<AppSession>("/api/auth/me", params).then((res) => res?.data),
     signOut: (params?: AxiosRequestConfig) => axios.post<void>("/api/auth/logout", {}, params),
     generatePalette: (data: GeneratePaletteValidation["body"], params?: AxiosRequestConfig) =>
-      axios.post<Palette>("/api/generate/palette", data, params),
+      axios.post<Palette>("/api/generate/palette", data, params).then((res) => res?.data),
   };
 };
 

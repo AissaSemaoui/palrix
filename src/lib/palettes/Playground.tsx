@@ -1,9 +1,14 @@
+"use client";
+
 import React from "react";
-import { cn } from "../utils";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import Tile from "@/components/ui/Tile";
+
 import { Button } from "@/components/ui/Button";
+import Tile from "@/components/ui/Tile";
 import PaletteCard from "./PaletteCard";
+
+import { cn } from "@/lib/utils";
+import { useSelectedPalette } from "@/hooks/use-playground";
+import Heading from "@/components/Heading";
 
 type PlaygroundActionsProps = {
   className?: string;
@@ -23,13 +28,24 @@ const PlaygroundActions = ({ className }: PlaygroundActionsProps) => {
 };
 
 const Playground = ({ className }: PlaygroundProps) => {
+  const selectedPalette = useSelectedPalette();
+
+  if (!selectedPalette) {
+    return (
+      <Tile className="text-center">
+        <Heading type={2}>No Palette Selected yet!</Heading>
+      </Tile>
+    );
+  }
+
   return (
     <section className={cn("", className)}>
       <PlaygroundActions className="mb-3" />
 
       <div className="space-y-2">
-        <PaletteCard />
-        <PaletteCard />
+        {selectedPalette.colors.map((c) => (
+          <PaletteCard key={c.name} name={c.name} shades={c.shades} primaryShade={selectedPalette.primaryShade} />
+        ))}
       </div>
     </section>
   );

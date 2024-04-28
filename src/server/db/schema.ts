@@ -47,6 +47,7 @@ export const palettes = pgTable("palette", {
     .notNull()
     .references(() => users.id),
   maxShades: integer("max_shades").notNull(),
+  primaryShade: integer("primary_shade").notNull(),
   colors: jsonb("colors").array().notNull().$type<Shade[]>(),
   isPublic: boolean("is_public").notNull().default(false),
 
@@ -57,9 +58,7 @@ export const palettes = pgTable("palette", {
   updatedAt: timestamp("updatedAt", {
     withTimezone: true,
     mode: "date",
-  })
-    .notNull()
-    .defaultNow(),
+  }).defaultNow(),
 });
 
 export const userRelations = relations(users, ({ one }) => ({

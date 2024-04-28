@@ -8,7 +8,9 @@ import { Icons } from "@/components/Icons";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import Heading from "@/components/Heading";
+
 import { requests } from "@/api-client";
+import { usePlaygroundActions } from "@/hooks/use-playground";
 
 type PromptInputProps = {};
 
@@ -30,8 +32,15 @@ const PromptInput = ({}: PromptInputProps) => {
 };
 
 const PromptCard = ({}: PromptCardProps) => {
+  const { setSelectedPalette } = usePlaygroundActions();
+
   const handleCreatePalette = () => {
-    requests.generatePalette({}).then(console.log).catch(console.error);
+    requests
+      .generatePalette({
+        userPrompt: "Freelancing Platform for security field",
+      })
+      .then(setSelectedPalette)
+      .catch(console.error);
   };
 
   return (

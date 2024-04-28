@@ -11,6 +11,10 @@ const env = {
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     googleCallbackUrl: process.env.GOOGLE_CALLBACK_URL!,
   },
+
+  ai: {
+    modelApiKey: process.env.MODEL_API_KEY!,
+  },
 };
 
 export default env;
