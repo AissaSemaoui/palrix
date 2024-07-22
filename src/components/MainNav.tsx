@@ -8,6 +8,7 @@ import { buttonVariants } from "@/components/ui/Button";
 import { MobileNav } from "@/components/MainMobileNav";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Icons } from "@/components/Icons";
+import Logo from "@/components/ui/logo";
 import Show from "./Show";
 
 import { cn } from "@/lib/utils";
@@ -33,7 +34,7 @@ export function MainNav({ items, children }: MainNavProps) {
     <div className="flex w-full justify-between">
       <div className="flex gap-6 md:gap-10">
         <Link href="/" className="hidden items-center space-x-2 md:flex">
-          <Icons.logo />
+          <Logo />
           <span className="hidden font-bold sm:inline-block">{siteConfig.name}</span>
         </Link>
         {items?.length ? (
@@ -55,7 +56,7 @@ export function MainNav({ items, children }: MainNavProps) {
         ) : null}
 
         <button className="flex items-center space-x-2 md:hidden" onClick={() => setShowMobileMenu(!showMobileMenu)}>
-          <Icons.logo />
+          <Logo />
 
           {showMobileMenu ? <Icons.close /> : <Icons.menu />}
         </button>

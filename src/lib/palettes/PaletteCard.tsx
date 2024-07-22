@@ -9,7 +9,7 @@ import type { Palette } from "@/server/types";
 type PaletteCardProps = Pick<Palette["colors"][number], "name" | "shades"> & Pick<Palette, "primaryShade">;
 
 const PaletteCard = ({ name, shades, primaryShade }: PaletteCardProps) => {
-  const primaryColor = shades[primaryShade - 1];
+  const primaryColor = shades[primaryShade >= 100 ? primaryShade / 10 : primaryShade];
 
   return (
     <Tile size="md" className="space-y-4">
@@ -20,6 +20,7 @@ const PaletteCard = ({ name, shades, primaryShade }: PaletteCardProps) => {
           <p className="text-sm text-muted-foreground shadow-red-500">{primaryColor}</p>
         </div>
       </div>
+
       <div className="flex justify-stretch gap-1">
         {shades.map((shade) => (
           <ColorBox key={shade} color={shade} className="w-full" />

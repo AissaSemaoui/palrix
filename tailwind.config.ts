@@ -42,7 +42,17 @@ const config = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
-          ...colors.purple,
+          50: "#f7f7f7",
+          100: "#f0eff2",
+          200: "#e4d6ef",
+          300: "#d2b5ed",
+          400: "#a55ce8",
+          500: "#7a22d5",
+          600: "#5a1a9c",
+          700: "#451378",
+          800: "#2b0b49",
+          900: "#1c062f",
+          950: "#0d0118",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",

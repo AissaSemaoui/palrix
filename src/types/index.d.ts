@@ -1,7 +1,8 @@
 import type { LucideIcon } from "lucide-react";
-import { WithRequired } from "@tanstack/react-query";
+import { MutationFunction, UseMutationOptions, WithRequired } from "@tanstack/react-query";
 
 import { Session, User } from "@/server/types";
+import { AxiosError } from "axios";
 
 type Maybe<T> = T | undefined;
 
@@ -19,4 +20,10 @@ interface AppSession {
   session: Session;
 }
 
-export { Maybe, NavItem, User, WithRequired, AppSession };
+type CustomMutationOptions<TFunction extends MutationFunction<any, any>> = UseMutationOptions<
+  Awaited<ReturnType<TFunction>>,
+  AxiosError,
+  Parameters<TFunction>[0]
+>;
+
+export { Maybe, NavItem, User, WithRequired, AppSession, CustomMutationOptions };

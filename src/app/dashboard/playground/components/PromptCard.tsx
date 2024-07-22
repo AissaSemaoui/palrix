@@ -10,8 +10,8 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import Heading from "@/components/Heading";
 
-import { mutations, requests } from "@/api-client";
 import { usePlaygroundActions, usePlaygroundStatus, usePrompt } from "@/hooks/use-playground";
+import { useGeneratePalette } from "@/api-client/mutations/useGeneratePalette";
 
 type PromptInputProps = {
   onSubmit: () => void;
@@ -26,7 +26,7 @@ const PromptInput = ({ onSubmit }: PromptInputProps) => {
 
   const [promptInput, setPromptInput] = useState("");
 
-  useDebounce(
+  const [isPromptReady] = useDebounce(
     () => {
       setPrompt(promptInput);
     },
@@ -67,7 +67,7 @@ const PromptCard = ({}: PromptCardProps) => {
 
   const prompt = usePrompt();
 
-  const { mutate } = mutations.useGeneratePalette({
+  const { mutate } = useGeneratePalette({
     onMutate: () => setStatus("loading"),
     onSettled: () => setStatus("idle"),
     onSuccess: (data) => {

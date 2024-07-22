@@ -13,12 +13,12 @@ import {
 } from "@/components/ui/DropdownMenu";
 import { ModeToggle } from "@/components/ModeToggle";
 
-import { siteConfig } from "@/config/site";
 import { useUserMe } from "@/hooks/use-user";
 
 import type { User } from "@/types";
 
 import { useSignOut } from "@/hooks/use-sign-out";
+import Logo from "@/components/ui/logo";
 
 type AppNavProps = {};
 
@@ -35,7 +35,7 @@ const AvatarMenu = ({ user }: { user: User }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer">
+        <DropdownMenuItem onClick={signOut} className="cursor-pointer">
           <Icons.logout className="mr-2 h-4 w-4" /> Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -49,8 +49,7 @@ const AppNav = ({}: AppNavProps) => {
   return (
     <nav className="flex items-center justify-between border px-4 py-2">
       <div className="flex gap-2">
-        <Icons.logo />
-        {siteConfig.name}
+        <Logo />
       </div>
 
       <div className="flex items-center gap-2">

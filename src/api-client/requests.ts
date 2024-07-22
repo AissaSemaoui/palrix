@@ -8,10 +8,10 @@ import { GeneratePaletteValidation } from "@/server/validations/generation.valid
 
 const makeRequests = (axios: AxiosInstance, config?: AxiosRequestConfig) => {
   return {
-    userMe: (params?: AxiosRequestConfig) => axios.get<AppSession>("/api/auth/me", params).then((res) => res?.data),
-    signOut: (params?: AxiosRequestConfig) => axios.post<void>("/api/auth/logout", {}, params),
-    generatePalette: (data: GeneratePaletteValidation["body"], params?: AxiosRequestConfig) =>
-      axios.post<Palette>("/api/generate/palette", data, params).then((res) => res?.data),
+    userMe: () => axios.get<AppSession>("/api/auth/me").then((res) => res?.data),
+    signOut: () => axios.post<void>("/api/auth/logout", {}),
+    generatePalette: (data: GeneratePaletteValidation["body"]) =>
+      axios.post<Palette>("/api/generate/palette", data).then((res) => res?.data),
   };
 };
 

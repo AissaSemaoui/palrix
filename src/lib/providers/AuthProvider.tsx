@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 
 import { useUser } from "@/hooks/use-user";
-import { queries } from "@/api-client";
+import { useUserMe } from "@/api-client/queries/useUserMe";
 
 import type { AppSession } from "@/types";
 
@@ -15,7 +15,7 @@ interface AuthProviderProps {
 const AuthProvider = ({ children, initialSession }: AuthProviderProps) => {
   const setUserMe = useUser((state) => state.setUserMe);
 
-  const { data, isError, isSuccess, isPending } = queries.useUserMe({
+  const { data, isError, isSuccess, isPending } = useUserMe({
     initialData: initialSession,
     retry: false,
   });

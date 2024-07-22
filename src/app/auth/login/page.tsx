@@ -1,4 +1,5 @@
 import { Icons } from "@/components/Icons";
+import Logo from "@/components/ui/logo";
 import { siteConfig } from "@/config/site";
 
 import { UserAuthForm } from "@/lib/auth/UserAuthForm";
@@ -11,7 +12,7 @@ const RegisterPage = () => {
           <div className="hidden lg:relative lg:block lg:p-12">
             <a className="block text-white" href="#">
               <span className="sr-only">Home</span>
-              <Icons.logo className="h-10 w-10" />
+              <Logo className="h-10" />
             </a>
 
             <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">Welcome to {siteConfig.name}</h2>

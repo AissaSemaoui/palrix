@@ -1,13 +1,12 @@
 "use client";
 
+import { useSignOut as useMutationSignOut } from "@/api-client/mutations/useSignOut";
 import { useRouter } from "next/navigation";
-
-import { mutations } from "@/api-client";
 
 export const useSignOut = () => {
   const router = useRouter();
 
-  return mutations.useSignOut({
+  return useMutationSignOut({
     onSuccess: () => {
       router.refresh();
     },
