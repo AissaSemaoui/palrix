@@ -1,5 +1,13 @@
+import {
+  DefinedInitialDataOptions,
+  MutationFunction,
+  MutationOptions,
+  QueryFunction,
+  QueryKey,
+  QueryOptions,
+  WithRequired,
+} from "@tanstack/react-query";
 import type { LucideIcon } from "lucide-react";
-import { MutationFunction, UseMutationOptions, WithRequired } from "@tanstack/react-query";
 
 import { Session, User } from "@/server/types";
 import { AxiosError } from "axios";
@@ -20,10 +28,18 @@ interface AppSession {
   session: Session;
 }
 
-type CustomMutationOptions<TFunction extends MutationFunction<any, any>> = UseMutationOptions<
+type CustomMutationOptions<TFunction extends MutationFunction<any, any>> = MutationOptions<
   Awaited<ReturnType<TFunction>>,
   AxiosError,
   Parameters<TFunction>[0]
 >;
 
-export { Maybe, NavItem, User, WithRequired, AppSession, CustomMutationOptions };
+type CustomQueryOptions<TFunction extends QueryFunction<any, any>> = QueryOptions<
+  Awaited<ReturnType<TFunction>>,
+  AxiosError,
+  Awaited<ReturnType<TFunction>>,
+  QueryKey,
+  DefinedInitialDataOptions<TFunction>
+>;
+
+export { AppSession, CustomMutationOptions, CustomQueryOptions, Maybe, NavItem, User, WithRequired };

@@ -30,7 +30,7 @@ const AvatarMenu = ({ user }: { user: User }) => {
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage src={user?.avatar_url ?? ""} />
-          <AvatarFallback className="border border-accent-300">{user.displayName.substring(0, 2)}</AvatarFallback>
+          <AvatarFallback className="border border-accent-300">{user?.displayName.substring(0, 2)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
