@@ -19,15 +19,20 @@ export const metadata: Metadata = {
   description: "Color Palette AI Generator",
 };
 
+const getSession = async () => {
+  try {
+    return await verifyNextSession(cookies().toString());
+  } catch {
+    return null;
+  }
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let session = undefined;
-  await verifyNextSession(cookies().toString()).then((res) => {
-    session = res;
-  });
+  let session = await getSession();
 
   return (
     <QueryClientProvider client={queryClient}>

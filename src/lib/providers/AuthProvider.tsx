@@ -10,7 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { paths } from "@/config/navigations";
 
 interface AuthProviderProps {
-  initialSession?: AppSession;
+  initialSession?: AppSession | null;
   children: React.ReactNode;
 }
 
@@ -22,7 +22,7 @@ const AuthProvider = ({ children, initialSession }: AuthProviderProps) => {
   const userMe = useUser();
 
   const { data, isError, isSuccess, isPending } = useUserMe({
-    initialData: initialSession,
+    initialData: initialSession ?? undefined,
     retry: false,
   });
 
