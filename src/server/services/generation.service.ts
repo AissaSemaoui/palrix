@@ -2,8 +2,8 @@ import { sendAiPrompt } from "@server/config/ai-model";
 import { PALETTE_GENERATION_PROMPT } from "@server/config/prompts";
 
 import type { GeneratePaletteValidation } from "@server/validations/generation.validation";
-import type { Palette, Shade } from "@server/types";
-import { generateShades } from "../utils/colors";
+import type { Palette } from "@server/types";
+import { generateColorPalette } from "@server/utils/colors";
 
 interface PaletteGenerationAiResponse {
   name: string;
@@ -29,7 +29,13 @@ export const generatePalette = async ({ userPrompt }: GeneratePaletteValidation[
 
   const generatedPalette = paletteObj.colors.map((c) => ({
     name: c.name,
-    shades: generateShades(c.shade, maxShades, [0.98, 0.2], [1, 0.3]),
+    shades: generateColorPalette(c.shade, {
+      numShades: maxShades,
+      lightnessRange: [0.05, 0.95],
+      saturationRange: [0.5, 1],
+      interpolationMethod: "bezier",
+    }),
+    // shades: generateShades(c.shade, maxShades, [0.98, 0.2], [1, 0.3]),
   }));
 
   console.log(total_tokens);

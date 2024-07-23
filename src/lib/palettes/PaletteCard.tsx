@@ -10,6 +10,7 @@ type PaletteCardProps = Pick<Palette["colors"][number], "name" | "shades"> & Pic
 
 const PaletteCard = ({ name, shades, primaryShade }: PaletteCardProps) => {
   const primaryColor = shades[primaryShade >= 100 ? primaryShade / 10 : primaryShade];
+  console.log("here is the primary color: ", primaryColor);
 
   return (
     <Tile size="md" className="space-y-4">

@@ -1,17 +1,16 @@
 "use client";
 
-import React, { CSSProperties } from "react";
 import { cva } from "class-variance-authority";
+import React, { CSSProperties } from "react";
 
 import Tile from "@/components/ui/Tile";
-import chroma from "chroma-js";
 
 interface ColorBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "sm" | "md" | "lg";
   color: CSSProperties["backgroundColor"];
 }
 
-const colorBoxVariants = cva("rounded-md border", {
+const colorBoxVariants = cva("rounded-md dark:border-gray-900 border-gray-50 overflow-hidden shadow-none", {
   variants: {
     size: {
       sm: "h-8 w-8",

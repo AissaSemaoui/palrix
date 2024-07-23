@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useDeferredValue, useEffect, useRef, useState } from "react";
 import { useDebounce } from "react-use";
 
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/Card";
@@ -15,29 +15,27 @@ import { useGeneratePalette } from "@/api-client/mutations/useGeneratePalette";
 
 type PromptInputProps = {
   onSubmit: () => void;
+  loading: boolean;
+  disabled: boolean;
 };
 
 type PromptCardProps = {};
 
-const PromptInput = ({ onSubmit }: PromptInputProps) => {
-  const status = usePlaygroundStatus();
-
+const PromptInput = ({ onSubmit, loading, disabled }: PromptInputProps) => {
   const { setPrompt } = usePlaygroundActions();
 
   const [promptInput, setPromptInput] = useState("");
 
-  const [isPromptReady] = useDebounce(
-    () => {
-      setPrompt(promptInput);
-    },
-    1000,
-    [promptInput],
-  );
+  const deferredPrompt = useDeferredValue(promptInput);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit();
   };
+
+  useEffect(() => {
+    setPrompt(deferredPrompt);
+  }, [deferredPrompt]);
 
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2">
@@ -53,7 +51,8 @@ const PromptInput = ({ onSubmit }: PromptInputProps) => {
         type="submit"
         variant="default"
         size="icon"
-        loading={status === "loading"}
+        loading={loading}
+        disabled={disabled}
         className="h-11 w-11 bg-accent-700/90 text-accent-50 shadow hover:bg-accent-700  dark:bg-accent-600 dark:hover:bg-accent-600/90"
       >
         <Icons.sendHorizontal className="h-5 w-5" />
@@ -64,6 +63,7 @@ const PromptInput = ({ onSubmit }: PromptInputProps) => {
 
 const PromptCard = ({}: PromptCardProps) => {
   const { setSelectedPalette, setStatus } = usePlaygroundActions();
+  const status = usePlaygroundStatus();
 
   const prompt = usePrompt();
 
@@ -80,15 +80,25 @@ const PromptCard = ({}: PromptCardProps) => {
     },
   });
 
+  const isRandom = useRef(false);
+
   const handleGeneratePalette = () => {
+    isRandom.current = false;
     mutate({
       userPrompt: prompt,
     });
   };
 
+  const handleGenerateRandomPalette = () => {
+    isRandom.current = true;
+    mutate({
+      userPrompt: "Random",
+    });
+  };
+
   return (
-    <Card className="flex items-center bg-secondary">
-      <Illustrations.paint className="hidden h-56 text-red-800 md:block" />
+    <Card className="flex items-center overflow-hidden bg-secondary">
+      <Illustrations.paint className="hidden h-56 dark:bg-secondary-foreground md:block" />
 
       <div className="h-max w-full bg-secondary">
         <CardHeader className="pb-2">
@@ -98,11 +108,15 @@ const PromptCard = ({}: PromptCardProps) => {
         </CardHeader>
 
         <CardContent>
-          <PromptInput onSubmit={handleGeneratePalette} />
+          <PromptInput
+            onSubmit={handleGeneratePalette}
+            loading={!isRandom && status === "loading"}
+            disabled={status === "loading"}
+          />
         </CardContent>
 
-        <CardFooter className="space-x-2">
-          <Button variant="outline">
+        <CardFooter className="space-x-2" onClick={handleGenerateRandomPalette}>
+          <Button variant="outline" disabled={status === "loading"} loading={isRandom && status === "loading"}>
             <Icons.dices className="mr-2 h-5 w-5" />
             Random
           </Button>

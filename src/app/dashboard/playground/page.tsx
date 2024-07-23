@@ -8,15 +8,15 @@ type PlaygroundPageProps = {};
 
 const PlaygroundPage = (props: PlaygroundPageProps) => {
   return (
-    <>
+    <main className="mx-auto w-full xl:w-4/5">
       <AppPage.Header title="Hi George," description="What do you wanna generate today?" />
 
-      <section className="space-y-4 xl:w-3/4">
+      <section className="space-y-4">
         <PromptCard />
 
         <Playground className="mb-2" />
       </section>
-    </>
+    </main>
   );
 };
 

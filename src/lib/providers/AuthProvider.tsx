@@ -18,25 +18,17 @@ const AuthProvider = ({ children, initialSession }: AuthProviderProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const setUserMe = useUser((state) => state.setUserMe);
-  const userMe = useUser();
+  const { userMe, setUserMe } = useUser();
 
-  const { data, isError, isSuccess, isPending } = useUserMe({
+  const { data, isError, isSuccess } = useUserMe({
     initialData: initialSession ?? undefined,
     retry: false,
   });
 
-  const initialRender = useRef(true);
-
-  if (isPending && initialRender.current && initialSession?.user) {
-    setUserMe(initialSession.user);
-    initialRender.current = false;
-  }
-
   useEffect(() => {
-    if (isSuccess) {
+    if (data?.user) {
       setUserMe(data.user);
-    } else if (isError) {
+    } else {
       setUserMe(null);
     }
   }, [data, setUserMe, isError, isSuccess]);

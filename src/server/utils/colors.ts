@@ -1,81 +1,159 @@
-import chroma, { type Color } from "chroma-js";
+import chroma, { Color } from "chroma-js";
 
-export const getClosestLightness = (colorObject: Color, LIGHTNESS_MAP: number[]) =>
-  LIGHTNESS_MAP.reduce((prev, curr) => (colorObject.get("hsl.l") - curr > prev ? prev : curr), 0);
+// Types and Interfaces
+type ColorSpace = "hsl" | "rgb" | "lab";
+type InterpolationMethod = "linear" | "bezier";
 
-export const getClosestSaturation = (colorObject: Color, SATURATION_MAP: number[]) =>
-  SATURATION_MAP.reduce((prev, curr) => (colorObject.get("hsl.l") - curr > prev ? prev : curr), 0);
+interface ColorPaletteConfig {
+  lightnessRange: [number, number];
+  saturationRange: [number, number];
+  numShades: number;
+  colorSpace: ColorSpace;
+  interpolationMethod: InterpolationMethod;
+}
 
-export const inspiringGenerateColors = (primaryColor: string, LIGHTNESS_MAP: number[], SATURATION_MAP: number[]) => {
-  const primaryColorObj = chroma(primaryColor);
+interface NamedPalette {
+  name: string;
+  config: Partial<ColorPaletteConfig>;
+}
 
-  const lightness = primaryColorObj.get("hsl.l");
-  const closestLightness = getClosestLightness(primaryColorObj, LIGHTNESS_MAP);
-  const closestSaturation = getClosestSaturation(primaryColorObj, SATURATION_MAP);
-
-  const primaryColorIndex = LIGHTNESS_MAP.findIndex((l) => l === closestLightness);
-  const baseSaturation = closestSaturation;
-  console.log(baseSaturation);
-
-  console.log(baseSaturation, lightness);
-
-  const shades = LIGHTNESS_MAP.map((l) => primaryColorObj.set("hsl.l", l)).map((c, i) => {
-    return true ? c.saturate(baseSaturation + SATURATION_MAP[i]) : c;
-  });
-
-  console.log(shades);
-
-  return shades;
+// Default configuration
+const defaultConfig: ColorPaletteConfig = {
+  lightnessRange: [0.1, 0.9],
+  saturationRange: [0.1, 0.9],
+  numShades: 9,
+  colorSpace: "hsl",
+  interpolationMethod: "linear",
 };
 
-export const generateShades = (
-  primaryColor: string,
-  numShades: number,
-  lightnessRange: [number, number],
-  saturationRange: [number, number],
-) => {
+// Named palette configurations
+const namedPalettes: NamedPalette[] = [
+  { name: "pastel", config: { lightnessRange: [0.7, 0.9], saturationRange: [0.1, 0.3] } },
+  { name: "vibrant", config: { lightnessRange: [0.3, 0.7], saturationRange: [0.7, 0.9] } },
+  { name: "muted", config: { lightnessRange: [0.3, 0.7], saturationRange: [0.2, 0.4] } },
+];
+
+// Memoization function
+function memoize<T extends (...args: any[]) => any>(fn: T): T {
+  const cache = new Map();
+  return ((...args: any[]) => {
+    const key = JSON.stringify(args);
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    const result = fn(...args);
+    cache.set(key, result);
+    return result;
+  }) as T;
+}
+
+// Color palette generation
+// Update the generateColorPalette function to pass colorSpace to interpolateRange
+export function generateColorPalette(primaryColor: string, config: Partial<ColorPaletteConfig> = {}): string[] {
+  const fullConfig = { ...defaultConfig, ...config };
+  const { lightnessRange, saturationRange, numShades, colorSpace, interpolationMethod } = fullConfig;
+
+  if (!chroma.valid(primaryColor)) {
+    throw new Error(`Invalid primary color: ${primaryColor}`);
+  }
+
   const primaryColorObj = chroma(primaryColor);
-  const baseHue = primaryColorObj.get("hsl.h");
+  const baseHue = primaryColorObj.get(`${colorSpace}.h`);
 
-  console.log(lightnessRange, numShades);
-  // Generate dynamic lightness and saturation maps
-  const lightnessMap = Array.from(
-    { length: numShades },
-    (_, i) => lightnessRange[0] + (i / (numShades - 1)) * (lightnessRange[1] - lightnessRange[0]),
-  );
-  const saturationMap = Array.from(
-    { length: numShades },
-    (_, i) => saturationRange[0] + (i / (numShades - 1)) * (saturationRange[1] - saturationRange[0]),
-  );
+  const lightnessMap = interpolateRange(lightnessRange, numShades, interpolationMethod, colorSpace);
+  const saturationMap = interpolateRange(saturationRange, numShades, interpolationMethod, colorSpace);
 
-  const shades = lightnessMap.map((l, i) => {
-    const saturation = saturationMap[i];
-    return chroma(baseHue, saturation, l, "hsl").hex();
-  });
+  return lightnessMap.map((l, i) => chroma[colorSpace](baseHue, saturationMap[i], l).hex());
+}
 
-  return shades;
-};
+function interpolateRange(
+  [start, end]: [number, number],
+  steps: number,
+  method: InterpolationMethod,
+  colorSpace: ColorSpace,
+): number[] {
+  if (method === "linear") {
+    return Array.from({ length: steps }, (_, i) => start + (i / (steps - 1)) * (end - start));
+  } else if (method === "bezier") {
+    // Create two colors using the start and end values in the specified color space
+    const startColor = chroma[colorSpace](0, 0, start);
+    const endColor = chroma[colorSpace](0, 0, end);
 
-export const extractLSMap = (shades: string[]) => {
-  const lightnessMap: number[][] = [];
-  const saturationMap: number[][] = [];
+    // Create a bezier interpolator between these colors
+    const bezier = chroma.bezier([startColor.name(), endColor.name()]);
 
-  const shadesObj = shades.map((c) => chroma(c));
-
-  shadesObj.forEach((c, cI) => {
-    const lightnessArr = (lightnessMap[cI] = [] as number[]);
-    const saturationArr = (saturationMap[cI] = [] as number[]);
-    const baseColor = chroma(shades[cI]);
-
-    shadesObj.forEach((s) => {
-      console.log(s.get("hsl.l"), baseColor.get("hsl.l"));
-      lightnessArr.push(Number(s.get("hsl.l").toFixed(2)));
-      saturationArr.push(Number((s.get("hsl.s") - baseColor.get("hsl.s")).toFixed(2)));
+    // Use the bezier function to interpolate and extract the relevant channel
+    return Array.from({ length: steps }, (_, i) => {
+      const t = i / (steps - 1);
+      return bezier(t).get(`${colorSpace}.${colorSpace === "hsl" ? "l" : colorSpace === "rgb" ? "r" : "l"}`);
     });
-  });
+  }
+  throw new Error(`Unsupported interpolation method: ${method}`);
+}
 
-  return {
-    lightnessMap,
-    saturationMap,
-  };
-};
+// Memoized helper functions
+export const getClosestLightness = memoize((colorObject: Color, lightnessMap: number[]): number =>
+  lightnessMap.reduce((prev, curr) =>
+    Math.abs(colorObject.get("hsl.l") - curr) < Math.abs(colorObject.get("hsl.l") - prev) ? curr : prev,
+  ),
+);
+
+export const getClosestSaturation = memoize((colorObject: Color, saturationMap: number[]): number =>
+  saturationMap.reduce((prev, curr) =>
+    Math.abs(colorObject.get("hsl.s") - curr) < Math.abs(colorObject.get("hsl.s") - prev) ? curr : prev,
+  ),
+);
+
+// Accessibility functions
+export function getColorContrast(color1: string, color2: string): number {
+  return chroma.contrast(color1, color2);
+}
+
+export function isAccessible(foreground: string, background: string, level: "AA" | "AAA" = "AA"): boolean {
+  const contrast = getColorContrast(foreground, background);
+  return level === "AA" ? contrast >= 4.5 : contrast >= 7;
+}
+
+// Color harmony functions
+export function getComplementaryColor(color: string): string {
+  return chroma(color)
+    .set("hsl.h", (chroma(color).get("hsl.h") + 180) % 360)
+    .hex();
+}
+
+export function getAnalogousColors(color: string): [string, string] {
+  const baseHue = chroma(color).get("hsl.h");
+  return [
+    chroma(color)
+      .set("hsl.h", (baseHue + 30) % 360)
+      .hex(),
+    chroma(color)
+      .set("hsl.h", (baseHue - 30 + 360) % 360)
+      .hex(),
+  ];
+}
+
+// Named palette function
+export function getNamedPalette(name: string, primaryColor: string): string[] {
+  const palette = namedPalettes.find((p) => p.name.toLowerCase() === name.toLowerCase());
+  if (!palette) {
+    throw new Error(`Named palette not found: ${name}`);
+  }
+  return generateColorPalette(primaryColor, palette.config);
+}
+
+// Palette preview function
+export function generatePalettePreview(palette: string[]): string {
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="300" height="50">
+      ${palette
+        .map(
+          (color, i) => `
+        <rect x="${i * 30}" y="0" width="30" height="50" fill="${color}" />
+      `,
+        )
+        .join("")}
+    </svg>
+  `;
+  return `data:image/svg+xml;base64,${btoa(svg)}`;
+}

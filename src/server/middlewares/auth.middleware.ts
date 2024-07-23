@@ -4,7 +4,7 @@ import { lucia } from "@server/config/lucia";
 
 import type { ExpressMiddleware, User } from "@/server/types";
 
-type VerifyNextSession = (cookies: string) => Promise<{ session: Session | null; user: User | null }>;
+type VerifyNextSession = (cookies: string) => Promise<{ session: Session; user: User } | { session: null; user: null }>;
 
 export const verifySession: ExpressMiddleware = async (req, res, next) => {
   const sessionId = lucia.readSessionCookie(req.headers.cookie ?? "");
@@ -35,7 +35,7 @@ export const verifySession: ExpressMiddleware = async (req, res, next) => {
   return next();
 };
 
-export const verifyNextSession: VerifyNextSession = async (cookies: string) => {
+export const verifyNextSession = async (cookies: string) => {
   const sessionId = lucia.readSessionCookie(cookies);
 
   if (!sessionId) {
