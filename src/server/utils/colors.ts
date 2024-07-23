@@ -145,7 +145,7 @@ export function getNamedPalette(name: string, primaryColor: string): string[] {
 // Palette preview function
 export function generatePalettePreview(palette: string[]): string {
   const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="300" height="50">
+    <svg xmlns="http://www.w3.org/2000/svg" width="300" height="100%">
       ${palette
         .map(
           (color, i) => `

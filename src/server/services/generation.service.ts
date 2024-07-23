@@ -11,6 +11,11 @@ interface PaletteGenerationAiResponse {
   colors: {
     name: string;
     shade: string;
+    config: {
+      lightnessRange?: [number, number];
+      saturationRange?: [number, number];
+      interpolationMethod?: "bezier" | "linear";
+    };
   }[];
 }
 
@@ -31,9 +36,10 @@ export const generatePalette = async ({ userPrompt }: GeneratePaletteValidation[
     name: c.name,
     shades: generateColorPalette(c.shade, {
       numShades: maxShades,
-      lightnessRange: [0.05, 0.95],
-      saturationRange: [0.5, 1],
-      interpolationMethod: "bezier",
+      lightnessRange: [0.95, 0.05],
+      saturationRange: [1, 0.5],
+      ...c.config,
+      interpolationMethod: "linear",
     }),
     // shades: generateShades(c.shade, maxShades, [0.98, 0.2], [1, 0.3]),
   }));

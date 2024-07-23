@@ -26,8 +26,6 @@ const colorBoxVariants = cva("rounded-md dark:border-gray-900 border-gray-50 ove
 const ColorBox = ({ color, size, className, ...props }: ColorBoxProps) => {
   const handleCopy = () => navigator.clipboard.writeText(color ?? "");
 
-  console.log(color);
-
   return (
     <div className={className}>
       <Tile
@@ -39,8 +37,6 @@ const ColorBox = ({ color, size, className, ...props }: ColorBoxProps) => {
           backgroundColor: color,
         }}
       />
-
-      <p className="text-sm text-muted-foreground">{color}</p>
     </div>
   );
 };
