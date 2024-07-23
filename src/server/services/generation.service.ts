@@ -4,6 +4,7 @@ import { PALETTE_GENERATION_PROMPT } from "@server/config/prompts";
 import type { GeneratePaletteValidation } from "@server/validations/generation.validation";
 import type { Palette } from "@server/types";
 import { generateColorPalette } from "@server/utils/colors";
+import { MAX_SHADES_NUMBER } from "@/config/constants";
 
 interface PaletteGenerationAiResponse {
   name: string;
@@ -30,7 +31,7 @@ export const generatePalette = async ({ userPrompt }: GeneratePaletteValidation[
   const paletteObj: PaletteGenerationAiResponse = JSON.parse(content);
   console.timeEnd("Generating Duration");
 
-  const maxShades = 11;
+  const maxShades = MAX_SHADES_NUMBER;
 
   const generatedPalette = paletteObj.colors.map((c) => ({
     name: c.name,

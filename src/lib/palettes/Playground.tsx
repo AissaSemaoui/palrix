@@ -20,7 +20,7 @@ type PlaygroundProps = {
 
 const PlaygroundActions = ({ className }: PlaygroundActionsProps) => {
   return (
-    <Tile className={cn("space-x-2 border-none p-4", className)}>
+    <Tile className={cn("space-x-2 rounded-sm p-2 shadow-sm", className)}>
       <Button variant="outline">Export</Button>
       <Button variant="outline">Save</Button>
     </Tile>
@@ -39,10 +39,14 @@ const Playground = ({ className }: PlaygroundProps) => {
   }
 
   return (
-    <section className={cn("", className)}>
-      <PlaygroundActions className="mb-3" />
+    <section className={cn("rounded-md bg-muted", className)}>
+      <PlaygroundActions className="mb-2" />
 
-      <div className="space-y-2">
+      <div className="px-4">
+        <Heading type={4}>{selectedPalette.name}</Heading>
+      </div>
+
+      <div className="space-y-2 p-2">
         {selectedPalette.colors.map((c) => (
           <PaletteCard key={c.name} name={c.name} shades={c.shades} primaryShade={selectedPalette.primaryShade} />
         ))}

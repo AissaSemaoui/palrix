@@ -12,6 +12,7 @@ import Heading from "@/components/Heading";
 
 import { usePlaygroundActions, usePlaygroundStatus, usePrompt } from "@/hooks/use-playground";
 import { useGeneratePalette } from "@/api-client/mutations/useGeneratePalette";
+import AppPage from "@/lib/dashboard/AppPage";
 
 type PromptInputProps = {
   onSubmit: () => void;
@@ -98,10 +99,8 @@ const PromptCard = ({}: PromptCardProps) => {
 
   return (
     <Card className="flex items-center overflow-hidden bg-secondary">
-      <Illustrations.paint className="hidden h-56 dark:bg-secondary-foreground md:block" />
-
       <div className="h-max w-full bg-secondary">
-        <CardHeader className="pb-2">
+        <CardHeader className="pb-3">
           <Heading type={3} order={3} className="font-semibold">
             Describe your website in a few words
           </Heading>
@@ -110,18 +109,20 @@ const PromptCard = ({}: PromptCardProps) => {
         <CardContent>
           <PromptInput
             onSubmit={handleGeneratePalette}
-            loading={!isRandom && status === "loading"}
+            loading={!isRandom.current && status === "loading"}
             disabled={status === "loading"}
           />
         </CardContent>
 
         <CardFooter className="space-x-2" onClick={handleGenerateRandomPalette}>
-          <Button variant="outline" disabled={status === "loading"} loading={isRandom && status === "loading"}>
+          <Button variant="outline" disabled={status === "loading"} loading={isRandom.current && status === "loading"}>
             <Icons.dices className="mr-2 h-5 w-5" />
             Random
           </Button>
         </CardFooter>
       </div>
+
+      <Illustrations.paint className="hidden h-48 dark:bg-secondary-foreground md:block" />
     </Card>
   );
 };

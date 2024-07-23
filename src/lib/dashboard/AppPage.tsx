@@ -18,8 +18,10 @@ interface AppPageProps {
 const PageHeader = ({ title, description, className }: PageHeaderProps) => {
   return (
     <section className={cn("mb-6", className)}>
-      <Heading type={1}>{title}</Heading>
-      <CardTitle className="text-lg text-light">{description}</CardTitle>
+      <Heading type={1} className="font-bold">
+        {title}
+      </Heading>
+      <CardTitle className="text-md font-normal text-light">{description}</CardTitle>
     </section>
   );
 };

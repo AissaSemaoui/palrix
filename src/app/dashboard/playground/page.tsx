@@ -9,9 +9,9 @@ type PlaygroundPageProps = {};
 const PlaygroundPage = (props: PlaygroundPageProps) => {
   return (
     <main className="mx-auto w-full xl:w-4/5">
-      <AppPage.Header title="Hi George," description="What do you wanna generate today?" />
+      <AppPage.Header title="Playground" description="Color generation center" />
 
-      <section className="space-y-4">
+      <section className="space-y-6">
         <PromptCard />
 
         <Playground className="mb-2" />

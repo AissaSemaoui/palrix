@@ -8,7 +8,7 @@ interface Tile extends React.HTMLAttributes<HTMLDivElement> {
   shadow?: "sm" | "md" | "lg" | "none";
 }
 
-const tileVariants = cva("rounded-xl border bg-card text-card-foreground shadow", {
+const tileVariants = cva("rounded-md border bg-card text-card-foreground shadow", {
   variants: {
     size: {
       sm: "p-2",
