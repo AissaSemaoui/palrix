@@ -11,6 +11,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/Card"
 
 import { useGeneratePalette } from "@/api-client/mutations/useGeneratePalette";
 import { usePlaygroundActions, usePlaygroundStatus, usePrompt } from "@/hooks/use-playground";
+import { queryClient, queryKeys } from "@/api-client";
 
 type PromptInputProps = {
   onSubmit: () => void;
@@ -46,9 +47,9 @@ const PromptInput = ({ onSubmit, loading, disabled }: PromptInputProps) => {
         onChange={(e) => setPromptInput(e.currentTarget.value)}
         id="prompt_input"
         placeholder="Ex. A website for a coffee shop"
-        className="min-h-8 resize-none border-0 p-3 shadow-none focus-visible:ring-0"
+        className="h-full min-h-8 border-0 p-3 shadow-none focus-visible:ring-0"
       />
-      <div className="flex items-center p-3 pt-0">
+      <div className="absolute bottom-3 right-3 flex items-center pt-0">
         <Button
           type="submit"
           variant="default"
@@ -77,6 +78,9 @@ const PromptCard = ({}: PromptCardProps) => {
     onSuccess: (data) => {
       setSelectedPalette(data);
       setStatus("success");
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.getPalettes(),
+      });
     },
     onError: (error) => {
       console.error(error);

@@ -16,7 +16,12 @@ export const savePaletteValidation = z.object({
   body: paletteInsertSchema,
 });
 
-export const getPalettesValidation = z.object({});
+export const getPalettesValidation = z.object({
+  query: z.object({
+    p: z.string().optional(),
+    s: z.string().optional(),
+  }),
+});
 
 export const getPaletteValidation = z.object({
   params: z.object({

@@ -12,6 +12,7 @@ export enum UserRoles {
 export interface Shade {
   name: string;
   shades: string[];
+  mainShade: string;
 }
 
 export type Palette = typeof palettes.$inferSelect;

@@ -5,6 +5,7 @@ import type { GeneratePaletteValidation } from "@server/validations/generation.v
 import type { Palette } from "@server/types";
 import { generateColorPalette } from "@server/utils/colors";
 import { MAX_SHADES_NUMBER } from "@/config/constants";
+import chroma from "chroma-js";
 
 interface PaletteGenerationAiResponse {
   name: string;
@@ -42,6 +43,7 @@ export const generatePalette = async ({ userPrompt }: GeneratePaletteValidation[
       ...c.config,
       interpolationMethod: "linear",
     }),
+    mainShade: String(chroma(c.shade).get("hex")),
     // shades: generateShades(c.shade, maxShades, [0.98, 0.2], [1, 0.3]),
   }));
 

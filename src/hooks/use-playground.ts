@@ -1,5 +1,6 @@
 import { Palette } from "@/server/types";
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 type Status = "idle" | "success" | "error" | "loading";
 
@@ -14,16 +15,24 @@ interface UsePlayground {
   setSelectedPalette: (palette: Palette) => void;
 }
 
-export const usePlayground = create<UsePlayground>((set) => ({
-  prompt: "",
-  setPrompt: (prompt) => set({ prompt }),
+export const usePlayground = create(
+  persist<UsePlayground>(
+    (set) => ({
+      prompt: "",
+      setPrompt: (prompt) => set({ prompt }),
 
-  status: "idle",
-  setStatus: (status) => set({ status }),
+      status: "idle",
+      setStatus: (status) => set({ status }),
 
-  selectedPalette: null,
-  setSelectedPalette: (palette) => set({ selectedPalette: palette }),
-}));
+      selectedPalette: null,
+      setSelectedPalette: (palette) => set({ selectedPalette: palette }),
+    }),
+    {
+      name: "playground",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);
 
 export const useSelectedPalette = () => usePlayground((state) => state.selectedPalette);
 

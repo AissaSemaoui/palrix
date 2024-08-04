@@ -48,7 +48,7 @@ const Playground = ({ className }: PlaygroundProps) => {
 
       <div className="space-y-2 p-2">
         {selectedPalette.colors.map((c) => (
-          <PaletteCard key={c.name} name={c.name} shades={c.shades} primaryShade={selectedPalette.primaryShade} />
+          <PaletteCard key={c.name} {...c} primaryShade={selectedPalette.primaryShade} />
         ))}
       </div>
     </section>

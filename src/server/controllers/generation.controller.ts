@@ -5,6 +5,7 @@ import { GeneratePaletteValidation } from "@server/validations/generation.valida
 import { catchController } from "@server/utils/api";
 import { savePalette } from "@server/services/palettes.service";
 import { AuthError } from "@server/utils/errors";
+import { ApiResponse } from "@server/utils/response";
 
 import type { ExpressMiddleware } from "@server/types";
 
@@ -24,5 +25,5 @@ export const generatePaletteController: ExpressMiddleware = catchController(asyn
     ...paletteDraft,
   });
 
-  res.status(httpStatus.OK).json(savedPalette);
+  res.status(httpStatus.OK).json(ApiResponse(savedPalette));
 }, "[Generate Palette Controller]");

@@ -5,11 +5,14 @@ import React, { CSSProperties } from "react";
 
 import Tile from "@/components/ui/Tile";
 import If from "./If";
+import { cn } from "@/lib/utils";
 
 interface ColorBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   name?: string;
   size?: "sm" | "md" | "lg";
   color: CSSProperties["backgroundColor"];
+  showCode?: boolean;
+  showName?: boolean;
 }
 
 const colorBoxVariants = cva(
@@ -28,11 +31,11 @@ const colorBoxVariants = cva(
   },
 );
 
-const ColorBox = ({ color, size, name, className, ...props }: ColorBoxProps) => {
+const ColorBox = ({ color, size, name, className, showCode = true, showName = true, ...props }: ColorBoxProps) => {
   const handleCopy = () => navigator.clipboard.writeText(color ?? "");
 
   return (
-    <div className={className}>
+    <div className={cn("overflow-x-hidden", className)}>
       <Tile
         className={colorBoxVariants({ size, className })}
         {...props}
@@ -42,8 +45,12 @@ const ColorBox = ({ color, size, name, className, ...props }: ColorBoxProps) => 
           backgroundColor: color,
         }}
       />
-      <If condition={name}>
-        <p className="mt-1 pl-1 text-xs font-medium text-secondary-foreground">{name}</p>
+      <If condition={showName}>
+        <p className="mt-1 w-full max-w-full overflow-x-hidden text-ellipsis pl-1 text-xs font-medium capitalize text-muted-foreground">
+          {name}
+        </p>
+      </If>
+      <If condition={showCode}>
         <p className="pl-1 text-xs font-medium text-muted-foreground">{color}</p>
       </If>
     </div>

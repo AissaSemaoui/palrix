@@ -11,12 +11,14 @@ const makeRequests = (axios: AxiosInstance, config?: AxiosRequestConfig) => {
     userMe: () => axios.get<AppSession>("/api/auth/me").then((res) => res?.data),
     signOut: () => axios.post<void>("/api/auth/logout", {}),
     generatePalette: (data: GeneratePaletteValidation["body"]) =>
-      axios.post<Palette>("/api/generate/palette", data).then((res) => res?.data),
+      axios.post<ApiResponseReturn<Palette>>("/api/generate/palette", data).then((res) => res.data.data),
+    getPalettes: () => axios.get<ApiResponseReturn<Palette[]>>("/api/palettes?p=all&s=24").then((res) => res.data.data),
   };
 };
 
 export const queryKeys = {
   userMe: () => ["me"],
+  getPalettes: () => ["palettes"],
 };
 
 export const requests = makeRequests(axiosInstance);

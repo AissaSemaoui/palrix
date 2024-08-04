@@ -9,10 +9,11 @@ import Image from "next/image";
 import { generatePalettePreview } from "@/server/utils/colors";
 import { SHADES_NAMES } from "@/config/constants";
 
-type PaletteCardProps = Pick<Palette["colors"][number], "name" | "shades"> & Pick<Palette, "primaryShade">;
+type PaletteCardProps = Pick<Palette["colors"][number], "name" | "shades" | "mainShade"> &
+  Pick<Palette, "primaryShade">;
 
-const PaletteCard = ({ name, shades, primaryShade }: PaletteCardProps) => {
-  const primaryColor = shades[4];
+const PaletteCard = ({ name, shades, mainShade }: PaletteCardProps) => {
+  const primaryColor = mainShade ?? shades?.[5] ?? shades?.[4];
 
   const formattedShades = shades.map((sh, i) => ({
     shade: sh,
@@ -32,7 +33,7 @@ const PaletteCard = ({ name, shades, primaryShade }: PaletteCardProps) => {
         </div>
       </div>
 
-      <div className="flex justify-stretch gap-1">
+      <div className="flex justify-stretch gap-1 overflow-x-auto">
         {formattedShades.map(({ shade, name }) => (
           <ColorBox key={shade} color={shade} name={name} className="w-full" />
         ))}
