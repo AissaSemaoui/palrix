@@ -23,10 +23,15 @@ interface NavItem {
   fullMatch?: boolean;
 }
 
-interface AppSession {
-  user: User;
-  session: Session;
-}
+type AppSession =
+  | {
+      user: User;
+      session: Session;
+    }
+  | {
+      user: null;
+      session: null;
+    };
 
 type CustomMutationOptions<TFunction extends MutationFunction<any, any>> = MutationOptions<
   Awaited<ReturnType<TFunction>>,

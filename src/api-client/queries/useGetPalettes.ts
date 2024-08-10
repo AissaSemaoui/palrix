@@ -10,6 +10,6 @@ export const useGetPalettes = (options?: Omit<CustomQueryOptions<GetPalettesRequ
   return useQuery({
     ...options,
     queryFn: requests.getPalettes,
-    queryKeys: queryKeys.getPalettes(),
+    queryKey: queryKeys.getPalettes(),
   });
 };

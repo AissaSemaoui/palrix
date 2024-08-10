@@ -10,7 +10,6 @@ import { queryClient } from "@/api-client";
 import "./globals.css";
 import { verifyNextSession, verifySession } from "@/server/middlewares/auth.middleware";
 import { cookies } from "next/headers";
-import { AppSession } from "@/types";
 
 const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
 
@@ -37,11 +36,11 @@ export default async function RootLayout({
   return (
     <QueryClientProvider client={queryClient}>
       <html lang="en">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <body className={clsx(inter.className, "flex min-h-screen flex-col")}>
+        <body className={clsx(inter.className, "flex min-h-screen flex-col")}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <AuthProvider initialSession={session}>{children}</AuthProvider>
-          </body>
-        </ThemeProvider>
+          </ThemeProvider>
+        </body>
       </html>
     </QueryClientProvider>
   );

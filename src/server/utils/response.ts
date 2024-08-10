@@ -6,7 +6,7 @@ type PaginationOptions =
     }
   | undefined;
 
-type ApiResponseReturn<T> = {
+export type ApiResponseReturn<T> = {
   success: boolean;
   data: T;
   pagination: {

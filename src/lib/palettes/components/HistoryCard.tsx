@@ -15,27 +15,25 @@ type HistoryCardProps = {
 
 const HistoryCard = ({ className }: HistoryCardProps) => {
   console.log("we are here before?!");
-  const { data: historyPalettes, isLoading, isError } = useGetPalettes();
+  const { data: historyPalettes, isLoading, isSuccess, isError } = useGetPalettes();
 
   console.log(historyPalettes);
 
   if (isLoading) return <h1>Loading...</h1>;
 
-  if (isError) return <h1>Error...</h1>;
+  if (isError || !isSuccess) return <h1>Error...</h1>;
 
   return (
-    <Card className={cn("rounded-md", className)}>
-      <CardContent className="h-screen min-h-80 overflow-y-auto p-2">
-        <CardHeader className="mb-3 p-2 pb-0">
-          <CardTitle>History</CardTitle>
-        </CardHeader>
-        <section className="flex flex-col gap-2">
-          {historyPalettes.map((palette) => (
-            <PaletteDisplayCard key={palette.id} {...palette} className="border-solid border-border/40" />
-          ))}
-        </section>
-      </CardContent>
-    </Card>
+    <CardContent className={cn(className)}>
+      <CardHeader className="mb-3 p-2 pb-0">
+        <CardTitle>History</CardTitle>
+      </CardHeader>
+      <section className="flex flex-col gap-2">
+        {historyPalettes.map((palette) => (
+          <PaletteDisplayCard key={palette.id} {...palette} className="border-solid border-border/40" />
+        ))}
+      </section>
+    </CardContent>
   );
 };
 

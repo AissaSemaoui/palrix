@@ -44,5 +44,7 @@ export const verifyNextSession = async (cookies: string) => {
 
   const { session, user } = await lucia.validateSession(sessionId);
 
+  if (!session || !user) return { session: null, user: null };
+
   return { session, user };
 };

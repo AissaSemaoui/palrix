@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 
 import { useUser } from "@/hooks/use-user";
 import { useUserMe } from "@/api-client/queries/useUserMe";
@@ -18,20 +18,20 @@ const AuthProvider = ({ children, initialSession }: AuthProviderProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const { userMe, setUserMe } = useUser();
+  const { setUserMe } = useUser();
 
-  const { data, isError, isSuccess } = useUserMe({
+  const { data } = useUserMe({
     initialData: initialSession ?? undefined,
     retry: false,
+    onSuccess: (data) => {
+      setUserMe(data.user);
+    },
+    onError: () => {
+      setUserMe(null);
+    },
   });
 
-  useEffect(() => {
-    if (data?.user) {
-      setUserMe(data.user);
-    } else {
-      setUserMe(null);
-    }
-  }, [data, setUserMe, isError, isSuccess]);
+  const userMe = useMemo(() => data?.user, [data]);
 
   useEffect(() => {
     if (userMe && pathname.includes(paths.auth.root)) {

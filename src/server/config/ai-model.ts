@@ -10,7 +10,7 @@ export const sendAiPrompt = async (systemPrompt: string, userPrompt?: string) =>
   const msg = await anthropic.messages.create({
     system: systemPrompt,
     messages: userPrompt ? [{ role: "user", content: userPrompt }] : [],
-    model: "claude-3-5-sonnet-20240620",
+    model: "claude-3-sonnet-20240229",
     max_tokens: 1024,
     temperature: 1,
   });

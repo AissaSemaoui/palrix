@@ -6,13 +6,15 @@ import { Palette } from "@/server/types";
 
 import { GeneratePaletteValidation } from "@/server/validations/generation.validation";
 
+import { type ApiResponseReturn } from "@/server/utils/response";
+
 const makeRequests = (axios: AxiosInstance, config?: AxiosRequestConfig) => {
   return {
     userMe: () => axios.get<AppSession>("/api/auth/me").then((res) => res?.data),
     signOut: () => axios.post<void>("/api/auth/logout", {}),
     generatePalette: (data: GeneratePaletteValidation["body"]) =>
       axios.post<ApiResponseReturn<Palette>>("/api/generate/palette", data).then((res) => res.data.data),
-    getPalettes: () => axios.get<ApiResponseReturn<Palette[]>>("/api/palettes?p=all&s=24").then((res) => res.data.data),
+    getPalettes: () => axios.get<ApiResponseReturn<Palette[]>>("/api/palettes").then((res) => res.data.data),
   };
 };
 

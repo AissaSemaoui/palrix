@@ -12,6 +12,7 @@ import {
   MoonIcon,
   SunIcon,
   ArrowRightIcon,
+  HistoryIcon,
 } from "lucide-react";
 
 export const Icons = {
@@ -28,4 +29,5 @@ export const Icons = {
   moon: MoonIcon,
   sun: SunIcon,
   arrowRight: ArrowRightIcon,
+  history: HistoryIcon,
 } as const;

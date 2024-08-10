@@ -16,7 +16,7 @@ const DashboardLayout = async ({ children }: React.PropsWithChildren) => {
         <AppNav />
         <div className="flex h-full w-full flex-1">
           <AppSidebar />
-          <AppPage className="flex-1">{children}</AppPage>
+          <AppPage className="container flex-1">{children}</AppPage>
         </div>
       </div>
     </AuthProvider>

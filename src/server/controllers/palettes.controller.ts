@@ -20,19 +20,19 @@ export const savePaletteController: ExpressMiddleware = catchController(async (r
 }, "[Create Palette Controller]");
 
 export const getPalettesController: ExpressMiddleware = catchController(async (req, res) => {
-  console.log(req);
-
   const query = req.query as GetPalettesValidation["query"];
 
-  const pageIndex = (Number(query.p) ?? 1) - 1;
-  const pageSize = Number(query.s) ?? 10;
+  const pageIndex = Number(query.p ?? 1) - 1;
+  const pageSize = Number(query.s ?? 10);
 
   const historyPalettes = await db
     .select()
     .from(palettes)
     .orderBy(desc(palettes.createdAt))
-    .offset(pageIndex * pageSize)
-    .limit(pageSize);
+    .limit(pageSize)
+    .offset(pageIndex * pageSize);
+
+  console.log(historyPalettes.length);
 
   return res.status(httpStatus.OK).json(ApiResponse(historyPalettes));
 });
