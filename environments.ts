@@ -4,6 +4,7 @@ const env = {
 
   db: {
     url: process.env.DATABASE_URL!,
+    public_url: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL!,
   },
 
   auth: {
