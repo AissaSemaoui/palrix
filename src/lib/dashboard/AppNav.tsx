@@ -12,15 +12,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 import { ModeToggle } from "@/components/ModeToggle";
+import Logo from "@/components/ui/logo";
 
 import { useUserMe } from "@/hooks/use-user";
+import { useSignOut } from "@/hooks/use-sign-out";
+import { cn } from "@/lib/utils";
 
 import type { User } from "@/types";
 
-import { useSignOut } from "@/hooks/use-sign-out";
-import Logo from "@/components/ui/logo";
-
-type AppNavProps = {};
+type AppNavProps = {
+  className?: string;
+};
 
 const AvatarMenu = ({ user }: { user: User }) => {
   const { mutate: signOut } = useSignOut();
@@ -35,7 +37,7 @@ const AvatarMenu = ({ user }: { user: User }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={signOut} className="cursor-pointer">
+        <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer">
           <Icons.logout className="mr-2 h-4 w-4" /> Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -43,11 +45,11 @@ const AvatarMenu = ({ user }: { user: User }) => {
   );
 };
 
-const AppNav = ({}: AppNavProps) => {
+const AppNav = ({ className }: AppNavProps) => {
   const user = useUserMe<true>();
 
   return (
-    <nav className="flex items-center justify-between border px-4 py-2">
+    <nav className={cn("flex items-center justify-between border-b bg-white px-4 py-2", className)}>
       <div className="flex gap-2">
         <Logo />
       </div>

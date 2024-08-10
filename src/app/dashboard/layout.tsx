@@ -13,9 +13,9 @@ const DashboardLayout = async ({ children }: React.PropsWithChildren) => {
   return (
     <AuthProvider initialSession={appSession}>
       <div className="flex flex-1 flex-col">
-        <AppNav />
+        <AppNav className="sticky top-0 z-50 h-14" />
         <div className="flex h-full w-full flex-1">
-          <AppSidebar />
+          <AppSidebar className="sticky top-14 h-[calc(100vh-56px)]" />
           <AppPage className="container flex-1">{children}</AppPage>
         </div>
       </div>

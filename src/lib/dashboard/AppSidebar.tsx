@@ -11,7 +11,9 @@ import { paths } from "@/config/navigations";
 
 import type { NavItem, WithRequired } from "@/types";
 
-interface AppSidebarProps {}
+interface AppSidebarProps {
+  className?: string;
+}
 
 type SidebarNavItem = WithRequired<NavItem, "Icon">;
 
@@ -66,12 +68,12 @@ const SidebarItem = ({ item, active }: SidebarItemProps) => {
   );
 };
 
-const AppSidebar = ({}: AppSidebarProps) => {
+const AppSidebar = ({ className }: AppSidebarProps) => {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden w-2/12 border-r p-4 lg:block lg:w-[17rem]">
-      <ul className="space-y-1">
+    <aside className={cn("hidden w-2/12 border-r p-4 lg:block lg:w-[17rem]", className)}>
+      <ul className="mt-8 space-y-2">
         {items.map((item) => (
           <li key={item.title}>
             <SidebarItem item={item} active={item.fullMatch ? item.href === pathname : pathname.includes(item.href)} />
