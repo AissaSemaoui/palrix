@@ -49,7 +49,7 @@ const AppNav = ({ className }: AppNavProps) => {
   const user = useUserMe<true>();
 
   return (
-    <nav className={cn("flex items-center justify-between border-b bg-white px-4 py-2", className)}>
+    <nav className={cn("flex items-center justify-between border-b bg-background px-4 py-2", className)}>
       <div className="flex gap-2">
         <Logo />
       </div>
