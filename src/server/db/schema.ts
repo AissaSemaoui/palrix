@@ -14,32 +14,6 @@ export const users = pgTable("user", {
   role: rolesEnum("role").notNull().default(UserRoles.USER),
 });
 
-export const sessions = pgTable("session", {
-  id: text("id").primaryKey(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id),
-
-  expiresAt: timestamp("expires_at", {
-    withTimezone: true,
-    mode: "date",
-  }).notNull(),
-});
-
-export const auth_providers = pgTable(
-  "oauth_account",
-  {
-    providerId: text("provider_id").notNull(),
-    providerUserId: text("provider_user_id").notNull(),
-    userId: text("user_id")
-      .notNull()
-      .references(() => users.id),
-  },
-  (table) => ({
-    pk: primaryKey({ columns: [table.providerId, table.userId] }),
-  }),
-);
-
 export const palettes = pgTable("palette", {
   id: text("id").primaryKey().$defaultFn(createId),
   name: text("name").notNull(),
@@ -62,16 +36,6 @@ export const palettes = pgTable("palette", {
 });
 
 export const userRelations = relations(users, ({ one }) => ({
-  session: one(sessions, {
-    fields: [users.id],
-    references: [sessions.userId],
-    relationName: "user_session",
-  }),
-  oauth_account: one(auth_providers, {
-    fields: [users.id],
-    references: [auth_providers.userId],
-    relationName: "oauth_account",
-  }),
   palette: one(palettes, {
     fields: [users.id],
     references: [palettes.userId],

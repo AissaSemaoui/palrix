@@ -1,14 +1,15 @@
 import "module-alias/register";
 
-import express from "express";
-import passport from "passport";
 import cookieParser from "cookie-parser";
+import express from "express";
 
+import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
+
+import { paths } from "@/config/navigations";
 import { verifySession } from "@server/middlewares/auth.middleware";
 import { errorHandler } from "@server/middlewares/errorHandler.middleware";
-import { authRoutes, generationRoutes, palettesRoutes } from "@server/routes";
 import { nextApp, nextHandler } from "@server/next_app";
-import { passportConfig } from "@server/config/passport";
+import { generationRoutes, palettesRoutes } from "@server/routes";
 import { logger } from "@server/utils/logger";
 
 const PORT = process.env.PORT || 3000;
@@ -18,10 +19,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-passportConfig(passport);
-app.use("/api/*", passport.initialize(), verifySession);
-
-app.use("/api/auth", authRoutes);
+app.use("/api/*", ClerkExpressWithAuth({ signInUrl: paths.auth.login }), verifySession);
 
 app.use("/api/palettes", palettesRoutes);
 app.use("/api/generate", generationRoutes);

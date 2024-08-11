@@ -1,20 +1,19 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
+import * as React from "react";
 
-import { buttonVariants } from "@/components/ui/Button";
+import { Icons } from "@/components/Icons";
 import { MobileNav } from "@/components/MainMobileNav";
 import { ModeToggle } from "@/components/ModeToggle";
-import { Icons } from "@/components/Icons";
+import { buttonVariants } from "@/components/ui/Button";
 import Logo from "@/components/ui/logo";
-import Show from "./Show";
+import Show from "@/components/Show";
 
-import { cn } from "@/lib/utils";
 import { paths } from "@/config/navigations";
-import { siteConfig } from "@/config/site";
 import { useUserMe } from "@/hooks/use-user";
+import { cn } from "@/lib/utils";
 
 import type { NavItem } from "@/types";
 
@@ -27,16 +26,13 @@ export function MainNav({ items, children }: MainNavProps) {
   const segment = useSelectedLayoutSegment();
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
 
-  const userMe = useUserMe();
-  const isAuthenticated = !!userMe?.id;
+  const { isSignedIn } = useUserMe();
+  const isAuthenticated = isSignedIn;
 
   return (
     <div className="flex w-full justify-between">
       <div className="flex gap-6 md:gap-10">
-        <Link href="/" className="hidden items-center space-x-2 md:flex">
-          <Logo />
-          <span className="hidden font-bold sm:inline-block">{siteConfig.name}</span>
-        </Link>
+        <Logo />
         {items?.length ? (
           <nav className="hidden gap-6 md:flex">
             {items?.map((item, index) => (

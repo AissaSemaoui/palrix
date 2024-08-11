@@ -4,22 +4,15 @@ import AppNav from "@/lib/dashboard/AppNav";
 import AppPage from "@/lib/dashboard/AppPage";
 import AppSidebar from "@/lib/dashboard/AppSidebar";
 
-import { requireSession } from "@/lib/auth/require-session";
-import AuthProvider from "@/lib/providers/AuthProvider";
-
 const DashboardLayout = async ({ children }: React.PropsWithChildren) => {
-  const appSession = await requireSession();
-
   return (
-    <AuthProvider initialSession={appSession}>
-      <div className="flex flex-1 flex-col">
-        <AppNav className="sticky top-0 z-50 h-14" />
-        <div className="flex h-full w-full flex-1">
-          <AppSidebar className="sticky top-14 h-[calc(100vh-56px)]" />
-          <AppPage className="container flex-1">{children}</AppPage>
-        </div>
+    <div className="flex flex-1 flex-col">
+      <AppNav className="sticky top-0 z-50 h-14" />
+      <div className="flex h-full w-full flex-1">
+        <AppSidebar className="sticky top-14 h-[calc(100vh-56px)]" />
+        <AppPage className="container flex-1">{children}</AppPage>
       </div>
-    </AuthProvider>
+    </div>
   );
 };
 

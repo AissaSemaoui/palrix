@@ -9,7 +9,7 @@ export const paths = {
   },
   auth: {
     root: "/auth",
-    login: "/auth/login",
-    register: "/auth/register",
+    login: "/auth/sign-in",
+    register: "/auth/sign-up",
   },
 } as const;

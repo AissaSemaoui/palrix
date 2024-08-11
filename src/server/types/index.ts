@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import { Session as LuciaSession } from "lucia";
 
-import { users, palettes } from "@server/db/schema";
-import { lucia } from "@server/config/lucia";
+import { StrictAuthProp } from "@clerk/clerk-sdk-node";
+import { palettes } from "@server/db/schema";
+
+import type { User as ClerkUser } from "@clerk/clerk-sdk-node";
 
 export enum UserRoles {
   USER = "user",
@@ -17,28 +18,15 @@ export interface Shade {
 
 export type Palette = typeof palettes.$inferSelect;
 
-export type DbUser = typeof users.$inferSelect;
-
-export type User = DbUser;
-
-export type Session = LuciaSession;
-
 export type ExpressMiddleware = (req: Request, res: Response, next: NextFunction) => Promise<any>;
 
 declare global {
   namespace Express {
     interface Locals {
-      user: User | null;
-      session: Session | null;
+      user: ClerkUser | null;
+      session: null;
     }
 
-    interface User extends DbUser {}
-  }
-}
-
-declare module "lucia" {
-  interface Register {
-    Lucia: typeof lucia;
-    DatabaseUserAttributes: DbUser;
+    interface Request extends StrictAuthProp {}
   }
 }

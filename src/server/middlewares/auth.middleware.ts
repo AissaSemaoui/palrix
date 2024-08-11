@@ -1,13 +1,12 @@
-import type { Session } from "lucia";
+import { clerkClient } from "@clerk/clerk-sdk-node";
+import { currentUser } from "@clerk/nextjs/server";
 
-import { lucia } from "@server/config/lucia";
-
-import type { ExpressMiddleware, User } from "@/server/types";
-
-type VerifyNextSession = (cookies: string) => Promise<{ session: Session; user: User } | { session: null; user: null }>;
+import type { ExpressMiddleware } from "@/server/types";
 
 export const verifySession: ExpressMiddleware = async (req, res, next) => {
-  const sessionId = lucia.readSessionCookie(req.headers.cookie ?? "");
+  console.log("here is the auth object? ", req.auth);
+
+  const { sessionId, userId } = req.auth;
 
   if (!sessionId) {
     res.locals.user = null;
@@ -16,35 +15,22 @@ export const verifySession: ExpressMiddleware = async (req, res, next) => {
     return next();
   }
 
-  const { user, session } = await lucia.validateSession(sessionId);
+  const user = await clerkClient.users.getUser(userId);
 
-  console.log("inside the middleware : ", user, session);
-
-  if (session && session.fresh) {
-    const { name, value, attributes } = lucia.createSessionCookie(sessionId);
-    res.cookie(name, value, attributes);
-  }
-  if (!session) {
-    const { name, value, attributes } = lucia.createBlankSessionCookie();
-    res.cookie(name, value, attributes);
-  }
+  console.log("inside the middleware : ", user, sessionId);
 
   res.locals.user = user;
-  res.locals.session = session;
+  res.locals.session = null;
 
   return next();
 };
 
-export const verifyNextSession = async (cookies: string) => {
-  const sessionId = lucia.readSessionCookie(cookies);
+export const verifyNextSession = async () => {
+  const user = null;
 
-  if (!sessionId) {
-    return { session: null, user: null };
-  }
+  console.log("here is the user: ", user);
 
-  const { session, user } = await lucia.validateSession(sessionId);
+  if (!user) return { user: null, session: null };
 
-  if (!session || !user) return { session: null, user: null };
-
-  return { session, user };
+  return { user, session: null };
 };

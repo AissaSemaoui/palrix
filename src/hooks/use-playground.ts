@@ -1,3 +1,5 @@
+"use client";
+
 import { Palette } from "@/server/types";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
