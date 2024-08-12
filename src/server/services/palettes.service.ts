@@ -16,5 +16,3 @@ export const savePalette = async (payload: PaletteDraft) => {
 
   return createdPalette;
 };
-
-console.log("running the create Palette function");

@@ -6,20 +6,21 @@ import express from "express";
 import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
 
 import { paths } from "@/config/navigations";
-import { verifySession } from "@server/middlewares/auth.middleware";
 import { errorHandler } from "@server/middlewares/errorHandler.middleware";
 import { nextApp, nextHandler } from "@server/next_app";
-import { generationRoutes, palettesRoutes } from "@server/routes";
+import { generationRoutes, palettesRoutes, webhookRoutes } from "@server/routes";
 import { logger } from "@server/utils/logger";
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api/*", ClerkExpressWithAuth({ signInUrl: paths.auth.login }), verifySession);
+app.use("/api/webhook", webhookRoutes);
+app.use("/api/*", ClerkExpressWithAuth({ signInUrl: paths.auth.login }));
+
+app.use(express.json());
 
 app.use("/api/palettes", palettesRoutes);
 app.use("/api/generate", generationRoutes);

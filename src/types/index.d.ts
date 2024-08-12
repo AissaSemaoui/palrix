@@ -14,6 +14,8 @@ import { AxiosError } from "axios";
 
 type Maybe<T> = T | undefined;
 
+type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
+
 // redeclare WithRequired here
 interface NavItem {
   Icon?: LucideIcon;
@@ -47,4 +49,4 @@ type CustomQueryOptions<TFunction extends QueryFunction<any, any>> = QueryOption
   DefinedInitialDataOptions<TFunction>
 >;
 
-export { AppSession, CustomMutationOptions, CustomQueryOptions, Maybe, NavItem, User, WithRequired };
+export { AppSession, CustomMutationOptions, CustomQueryOptions, Maybe, Optional, NavItem, User, WithRequired };

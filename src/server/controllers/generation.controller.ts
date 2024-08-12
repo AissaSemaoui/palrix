@@ -1,15 +1,14 @@
 import httpStatus from "http-status";
 
 import { generatePalette } from "@server/services/generation.service";
-import { GeneratePaletteValidation } from "@server/validations/generation.validation";
-import { catchController } from "@server/utils/api";
 import { savePalette } from "@server/services/palettes.service";
 import { AuthError } from "@server/utils/errors";
 import { ApiResponse } from "@server/utils/response";
+import { GeneratePaletteValidation } from "@server/validations/generation.validation";
 
 import type { ExpressMiddleware } from "@server/types";
 
-export const generatePaletteController: ExpressMiddleware = catchController(async (req, res, next) => {
+export const generatePaletteController: ExpressMiddleware = async (req, res, next) => {
   const userId = res.locals.user?.id;
 
   if (!userId) {
@@ -26,4 +25,4 @@ export const generatePaletteController: ExpressMiddleware = catchController(asyn
   });
 
   res.status(httpStatus.OK).json(ApiResponse(savedPalette));
-}, "[Generate Palette Controller]");
+};

@@ -8,9 +8,11 @@ export const catchController =
     try {
       console.log("within the controller");
       await controller(req, res, next);
-    } catch (error) {
-      logger.error(error, trace);
+    } catch (err) {
+      const error = err as Error;
+
+      logger.error({ name: error.name, message: error.message, cause: error.cause }, trace);
       console.log("within the controller error");
-      next(new Error((error as Error).message, { cause: trace }));
+      next(error);
     }
   };

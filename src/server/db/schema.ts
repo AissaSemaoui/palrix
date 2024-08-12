@@ -4,13 +4,15 @@ import { pgEnum, pgTable, primaryKey, text, timestamp, jsonb, boolean, integer }
 import { createId } from "@server/utils/generics";
 import { type Shade, UserRoles } from "@server/types";
 
-export const rolesEnum = pgEnum("role", [UserRoles.ADMIN, UserRoles.USER]);
+export const rolesEnum = pgEnum("role", [UserRoles.SUPER_ADMIN, UserRoles.USER]);
 
 export const users = pgTable("user", {
   id: text("id").primaryKey().$defaultFn(createId),
   email: text("email").notNull(),
-  displayName: text("display_name").notNull(),
-  avatar_url: text("avatar_url"),
+  first_name: text("first_name"),
+  last_name: text("last_name"),
+  username: text("username"),
+  image_url: text("image_url"),
   role: rolesEnum("role").notNull().default(UserRoles.USER),
 });
 

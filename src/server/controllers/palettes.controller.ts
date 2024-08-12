@@ -1,15 +1,14 @@
-import httpStatus from "http-status";
 import { desc } from "drizzle-orm";
+import httpStatus from "http-status";
 
-import { savePalette } from "@server/services/palettes.service";
-import { GetPalettesValidation, SavePaletteValidation } from "@server/validations/palettes.validation";
-import { catchController } from "@server/utils/api";
-import type { ExpressMiddleware } from "@server/types";
 import { db } from "@server/db";
 import { palettes } from "@server/db/schema";
+import { savePalette } from "@server/services/palettes.service";
+import type { ExpressMiddleware } from "@server/types";
 import { ApiResponse } from "@server/utils/response";
+import { GetPalettesValidation, SavePaletteValidation } from "@server/validations/palettes.validation";
 
-export const savePaletteController: ExpressMiddleware = catchController(async (req, res) => {
+export const savePaletteController: ExpressMiddleware = async (req, res) => {
   console.log("received a request from palette controller");
 
   const body = req.body as SavePaletteValidation["body"];
@@ -17,9 +16,9 @@ export const savePaletteController: ExpressMiddleware = catchController(async (r
   const newPalette = await savePalette(body);
 
   res.status(httpStatus.CREATED).json(ApiResponse(newPalette));
-}, "[Create Palette Controller]");
+};
 
-export const getPalettesController: ExpressMiddleware = catchController(async (req, res) => {
+export const getPalettesController: ExpressMiddleware = async (req, res) => {
   const query = req.query as GetPalettesValidation["query"];
 
   const pageIndex = Number(query.p ?? 1) - 1;
@@ -35,4 +34,4 @@ export const getPalettesController: ExpressMiddleware = catchController(async (r
   console.log(historyPalettes.length);
 
   return res.status(httpStatus.OK).json(ApiResponse(historyPalettes));
-});
+};

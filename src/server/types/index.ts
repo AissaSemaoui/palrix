@@ -3,11 +3,9 @@ import type { NextFunction, Request, Response } from "express";
 import { StrictAuthProp } from "@clerk/clerk-sdk-node";
 import { palettes } from "@server/db/schema";
 
-import type { User as ClerkUser } from "@clerk/clerk-sdk-node";
-
 export enum UserRoles {
   USER = "user",
-  ADMIN = "admin",
+  SUPER_ADMIN = "super_admin",
 }
 
 export interface Shade {
@@ -22,11 +20,6 @@ export type ExpressMiddleware = (req: Request, res: Response, next: NextFunction
 
 declare global {
   namespace Express {
-    interface Locals {
-      user: ClerkUser | null;
-      session: null;
-    }
-
     interface Request extends StrictAuthProp {}
   }
 }

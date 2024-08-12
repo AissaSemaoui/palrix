@@ -10,6 +10,9 @@ const env = {
   },
 
   auth: {},
+  clerk: {
+    webhookSecret: process.env.CLERK_WEBHOOK_SECRET,
+  },
 
   ai: {
     modelApiKey: process.env.MODEL_API_KEY!,
