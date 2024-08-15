@@ -23,7 +23,7 @@ const PaletteCard = ({ name, shades, mainShade }: PaletteCardProps) => {
   return (
     <Tile size="md" className="space-y-4 border-none p-3">
       <div className="flex items-end gap-2">
-        <ColorBox color={primaryColor} size="lg" />
+        <ColorBox color={primaryColor} size="lg" showCode={false} />
         <div>
           <Heading type={4} className="capitalize">
             {name}
@@ -33,9 +33,9 @@ const PaletteCard = ({ name, shades, mainShade }: PaletteCardProps) => {
         </div>
       </div>
 
-      <div className="flex justify-stretch gap-1 overflow-x-auto">
+      <div className="grid grid-cols-12 gap-1 md:grid-cols-11">
         {formattedShades.map(({ shade, name }) => (
-          <ColorBox key={shade} color={shade} name={name} className="w-full" />
+          <ColorBox key={shade} color={shade} name={name} className="col-span-4 w-full sm:col-span-2 md:col-span-1" />
         ))}
       </div>
     </Tile>

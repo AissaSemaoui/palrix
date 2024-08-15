@@ -23,9 +23,9 @@ const colorBoxVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-8 w-8",
-        md: "h-14 w-14",
-        lg: "h-20 w-20",
+        sm: "h-8 min-w-8",
+        md: "h-14 min-w-14",
+        lg: "h-20 min-w-20",
       },
     },
     defaultVariants: {
@@ -47,7 +47,7 @@ const ColorBox = ({
   const handleCopy = () => navigator.clipboard.writeText(color ?? "");
 
   return (
-    <div className={cn("overflow-x-hidden", className)}>
+    <div className={cn("w-fit", className)}>
       <ClickableTooltip content={`${color} copied!`} disabled={readOnly}>
         <Tile
           className={colorBoxVariants({ size, className })}

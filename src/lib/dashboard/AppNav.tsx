@@ -2,6 +2,7 @@
 
 import { ModeToggle } from "@/components/ModeToggle";
 import Logo from "@/components/ui/logo";
+import { paths } from "@/config/navigations";
 
 import { cn } from "@/lib/utils";
 
@@ -20,7 +21,7 @@ const AppNav = ({ className }: AppNavProps) => {
 
       <div className="flex items-center gap-2">
         <ModeToggle />
-        <UserButton />
+        <UserButton afterSwitchSessionUrl={paths.auth.login} signInUrl={paths.auth.login} />
       </div>
     </nav>
   );

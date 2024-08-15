@@ -9,7 +9,7 @@ import { GeneratePaletteValidation } from "@server/validations/generation.valida
 import type { ExpressMiddleware } from "@server/types";
 
 export const generatePaletteController: ExpressMiddleware = async (req, res, next) => {
-  const userId = res.locals.user?.id;
+  const userId = req.auth.userId;
 
   if (!userId) {
     throw new AuthError("Not Authorized!", 401);
