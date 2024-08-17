@@ -1,4 +1,4 @@
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import httpStatus from "http-status";
 
 import { db } from "@server/db";
@@ -19,6 +19,8 @@ export const savePaletteController: ExpressMiddleware = async (req, res) => {
 };
 
 export const getPalettesController: ExpressMiddleware = async (req, res) => {
+  const userId = req.auth.userId;
+
   const query = req.query as GetPalettesValidation["query"];
 
   const pageIndex = Number(query.p ?? 1) - 1;
@@ -27,6 +29,7 @@ export const getPalettesController: ExpressMiddleware = async (req, res) => {
   const historyPalettes = await db
     .select()
     .from(palettes)
+    .where(eq(palettes.userId, userId))
     .orderBy(desc(palettes.createdAt))
     .limit(pageSize)
     .offset(pageIndex * pageSize);

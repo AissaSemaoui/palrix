@@ -17,8 +17,6 @@ const HistoryCard = ({ className }: HistoryCardProps) => {
   console.log("we are here before?!");
   const { data: historyPalettes, isLoading, isSuccess, isError } = useGetPalettes();
 
-  console.log(historyPalettes);
-
   if (isLoading) return <h1>Loading...</h1>;
 
   if (isError || !isSuccess) return <h1>Error...</h1>;

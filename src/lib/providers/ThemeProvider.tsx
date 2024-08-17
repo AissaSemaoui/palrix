@@ -9,7 +9,12 @@ import { type ThemeProviderProps } from "next-themes/dist/types";
 const ThemeProvider = ({ children, ...props }: ThemeProviderProps) => {
   return (
     <NextThemesProvider {...props}>
-      <Toaster position="bottom-right" />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          className: "text-sm",
+        }}
+      />
 
       {children}
     </NextThemesProvider>

@@ -3,11 +3,13 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import Heading from "@/components/Heading";
 import { CardTitle } from "@/components/ui/Card";
+import If from "@/components/If";
 
 interface PageHeaderProps {
   title: string;
   description?: string;
   className?: string;
+  leftSection?: React.ReactNode;
 }
 
 interface AppPageProps {
@@ -15,13 +17,17 @@ interface AppPageProps {
   className?: string;
 }
 
-const PageHeader = ({ title, description, className }: PageHeaderProps) => {
+const PageHeader = ({ title, description, className, leftSection }: PageHeaderProps) => {
   return (
-    <section className={cn("mb-6", className)}>
-      <Heading type={1} className="font-bold">
-        {title}
-      </Heading>
-      <CardTitle className="text-md font-normal text-light">{description}</CardTitle>
+    <section className={cn("mb-6 flex items-center justify-between", className)}>
+      <div>
+        <Heading type={1} className="font-bold">
+          {title}
+        </Heading>
+        <CardTitle className="text-md font-normal text-light">{description}</CardTitle>
+      </div>
+
+      <If condition={leftSection}>{leftSection}</If>
     </section>
   );
 };

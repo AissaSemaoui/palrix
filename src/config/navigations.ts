@@ -2,7 +2,7 @@ export const paths = {
   marketing: "/",
   dashboard: {
     root: "/dashboard",
-    home: "/dashboard",
+    home: "/dashboard/playground",
     playground: "/dashboard/playground",
     settings: "/dashboard/settings",
     profile: "/dashboard/profile",
