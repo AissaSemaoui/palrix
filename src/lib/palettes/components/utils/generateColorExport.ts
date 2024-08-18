@@ -1,4 +1,4 @@
-import chroma, { ColorSpaces } from "chroma-js";
+import chroma, { type ColorSpaces } from "chroma-js";
 
 import { SHADES_NAMES } from "@/config/constants";
 import type { Palette, ExportFormat, ColorSpace } from "@/server/types";
@@ -27,15 +27,12 @@ const formatColor = (c: string[], colorSpace: ColorSpace, fullFormat: boolean) =
   c.map((shade) => {
     const result = chroma(shade)[colorSpace]();
 
-    const formattedColor =
-      typeof result === "string" || colorSpace === "hex"
-        ? result
-        : getStringFormatBySpace(result, colorSpace, fullFormat);
+    const formattedColor = getStringFormatBySpace(result, colorSpace, fullFormat);
 
     return formattedColor as string;
   });
 
-const getStringFormatBySpace = <T extends keyof ColorSpaces>(
+const getStringFormatBySpace = <T extends ColorSpace>(
   color: ColorSpaces[T],
   colorSpace: T,
   fullFormat: boolean,
@@ -43,6 +40,10 @@ const getStringFormatBySpace = <T extends keyof ColorSpaces>(
   let formatted: string;
 
   switch (colorSpace) {
+    case "hex": {
+      const c = color as string;
+      return fullFormat ? c : c.replace("#", "");
+    }
     case "rgb":
     case "rgba": {
       const [r, g, b, a] = color as [number, number, number, number?];

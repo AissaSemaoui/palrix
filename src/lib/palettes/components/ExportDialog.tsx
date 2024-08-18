@@ -30,28 +30,28 @@ type ExportDialogProps = React.PropsWithChildren<{
 
 type FormatTab = { title: string; value: ExportFormat };
 
+const ITEMS: FormatTab[] = [
+  {
+    title: "Tailwind",
+    value: "tailwind",
+  },
+  {
+    title: "CSS",
+    value: "css",
+  },
+  {
+    title: "SCSS",
+    value: "scss",
+  },
+  {
+    title: "JSON",
+    value: "json",
+  },
+];
+
 const ExportDialog = ({ colors, children }: ExportDialogProps) => {
   const [colorFormat, setColorFormat] = useState<ColorSpace>("hex");
-  const [fullFormat, setFullFormat] = useState(false);
-
-  const ITEMS: FormatTab[] = [
-    {
-      title: "Tailwind",
-      value: "tailwind",
-    },
-    {
-      title: "CSS",
-      value: "css",
-    },
-    {
-      title: "SCSS",
-      value: "scss",
-    },
-    {
-      title: "JSON",
-      value: "json",
-    },
-  ];
+  const [fullFormat, setFullFormat] = useState(true);
 
   return (
     <Dialog>
