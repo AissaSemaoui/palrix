@@ -1,30 +1,21 @@
 "use client";
 
-import React from "react";
-
 import { Button } from "@/components/ui/Button";
 import Tile from "@/components/ui/Tile";
-import PaletteCard from "./PaletteCard";
-
-import { cn } from "@/lib/utils";
-import { useSelectedPalette } from "@/hooks/use-playground";
 import Heading from "@/components/Heading";
+import PaletteCard from "./PaletteCard";
+import ExportDialog from "./ExportDialog";
+
+import { useSelectedPalette } from "@/hooks/use-playground";
+import { cn } from "@/lib/utils";
 
 type PlaygroundActionsProps = {
+  selectedPalette: NonNullable<ReturnType<typeof useSelectedPalette>>;
   className?: string;
 };
 
 type PlaygroundProps = {
   className?: string;
-};
-
-const PlaygroundActions = ({ className }: PlaygroundActionsProps) => {
-  return (
-    <Tile className={cn("space-x-2 rounded-sm p-2 shadow-sm", className)}>
-      <Button variant="outline">Export</Button>
-      <Button variant="outline">Save</Button>
-    </Tile>
-  );
 };
 
 const Playground = ({ className }: PlaygroundProps) => {
@@ -40,13 +31,9 @@ const Playground = ({ className }: PlaygroundProps) => {
 
   return (
     <section className={cn("rounded-md bg-muted", className)}>
-      <PlaygroundActions className="mb-2" />
+      <PlaygroundActions selectedPalette={selectedPalette} className="mb-4" />
 
-      <div className="px-4">
-        <Heading type={4}>{selectedPalette.name}</Heading>
-      </div>
-
-      <div className="space-y-2 p-2">
+      <div className="space-y-2 px-2">
         {selectedPalette.colors.map((c) => (
           <PaletteCard key={c.name} {...c} primaryShade={selectedPalette.primaryShade} />
         ))}
@@ -56,3 +43,20 @@ const Playground = ({ className }: PlaygroundProps) => {
 };
 
 export default Playground;
+
+const PlaygroundActions = ({ selectedPalette, className }: PlaygroundActionsProps) => {
+  return (
+    <Tile className={cn("flex items-center justify-between rounded-sm px-4 py-2 shadow-sm", className)}>
+      <div>
+        <Heading type={4}>{selectedPalette.name}</Heading>
+      </div>
+
+      <div className="space-x-2">
+        <Button variant="outline">Save</Button>
+        <ExportDialog colors={selectedPalette.colors}>
+          <Button variant="outline">Export</Button>
+        </ExportDialog>
+      </div>
+    </Tile>
+  );
+};

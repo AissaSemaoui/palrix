@@ -33,7 +33,7 @@ export default PlaygroundPage;
 const HistoryButton = () => (
   <Popover>
     <PopoverTrigger asChild>
-      <Button size="sm" variant="outline">
+      <Button size="md" variant="outline">
         History
         <Icons.history className="ml-2 size-4" />
       </Button>

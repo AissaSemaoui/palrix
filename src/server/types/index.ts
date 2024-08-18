@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 
 import { StrictAuthProp } from "@clerk/clerk-sdk-node";
 import { palettes } from "@server/db/schema";
+import { ColorSpaces } from "chroma-js";
 
 export enum UserRoles {
   USER = "user",
@@ -15,6 +16,10 @@ export interface Shade {
 }
 
 export type Palette = typeof palettes.$inferSelect;
+
+export type ExportFormat = "json" | "css" | "scss" | "tailwind";
+
+export type ColorSpace = keyof ColorSpaces | "hex";
 
 export type ExpressMiddleware = (req: Request, res: Response, next: NextFunction) => Promise<any>;
 

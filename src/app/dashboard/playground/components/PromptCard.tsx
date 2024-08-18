@@ -53,7 +53,7 @@ const PromptInput = ({ onSubmit, loading, disabled }: PromptInputProps) => {
         <Button
           type="submit"
           variant="default"
-          size="sm"
+          size="md"
           loading={loading}
           disabled={disabled}
           className="ml-auto gap-1.5 bg-accent-700/90 text-accent-50 shadow hover:bg-accent-700  dark:bg-accent-600 dark:hover:bg-accent-600/90"

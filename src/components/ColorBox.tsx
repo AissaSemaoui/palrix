@@ -7,7 +7,7 @@ import Tile from "@/components/ui/Tile";
 import ClickableTooltip from "@/components/ui/ClickableTooltip";
 import If from "./If";
 
-import { cn } from "@/lib/utils";
+import { cn, copyToClipboard } from "@/lib/utils";
 
 interface ColorBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   name?: string;
@@ -44,7 +44,7 @@ const ColorBox = ({
   showName = true,
   ...props
 }: ColorBoxProps) => {
-  const handleCopy = () => navigator.clipboard.writeText(color ?? "");
+  const handleCopy = () => copyToClipboard(color);
 
   return (
     <div className={cn("w-fit", className)}>

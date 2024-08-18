@@ -45,7 +45,7 @@ const PaletteDisplayCard = ({ className, ...palette }: PaletteCardProps) => {
         <Heading type={5} className="capitalize">
           {name}
         </Heading>
-        <Button variant="secondary" size="sm">
+        <Button variant="secondary" size="md">
           Select
           <Icons.arrowRight className="ml-1 h-3 w-3 text-secondary-foreground" />
         </Button>
