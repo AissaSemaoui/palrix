@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
-import Tile from "@/components/ui/Tile";
+import { Button } from "@/components/ui/button";
+import Tile from "@/components/ui/tile";
 import Heading from "@/components/Heading";
 import PaletteCard from "./PaletteCard";
 import ExportDialog from "./ExportDialog";

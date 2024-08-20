@@ -7,7 +7,7 @@ import * as React from "react";
 import { Icons } from "@/components/Icons";
 import { MobileNav } from "@/components/MainMobileNav";
 import { ModeToggle } from "@/components/ModeToggle";
-import { buttonVariants } from "@/components/ui/Button";
+import { buttonVariants } from "@/components/ui/button";
 import Logo from "@/components/ui/logo";
 import Show from "@/components/Show";
 

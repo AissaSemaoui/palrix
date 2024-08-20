@@ -3,9 +3,9 @@ import { toast } from "react-hot-toast";
 
 import ColorBox from "@/components/ColorBox";
 import Heading from "@/components/Heading";
-import Tile from "@/components/ui/Tile";
+import Tile from "@/components/ui/tile";
 import { Icons } from "@/components/Icons";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 
 import { usePlaygroundActions } from "@/hooks/use-playground";
 import { cn } from "@/lib/utils";

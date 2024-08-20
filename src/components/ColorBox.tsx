@@ -3,7 +3,7 @@
 import { cva } from "class-variance-authority";
 import React, { CSSProperties } from "react";
 
-import Tile from "@/components/ui/Tile";
+import Tile from "@/components/ui/tile";
 import ClickableTooltip from "@/components/ui/ClickableTooltip";
 import If from "./If";
 

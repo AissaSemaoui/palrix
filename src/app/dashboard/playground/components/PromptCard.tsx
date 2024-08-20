@@ -6,8 +6,8 @@ import Heading from "@/components/Heading";
 import { Textarea } from "@/components/ui/textarea";
 import { Icons } from "@/components/Icons";
 import { Illustrations } from "@/components/Illustrations";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/Card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 
 import { useGeneratePalette } from "@/api-client/mutations/useGeneratePalette";
 import { usePlaygroundActions, usePlaygroundStatus, usePrompt } from "@/hooks/use-playground";

@@ -3,7 +3,7 @@ import Playground from "@/lib/palettes/components/Playground";
 import HistoryCard from "@/lib/palettes/components/HistoryCard";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Icons } from "@/components/Icons";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import PromptCard from "./components/PromptCard";

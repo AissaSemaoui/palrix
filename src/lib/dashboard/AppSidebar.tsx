@@ -3,7 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 
-import { Anchor } from "@/components/ui/Anchor";
+import { Anchor } from "@/components/ui/anchor";
 import { Icons } from "@/components/Icons";
 
 import { cn } from "@/lib/utils";

@@ -2,7 +2,7 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 import Heading from "@/components/Heading";
-import { CardTitle } from "@/components/ui/Card";
+import { CardTitle } from "@/components/ui/card";
 import If from "@/components/If";
 
 interface PageHeaderProps {

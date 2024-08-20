@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 import TransitionPanel from "@/components/ui/TransitionPanel";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
 

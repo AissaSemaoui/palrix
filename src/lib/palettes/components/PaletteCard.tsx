@@ -2,13 +2,14 @@ import Image from "next/image";
 
 import ColorBox from "@/components/ColorBox";
 import Heading from "@/components/Heading";
-import Tile from "@/components/ui/Tile";
-import { Button } from "@/components/ui/Button";
+import Tile from "@/components/ui/tile";
+import { Button } from "@/components/ui/button";
 import ExportDialog from "./ExportDialog";
 
 import { SHADES_NAMES } from "@/config/constants";
 import type { Palette } from "@/server/types";
 import { generatePalettePreview } from "@/server/utils/colors";
+import UiExamplesDrawer from "./UiExamplesDrawer";
 
 type PaletteCardProps = Pick<Palette["colors"][number], "name" | "shades" | "mainShade"> &
   Pick<Palette, "primaryShade">;
@@ -32,15 +33,15 @@ const PaletteCard = ({ name, shades, mainShade }: PaletteCardProps) => {
           <Image src={generatePalettePreview(shades)} width={70} height={6} alt="palette preview" />
         </div>
         <div className="ml-auto flex gap-2">
-          <Button variant="link" size="sm">
-            Toggle UI
-            {/* <Icons.copy className="ml-2 size-3" /> */}
-          </Button>
+          <UiExamplesDrawer>
+            <Button variant="link" size="sm">
+              Toggle UI
+            </Button>
+          </UiExamplesDrawer>
 
           <ExportDialog colors={{ name, shades, mainShade }}>
             <Button variant="link" size="sm">
               Export
-              {/* <Icons.heart className="ml-2 size-3" /> */}
             </Button>
           </ExportDialog>
         </div>

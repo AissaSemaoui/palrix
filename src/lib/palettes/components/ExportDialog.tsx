@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 import AnimatedTabs from "@/components/AnimatedTabs";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -22,7 +22,7 @@ import { generateColorExport } from "./utils/generateColorExport";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { COLOR_SPACES } from "@/config/constants";
 import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/Label";
+import { Label } from "@/components/ui/label";
 
 type ExportDialogProps = React.PropsWithChildren<{
   colors: Palette["colors"] | Palette["colors"][number];
