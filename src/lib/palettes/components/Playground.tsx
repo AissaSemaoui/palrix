@@ -40,7 +40,7 @@ const Playground = ({ className }: PlaygroundProps) => {
     <section className={cn("rounded-md bg-muted", className)}>
       <PlaygroundActions selectedPalette={selectedPalette} className="mb-4" />
 
-      <div className="space-y-2 px-2">
+      <div className="space-y-2 px-2 pb-2">
         {selectedPalette.colors.map((c) => (
           <PaletteCard key={c.name} {...c} primaryShade={selectedPalette.primaryShade} />
         ))}
