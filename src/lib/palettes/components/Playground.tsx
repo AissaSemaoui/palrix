@@ -1,13 +1,15 @@
 "use client";
 
+import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/button";
 import Tile from "@/components/ui/tile";
-import Heading from "@/components/Heading";
-import PaletteCard from "./PaletteCard";
 import ExportDialog from "./ExportDialog";
+import PaletteCard from "./PaletteCard";
 
 import { useSelectedPalette } from "@/hooks/use-playground";
+import { useThemeCustomizer } from "@/lib/examples/use-theme-config";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 type PlaygroundActionsProps = {
   selectedPalette: NonNullable<ReturnType<typeof useSelectedPalette>>;
@@ -20,6 +22,11 @@ type PlaygroundProps = {
 
 const Playground = ({ className }: PlaygroundProps) => {
   const selectedPalette = useSelectedPalette();
+  const { generateThemes, themeConfig } = useThemeCustomizer();
+
+  useEffect(() => {
+    if (selectedPalette) generateThemes(selectedPalette);
+  }, [selectedPalette, themeConfig]);
 
   if (!selectedPalette) {
     return (

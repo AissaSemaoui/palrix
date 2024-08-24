@@ -14,15 +14,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-import { copyToClipboard } from "@/lib/utils";
-import type { ColorSpace, ExportFormat, Palette } from "@/server/types";
-
-import { generateColorExport } from "./utils/generateColorExport";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { COLOR_SPACES } from "@/config/constants";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+
+import { generateColorExport } from "@/lib/palettes/utils/generateColorExport";
+import { copyToClipboard } from "@/lib/utils";
+import { COLOR_SPACES } from "@/config/constants";
+
+import type { ColorSpace, ExportFormat, Palette } from "@/server/types";
 
 type ExportDialogProps = React.PropsWithChildren<{
   colors: Palette["colors"] | Palette["colors"][number];

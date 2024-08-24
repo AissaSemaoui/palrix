@@ -9,7 +9,7 @@ export enum UserRoles {
   SUPER_ADMIN = "super_admin",
 }
 
-export interface Shade {
+export interface Color {
   name: string;
   shades: string[];
   mainShade?: string;

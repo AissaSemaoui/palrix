@@ -1,16 +1,16 @@
 import React from "react";
 
+import CardsDemo from "@/lib/examples/components";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import ThemeCustomizer from "@/lib/examples/components/ThemeCustomizer";
 
 type UiExamplesDrawerProps = React.PropsWithChildren<{}>;
 
@@ -25,12 +25,11 @@ const UiExamplesDrawer = ({ children }: UiExamplesDrawerProps) => {
           <DrawerDescription>This action cannot be undone.</DrawerDescription>
         </DrawerHeader>
 
-        <DrawerFooter>
-          <Button>Submit</Button>
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
+        <ScrollArea className="h-[640px] px-4">
+          <ThemeCustomizer>
+            <CardsDemo className="container pb-4" />
+          </ThemeCustomizer>
+        </ScrollArea>
       </DrawerContent>
     </Drawer>
   );

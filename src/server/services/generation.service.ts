@@ -38,10 +38,10 @@ export const generatePalette = async ({ userPrompt }: GeneratePaletteValidation[
     name: c.name,
     shades: generateColorPalette(c.shade, {
       numShades: maxShades,
-      lightnessRange: [0.95, 0.05],
+      lightnessRange: [0.99, 0.05],
       saturationRange: [1, 0.5],
       ...c.config,
-      interpolationMethod: "linear",
+      interpolationMethod: "bezier",
     }),
     mainShade: String(chroma(c.shade).get("hex")),
     // shades: generateShades(c.shade, maxShades, [0.98, 0.2], [1, 0.3]),

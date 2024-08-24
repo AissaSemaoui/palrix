@@ -25,16 +25,6 @@ interface NavItem {
   fullMatch?: boolean;
 }
 
-type AppSession =
-  | {
-      user: User;
-      session: Session;
-    }
-  | {
-      user: null;
-      session: null;
-    };
-
 type CustomMutationOptions<TFunction extends MutationFunction<any, any>> = MutationOptions<
   Awaited<ReturnType<TFunction>>,
   AxiosError,
@@ -49,4 +39,41 @@ type CustomQueryOptions<TFunction extends QueryFunction<any, any>> = QueryOption
   DefinedInitialDataOptions<TFunction>
 >;
 
-export { AppSession, CustomMutationOptions, CustomQueryOptions, Maybe, Optional, NavItem, User, WithRequired };
+interface ThemeVariables {
+  background: string;
+  foreground: string;
+  card: string;
+  "card-foreground": string;
+  popover: string;
+  "popover-foreground": string;
+  primary: string;
+  "primary-foreground": string;
+  secondary: string;
+  "secondary-foreground": string;
+  muted: string;
+  "muted-foreground": string;
+  accent: string;
+  "accent-foreground": string;
+  destructive: string;
+  "destructive-foreground": string;
+  border: string;
+  input: string;
+  ring: string;
+  radius: string;
+  "chart-1": string;
+  "chart-2": string;
+  "chart-3": string;
+  "chart-4": string;
+  "chart-5": string;
+}
+
+interface Theme {
+  label: string;
+  name: string;
+  cssVars: {
+    light: ThemeVariables;
+    dark: ThemeVariables;
+  };
+}
+
+export { CustomMutationOptions, CustomQueryOptions, Maybe, Optional, NavItem, User, WithRequired, Theme };

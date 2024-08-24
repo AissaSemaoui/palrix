@@ -2,7 +2,7 @@ import { relations } from "drizzle-orm";
 import { pgEnum, pgTable, primaryKey, text, timestamp, jsonb, boolean, integer } from "drizzle-orm/pg-core";
 
 import { createId } from "@server/utils/generics";
-import { type Shade, UserRoles } from "@server/types";
+import { type Color, UserRoles } from "@server/types";
 
 export const rolesEnum = pgEnum("role", [UserRoles.SUPER_ADMIN, UserRoles.USER]);
 
@@ -24,7 +24,7 @@ export const palettes = pgTable("palette", {
     .references(() => users.id),
   maxShades: integer("max_shades").notNull(),
   primaryShade: integer("primary_shade").notNull(),
-  colors: jsonb("colors").array().notNull().$type<Shade[]>(),
+  colors: jsonb("colors").array().notNull().$type<Color[]>(),
   isPublic: boolean("is_public").notNull().default(false),
 
   createdAt: timestamp("createdAt", {
