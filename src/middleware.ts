@@ -1,8 +1,14 @@
 import { clerkMiddleware, auth, createRouteMatcher } from "@clerk/nextjs/server";
+import { paths } from "./config/navigations";
+import { NextResponse } from "next/server";
 
 const isPublicRoute = createRouteMatcher(["/auth/sign-in(.*)", "/auth/sign-up(.*)"]);
 
 export default clerkMiddleware((auth, request) => {
+  if (request.nextUrl.pathname === `${paths.dashboard.root}/home`) {
+    return NextResponse.redirect(new URL(paths.dashboard.home, request.nextUrl.origin));
+  }
+
   if (!isPublicRoute(request)) {
     auth().protect();
   }

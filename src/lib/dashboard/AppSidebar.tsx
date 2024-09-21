@@ -24,12 +24,6 @@ interface SidebarItemProps {
 
 const items: SidebarNavItem[] = [
   {
-    Icon: Icons.home,
-    title: "Home",
-    href: paths.dashboard.root,
-    fullMatch: true,
-  },
-  {
     Icon: Icons.playground,
     title: "Playground",
     href: paths.dashboard.playground,

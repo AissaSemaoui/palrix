@@ -1,5 +1,6 @@
 import {
   ArrowRightIcon,
+  BoxIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   CopyIcon,
@@ -16,7 +17,6 @@ import {
   SendHorizontalIcon,
   SettingsIcon,
   SunIcon,
-  SwatchBookIcon,
   WandSparklesIcon,
   XIcon,
 } from "lucide-react";
@@ -28,7 +28,7 @@ export const Icons = {
   loader: Loader2Icon,
   menu: MenuIcon,
   home: HomeIcon,
-  playground: SwatchBookIcon,
+  playground: BoxIcon,
   settings: SettingsIcon,
   logout: LogOutIcon,
   palette: PaletteIcon,
