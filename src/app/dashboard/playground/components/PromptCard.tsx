@@ -60,8 +60,8 @@ Ex. A coffee shop website`}
           disabled={disabled}
           className="ml-auto gap-1.5 bg-accent-700/90 text-accent-50 shadow hover:bg-accent-700  dark:bg-accent-600 dark:hover:bg-accent-600/90"
         >
-          Generate
-          <Icons.sendHorizontal className="h-4 w-4" />
+          Surprise me
+          <Icons.magic className="h-4 w-4" />
         </Button>
       </div>
     </form>

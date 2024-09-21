@@ -11,11 +11,13 @@ import {
   MenuIcon,
   MoonIcon,
   PaletteIcon,
+  PlusIcon,
   RefreshCcw,
   SendHorizontalIcon,
   SettingsIcon,
   SunIcon,
   SwatchBookIcon,
+  WandSparklesIcon,
   XIcon,
 } from "lucide-react";
 
@@ -40,6 +42,8 @@ export const Icons = {
   chevronUp: ChevronUpIcon,
   chevronDown: ChevronDownIcon,
   refresh: RefreshCcw,
+  plus: PlusIcon,
+  magic: WandSparklesIcon,
   gitHub: (props: IconProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path

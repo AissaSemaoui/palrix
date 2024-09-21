@@ -23,8 +23,8 @@ const PlaygroundPage = ({}: PlaygroundPageProps) => {
       <div className="gap-4">
         <section className="mb-2 ml-auto w-min"></section>
 
-        <section className="mb-14 space-y-6">
-          <Playground className="mb-2" />
+        <section className="mb-20 space-y-6">
+          <Playground />
 
           <FloatingActions className="fixed bottom-4" />
         </section>
