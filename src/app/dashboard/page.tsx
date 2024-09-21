@@ -1,16 +1,13 @@
-import React from "react";
+"use client";
 
-import AppPage from "@/lib/dashboard/AppPage";
 import BackgroundBoxes from "@/components/BackgroundBoxes";
 import Heading from "@/components/Heading";
-import { Input } from "@/components/ui/input";
-import Tile from "@/components/ui/tile";
 import { PromptInput } from "./playground/components/PromptCard";
 
-const DashboardPage = async () => {
+const DashboardPage = () => {
   return (
     <BackgroundBoxes className="h-full">
-      <section className="w-full">
+      <section className="mb-16 w-full">
         <header className="z-20 mb-4 text-center">
           <Heading type={1} className="mb-2 text-4xl">
             What palette can I create for you?
@@ -20,7 +17,12 @@ const DashboardPage = async () => {
           </p>
         </header>
         <section className="mx-auto w-fit">
-          <PromptInput className="w-[512px] max-w-full border-purple-600" />
+          <PromptInput
+            onSubmit={console.log}
+            loading={false}
+            disabled={false}
+            className="h-24 w-[768px] max-w-full border-purple-600"
+          />
         </section>
       </section>
     </BackgroundBoxes>
