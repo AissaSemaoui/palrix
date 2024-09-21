@@ -13,6 +13,8 @@ import type { Palette } from "@/server/types";
 import { generatePalettePreview } from "@/server/utils/colors";
 import UiExamplesDrawer from "./UiExamplesDrawer";
 import { useThemeCustomizerActions } from "@/lib/examples/use-theme-config";
+import { Icons } from "@/components/Icons";
+import EditColorNameDialog from "./EditColorNameDialog";
 
 type PaletteCardProps = Pick<Palette["colors"][number], "name" | "shades" | "mainShade"> &
   Pick<Palette, "primaryShade">;
@@ -35,9 +37,18 @@ const PaletteCard = ({ name, shades, mainShade }: PaletteCardProps) => {
     <article className="space-y-3 border-none">
       <div className="flex items-end gap-2 px-2">
         <div>
-          <Heading type={3} className="capitalize">
-            {name}
-          </Heading>
+          <div className="flex items-center gap-1">
+            <Heading type={3} className="capitalize">
+              {name}
+            </Heading>
+
+            <EditColorNameDialog defaultName={name}>
+              <Button variant="ghost" size="icon-sm">
+                <Icons.edit className="h-3 w-3" />
+              </Button>
+            </EditColorNameDialog>
+          </div>
+
           <Image src={generatePalettePreview(shades)} width={70} height={6} alt="palette preview" />
         </div>
         <div className="ml-auto flex gap-2">
