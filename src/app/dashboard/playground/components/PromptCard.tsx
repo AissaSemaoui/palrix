@@ -13,16 +13,18 @@ import { useGeneratePalette } from "@/api-client/mutations/useGeneratePalette";
 import { usePlaygroundActions, usePlaygroundStatus, usePrompt } from "@/hooks/use-playground";
 import { queryClient, queryKeys } from "@/api-client";
 import Tile from "@/components/ui/tile";
+import { cn } from "@/lib/utils";
 
 type PromptInputProps = {
   onSubmit: () => void;
   loading: boolean;
   disabled: boolean;
+  className?: string;
 };
 
 type PromptCardProps = {};
 
-const PromptInput = ({ onSubmit, loading, disabled }: PromptInputProps) => {
+export const PromptInput = ({ onSubmit, loading, className, disabled }: PromptInputProps) => {
   const { setPrompt } = usePlaygroundActions();
 
   const [promptInput, setPromptInput] = useState("");
@@ -41,7 +43,10 @@ const PromptInput = ({ onSubmit, loading, disabled }: PromptInputProps) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative w-full overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
+      className={cn(
+        "relative w-full overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring",
+        className,
+      )}
     >
       <Textarea
         value={promptInput}

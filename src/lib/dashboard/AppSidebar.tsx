@@ -55,7 +55,7 @@ const SidebarItem = ({ item, active }: SidebarItemProps) => {
     <Anchor
       href={item.href}
       variant={activeStyle?.variant}
-      className={cn("w-full justify-start", activeStyle?.className)}
+      className={cn("h-10 w-full justify-start", activeStyle?.className)}
     >
       <item.Icon className="mr-2 h-5 w-5" /> {item.title}
     </Anchor>
@@ -67,7 +67,7 @@ const AppSidebar = ({ className }: AppSidebarProps) => {
 
   return (
     <aside className={cn("hidden border-r bg-background p-4 lg:block", className)} id="app-sidebar">
-      <ul className="mt-8 space-y-2">
+      <ul className="mt-4 space-y-2">
         {items.map((item) => (
           <li key={item.title}>
             <SidebarItem item={item} active={item.fullMatch ? item.href === pathname : pathname.includes(item.href)} />

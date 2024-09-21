@@ -33,7 +33,7 @@ const PageHeader = ({ title, description, className, leftSection }: PageHeaderPr
 };
 
 const AppPage = ({ children, className }: AppPageProps) => {
-  return <main className={cn("p-4 md:p-8", className)}>{children}</main>;
+  return <main className={cn("container p-4 md:p-8", className)}>{children}</main>;
 };
 
 AppPage.Header = PageHeader;

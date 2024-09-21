@@ -12,7 +12,7 @@ const DashboardLayout = async ({ children }: React.PropsWithChildren) => {
         <AppNav className="sticky top-0 z-50 h-14" />
         <div className="flex h-full w-full flex-1">
           <AppSidebar className="sticky top-14 h-[calc(100vh-56px)]" />
-          <AppPage className="container flex-1">{children}</AppPage>
+          <section className="h-[calc(100vh-56px)] flex-1">{children}</section>
         </div>
       </div>
     </ProtectedProvider>

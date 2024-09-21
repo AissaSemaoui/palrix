@@ -13,7 +13,7 @@ type PlaygroundPageProps = {};
 
 const PlaygroundPage = ({}: PlaygroundPageProps) => {
   return (
-    <main className="mx-auto w-full ">
+    <AppPage className="mx-auto">
       <AppPage.Header
         title="Enhanced Color Palette Generator"
         description="Create and customize your perfect color palette"
@@ -29,7 +29,7 @@ const PlaygroundPage = ({}: PlaygroundPageProps) => {
           <FloatingActions className="fixed bottom-4" />
         </section>
       </div>
-    </main>
+    </AppPage>
   );
 };
 

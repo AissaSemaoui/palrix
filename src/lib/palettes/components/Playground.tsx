@@ -8,8 +8,9 @@ import PaletteCard from "./PaletteCard";
 import { Icons } from "@/components/Icons";
 import { useSelectedPalette } from "@/hooks/use-playground";
 import { cn } from "@/lib/utils";
-import NewColorDialog from "./NewColorDialog";
 import EditPaletteNameDialog from "./EditPaletteNameDialog";
+import NewColorDialog from "./NewColorDialog";
+import BackgroundBoxes from "@/components/BackgroundBoxes";
 
 type PlaygroundProps = {
   className?: string;
