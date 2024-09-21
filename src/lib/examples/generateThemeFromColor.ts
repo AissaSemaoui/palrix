@@ -1,5 +1,6 @@
+import { DEFAULT_THEME, MAPPER_THEME } from "@/config/constants";
 import { Color, Palette } from "@/server/types";
-import { Theme } from "@/types";
+import { Theme, ThemeMapping, ThemeMappingItem, ThemeMode, ThemeVariables } from "@/types";
 import { generateColorExport } from "../palettes/utils/generateColorExport";
 
 function mapColorShadesToConfig(shadesObject: Record<string, string>, name: string) {
@@ -17,11 +18,8 @@ function mapColorShadesToConfig(shadesObject: Record<string, string>, name: stri
     throw new Error("Shades object must contain all keys from 50 to 950");
   }
 
-  const radius = "0.5rem";
-
   return {
     light: {
-      radius,
       background: "0 0% 100%",
       foreground: shades["900"],
       card: "0 0% 100%",
@@ -48,7 +46,6 @@ function mapColorShadesToConfig(shadesObject: Record<string, string>, name: stri
       "chart-5": "27 87% 67%",
     },
     dark: {
-      radius,
       background: "240 10% 3.9%",
       foreground: shades["50"],
       card: "240 10% 3.9%",
@@ -85,5 +82,37 @@ export const generateThemeFromColor = (color: Color): Theme => {
     name: color.name,
     label: color.name,
     cssVars: mapColorShadesToConfig(shadesObject, color.name),
+  };
+};
+
+export const generateThemeFromMapping = (palette: Palette, themeMapping: ThemeMapping): Theme => {
+  const generateThemeMode = (mode: ThemeMode): Record<keyof ThemeVariables, string> => {
+    const result: Partial<Record<keyof ThemeVariables, string>> = {};
+
+    for (const themeEntry of Object.entries(themeMapping[mode])) {
+      const cssVar = themeEntry[0] as keyof ThemeVariables;
+      const mapping: ThemeMappingItem = themeEntry[1];
+
+      const color = palette.colors[mapping.paletteIndex];
+      if (!color) {
+        result[cssVar] = DEFAULT_THEME.cssVars[mode][cssVar];
+        continue;
+      }
+
+      const hslFormattedShades = JSON.parse(generateColorExport(color, "json", "hsl", false));
+      const shadeKey = Object.keys(hslFormattedShades)[mapping.shadeIndex];
+      result[cssVar] = hslFormattedShades[shadeKey];
+    }
+
+    return result as Record<keyof ThemeVariables, string>;
+  };
+
+  return {
+    name: MAPPER_THEME,
+    label: MAPPER_THEME,
+    cssVars: {
+      light: generateThemeMode("light"),
+      dark: generateThemeMode("dark"),
+    },
   };
 };

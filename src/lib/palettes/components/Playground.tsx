@@ -22,11 +22,6 @@ type PlaygroundProps = {
 
 const Playground = ({ className }: PlaygroundProps) => {
   const selectedPalette = useSelectedPalette();
-  const { generateThemes, themeConfig } = useThemeCustomizer();
-
-  useEffect(() => {
-    if (selectedPalette) generateThemes(selectedPalette);
-  }, [selectedPalette, themeConfig]);
 
   if (!selectedPalette) {
     return (

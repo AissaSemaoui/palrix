@@ -39,6 +39,8 @@ type CustomQueryOptions<TFunction extends QueryFunction<any, any>> = QueryOption
   DefinedInitialDataOptions<TFunction>
 >;
 
+type ThemeMode = "light" | "dark";
+
 interface ThemeVariables {
   background: string;
   foreground: string;
@@ -59,7 +61,6 @@ interface ThemeVariables {
   border: string;
   input: string;
   ring: string;
-  radius: string;
   "chart-1": string;
   "chart-2": string;
   "chart-3": string;
@@ -76,4 +77,35 @@ interface Theme {
   };
 }
 
-export { CustomMutationOptions, CustomQueryOptions, Maybe, Optional, NavItem, User, WithRequired, Theme };
+type ThemeConfig = {
+  style: string;
+  theme: string;
+  radius: number;
+};
+
+type ThemeMappingItem = {
+  paletteIndex: number;
+  shadeIndex: number;
+};
+
+type ThemeMapping = {
+  [themeMode in ThemeMode]: {
+    [cssVar in keyof ThemeVariables]: ThemeMappingItem;
+  };
+};
+
+export {
+  CustomMutationOptions,
+  CustomQueryOptions,
+  Maybe,
+  Optional,
+  NavItem,
+  User,
+  WithRequired,
+  Theme,
+  ThemeVariables,
+  ThemeMode,
+  ThemeConfig,
+  ThemeMappingItem,
+  ThemeMapping,
+};

@@ -1,3 +1,5 @@
+import { themes } from "@/lib/examples/themes";
+import { ThemeVariables } from "@/types";
 import { ColorSpaces } from "chroma-js";
 
 export const MAX_SHADES_NUMBER = 11;
@@ -14,3 +16,34 @@ export const COLOR_SPACES: (keyof ColorSpaces | "hex")[] = [
   "oklab",
   "oklch",
 ];
+
+export const CSS_VARS_NAMES: (keyof ThemeVariables)[] = [
+  "background",
+  "foreground",
+  "card",
+  "card-foreground",
+  "popover",
+  "popover-foreground",
+  "primary",
+  "primary-foreground",
+  "secondary",
+  "secondary-foreground",
+  "muted",
+  "muted-foreground",
+  "accent",
+  "accent-foreground",
+  "destructive",
+  "destructive-foreground",
+  "border",
+  "input",
+  "ring",
+  "chart-1",
+  "chart-2",
+  "chart-3",
+  "chart-4",
+  "chart-5",
+];
+
+export const DEFAULT_THEME = themes[0];
+
+export const MAPPER_THEME = "custom";

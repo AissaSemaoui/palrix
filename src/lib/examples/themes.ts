@@ -1,7 +1,7 @@
 export const themes = [
   {
-    name: "zinc",
-    label: "Zinc",
+    name: "neutral",
+    label: "Neutral",
     activeColor: {
       light: "240 5.9% 10%",
       dark: "240 5.2% 33.9%",
