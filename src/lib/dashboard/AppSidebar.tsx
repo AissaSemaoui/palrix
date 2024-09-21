@@ -72,7 +72,7 @@ const AppSidebar = ({ className }: AppSidebarProps) => {
   const pathname = usePathname();
 
   return (
-    <aside className={cn("hidden w-2/12 border-r p-4 lg:block lg:w-[17rem]", className)}>
+    <aside className={cn("hidden border-r bg-background p-4 lg:block", className)} id="app-sidebar">
       <ul className="mt-8 space-y-2">
         {items.map((item) => (
           <li key={item.title}>

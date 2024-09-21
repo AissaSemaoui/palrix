@@ -1,6 +1,6 @@
 export const themes = [
   {
-    name: "neutral",
+    name: "gray",
     label: "Neutral",
     activeColor: {
       light: "240 5.9% 10%",

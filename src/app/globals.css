@@ -73,11 +73,23 @@
 }
 
 @layer base {
+  :root {
+    --sidebar-width: 16%;
+    --sidebar-lg-width: 17rem;
+  }
+
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  #app-sidebar {
+    @apply w-[--sidebar-width] lg:w-[--sidebar-lg-width];
+  }
+  #floating-actions {
+    @apply left-1/2 -translate-x-1/2 lg:translate-x-[calc(-50%+var(--sidebar-lg-width)/2)] xl:translate-x-[calc(-50%+var(--sidebar-lg-width)/2)];
   }
 }
 

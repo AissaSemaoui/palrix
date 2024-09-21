@@ -32,11 +32,10 @@ const PaletteCard = ({ name, shades, mainShade }: PaletteCardProps) => {
   };
 
   return (
-    <Tile size="md" className="space-y-4 border-none p-3">
-      <div className="flex items-end gap-2">
-        <ColorBox color={primaryColor} size="lg" showCode={false} />
-        <div className="mb-1">
-          <Heading type={4} className="capitalize">
+    <article className="space-y-3 border-none">
+      <div className="flex items-end gap-2 px-2">
+        <div>
+          <Heading type={3} className="capitalize">
             {name}
           </Heading>
           <Image src={generatePalettePreview(shades)} width={70} height={6} alt="palette preview" />
@@ -56,12 +55,12 @@ const PaletteCard = ({ name, shades, mainShade }: PaletteCardProps) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-1 md:grid-cols-11">
+      <Tile size="md" className="grid grid-cols-12 gap-1 rounded-lg shadow-sm md:grid-cols-11">
         {formattedShades.map(({ shade, name }) => (
           <ColorBox key={shade} color={shade} name={name} className="col-span-4 w-full sm:col-span-2 md:col-span-1" />
         ))}
-      </div>
-    </Tile>
+      </Tile>
+    </article>
   );
 };
 

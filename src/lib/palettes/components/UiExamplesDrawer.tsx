@@ -23,7 +23,7 @@ const UiExamplesDrawer = ({ children }: UiExamplesDrawerProps) => {
     <Drawer>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
 
-      <DrawerContent>
+      <DrawerContent className="container">
         <DrawerClose className="absolute right-4 top-4" asChild>
           <Button variant="ghost" size="icon-sm">
             <Icons.close className="h-4 w-4" />
@@ -33,18 +33,11 @@ const UiExamplesDrawer = ({ children }: UiExamplesDrawerProps) => {
         <DrawerHeader>
           <DrawerTitle>Examples with your preferred color palette?</DrawerTitle>
           <DrawerDescription>This action cannot be undone.</DrawerDescription>
-
-          <ThemeMapper>
-            <Button variant="outline" className="w-fit">
-              <Icons.settings className="mr-2 h-4 w-4" />
-              Mapper
-            </Button>
-          </ThemeMapper>
         </DrawerHeader>
 
         <ScrollArea className="h-[640px] px-4">
           <ThemeCustomizer>
-            <CardsDemo className="container pb-4" />
+            <CardsDemo className="pb-4" />
           </ThemeCustomizer>
         </ScrollArea>
       </DrawerContent>
