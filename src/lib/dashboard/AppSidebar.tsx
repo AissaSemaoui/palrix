@@ -26,7 +26,7 @@ const items: SidebarNavItem[] = [
   {
     Icon: Icons.playground,
     title: "Playground",
-    href: paths.dashboard.playground,
+    href: paths.dashboard.home,
     fullMatch: false,
   },
   {

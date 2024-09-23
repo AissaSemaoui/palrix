@@ -6,13 +6,13 @@ type SettingsProps = {};
 
 const SettingsPage = ({}: SettingsProps) => {
   return (
-    <main>
+    <AppPage>
       <AppPage.Header title="Settings" />
 
       <section>
         <UserProfile />
       </section>
-    </main>
+    </AppPage>
   );
 };
 

@@ -75,7 +75,7 @@
 @layer base {
   :root {
     --sidebar-width: 16%;
-    --sidebar-lg-width: 17rem;
+    --sidebar-lg-width: 15rem;
   }
 
   * {

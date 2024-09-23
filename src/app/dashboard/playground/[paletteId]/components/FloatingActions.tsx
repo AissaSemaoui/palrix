@@ -27,7 +27,7 @@ const FloatingActions = ({ className }: FloatingActionsProps) => {
     <div className={cn("w-full max-w-screen-md px-4", className)} id="floating-actions">
       {showPromptCard && <PromptCard />}
 
-      <Tile shadow="lg" className="flex items-center justify-between">
+      <Tile shadow="lg" className="flex items-center justify-between border-2 border-purple-600">
         <div className="flex items-center gap-2">
           <ModeToggle className="mr-2" />
 

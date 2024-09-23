@@ -44,7 +44,7 @@ export const PromptInput = ({ onSubmit, loading, className, disabled }: PromptIn
     <form
       onSubmit={handleSubmit}
       className={cn(
-        "relative w-full overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring",
+        "relative w-full overflow-hidden rounded-sm border bg-background focus-within:ring-1 focus-within:ring-ring",
         className,
       )}
     >
