@@ -73,7 +73,7 @@ export function MainNav({ items, children }: MainNavProps) {
           </Show.If>
 
           <Show.Else>
-            <Link href="/dashboard" className={buttonVariants({ variant: "default" })}>
+            <Link href={paths.dashboard.home} className={buttonVariants({ variant: "default" })}>
               Dashboard
             </Link>
           </Show.Else>

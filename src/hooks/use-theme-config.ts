@@ -4,7 +4,7 @@ import { themes } from "@/lib/examples/themes";
 import { Palette } from "@/server/types";
 import { Theme, ThemeConfig, ThemeMapping, ThemeMappingItem, ThemeMode, ThemeVariables } from "@/types";
 import { create } from "zustand";
-import { generateThemeFromColor, generateThemeFromMapping } from "./generateThemeFromColor";
+import { generateThemeFromColor, generateThemeFromMapping } from "../lib/examples/generateThemeFromColor";
 
 type UseThemeCustomizer = {
   themeConfig: ThemeConfig;

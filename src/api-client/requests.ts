@@ -12,12 +12,15 @@ const makeRequests = (axios: AxiosInstance, config?: AxiosRequestConfig) => {
     signOut: () => axios.post<void>("/api/auth/logout", {}),
     generatePalette: (data: GeneratePaletteValidation["body"]) =>
       axios.post<ApiResponseReturn<Palette>>("/api/generate/palette", data).then((res) => res.data.data),
-    getPalettes: () => axios.get<ApiResponseReturn<Palette[]>>("/api/palettes").then((res) => res.data.data),
+    getPalettes: () => axios.get<ApiResponseReturn<Palette[], true>>("/api/palettes").then((res) => res.data.data),
+    getPalette: (paletteId: string) =>
+      axios.get<ApiResponseReturn<Palette>>(`/api/palettes/${paletteId}`).then((res) => res.data.data),
   };
 };
 
 export const queryKeys = {
   getPalettes: () => ["palettes"],
+  getPalette: (paletteId: string) => ["palettes", paletteId],
 };
 
 export const requests = makeRequests(axiosInstance);

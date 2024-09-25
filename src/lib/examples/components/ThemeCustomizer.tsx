@@ -1,7 +1,7 @@
 import { useTheme } from "next-themes";
 import React from "react";
 
-import { useSelectedCustomizerTheme } from "@/lib/examples/use-theme-config";
+import { useSelectedCustomizerTheme } from "@/hooks/use-theme-config";
 
 type ThemeCustomizerProps = React.PropsWithChildren;
 

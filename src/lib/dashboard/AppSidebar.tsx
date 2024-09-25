@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 
 import { Anchor } from "@/components/ui/anchor";
 import { Icons } from "@/components/Icons";
+import { Button } from "@/components/ui/button";
+import HistoryPopover from "@/lib/palettes/components/HistoryPopover";
 
 import { cn } from "@/lib/utils";
 import { paths } from "@/config/navigations";
@@ -22,12 +24,36 @@ interface SidebarItemProps {
   active?: boolean;
 }
 
+const sidebarItemVariants = {
+  active: {
+    className: "h-10 w-full justify-start text-accent-600 dark:text-accent-50 bg-accent-50 dark:bg-accent-950",
+    variant: "secondary",
+  },
+  inactive: {
+    className: "h-10 w-full justify-start",
+    variant: "ghost",
+  },
+} as const;
+
 const items: SidebarNavItem[] = [
   {
     Icon: Icons.playground,
     title: "Playground",
     href: paths.dashboard.home,
     fullMatch: false,
+  },
+  {
+    Icon: Icons.history,
+    title: "History",
+    href: paths.dashboard.history,
+    Component: () => (
+      <HistoryPopover side="right">
+        <Button variant={"outline"} className={sidebarItemVariants.inactive.className}>
+          <Icons.history className="mr-2 h-5 w-5" />
+          History
+        </Button>
+      </HistoryPopover>
+    ),
   },
   {
     Icon: Icons.settings,
@@ -38,18 +64,9 @@ const items: SidebarNavItem[] = [
 ];
 
 const SidebarItem = ({ item, active }: SidebarItemProps) => {
-  const sidebarItemVariants = {
-    active: {
-      className: "text-accent-600 dark:text-accent-50 bg-accent-50 dark:bg-accent-950",
-      variant: "secondary",
-    },
-    inactive: {
-      className: "",
-      variant: "ghost",
-    },
-  } as const;
-
   const activeStyle = sidebarItemVariants[active ? "active" : "inactive"];
+
+  if (item.Component) return <item.Component />;
 
   return (
     <Anchor

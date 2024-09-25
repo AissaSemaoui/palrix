@@ -2,7 +2,7 @@ import { useTheme } from "next-themes";
 import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { useSelectedCustomizerTheme, useThemeConfig } from "@/lib/examples/use-theme-config";
+import { useSelectedCustomizerTheme, useThemeConfig } from "@/hooks/use-theme-config";
 
 const data = [
   {

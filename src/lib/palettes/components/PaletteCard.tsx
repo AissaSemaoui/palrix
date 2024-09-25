@@ -12,7 +12,7 @@ import { SHADES_NAMES } from "@/config/constants";
 import type { Palette } from "@/server/types";
 import { generatePalettePreview } from "@/server/utils/colors";
 import UiExamplesDrawer from "./UiExamplesDrawer";
-import { useThemeCustomizerActions } from "@/lib/examples/use-theme-config";
+import { useThemeCustomizerActions } from "@/hooks/use-theme-config";
 import { Icons } from "@/components/Icons";
 import EditColorNameDialog from "./EditColorNameDialog";
 

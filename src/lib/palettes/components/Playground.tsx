@@ -5,19 +5,20 @@ import { Button } from "@/components/ui/button";
 import Tile from "@/components/ui/tile";
 import PaletteCard from "./PaletteCard";
 
+import { useGetPalette } from "@/api-client/queries/useGetPalette";
 import { Icons } from "@/components/Icons";
-import { useSelectedPalette } from "@/hooks/use-playground";
 import { cn } from "@/lib/utils";
 import EditPaletteNameDialog from "./EditPaletteNameDialog";
 import NewColorDialog from "./NewColorDialog";
-import BackgroundBoxes from "@/components/BackgroundBoxes";
 
 type PlaygroundProps = {
   className?: string;
 };
 
 const Playground = ({ className }: PlaygroundProps) => {
-  const selectedPalette = useSelectedPalette();
+  const { data: selectedPalette } = useGetPalette();
+
+  console.log("selectedPalette: ", selectedPalette);
 
   if (!selectedPalette) {
     return (

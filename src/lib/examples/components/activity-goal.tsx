@@ -8,7 +8,7 @@ import { Bar, BarChart, ResponsiveContainer } from "recharts";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 
-import { useSelectedCustomizerTheme } from "@/lib/examples/use-theme-config";
+import { useSelectedCustomizerTheme } from "@/hooks/use-theme-config";
 
 const data = [
   {

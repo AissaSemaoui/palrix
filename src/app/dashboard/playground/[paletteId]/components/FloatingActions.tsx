@@ -1,23 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { Icons } from "@/components/Icons";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import Tile from "@/components/ui/tile";
-
-import { cn } from "@/lib/utils";
-import PromptCard from "./PromptCard";
 import ExportDialog from "@/lib/palettes/components/ExportDialog";
-import { useSelectedPalette } from "@/hooks/use-playground";
+import PromptCard from "./PromptCard";
+
+import { useGetPalette } from "@/api-client/queries/useGetPalette";
+import { cn } from "@/lib/utils";
 
 type FloatingActionsProps = {
   className?: string;
 };
 
 const FloatingActions = ({ className }: FloatingActionsProps) => {
-  const selectedPalette = useSelectedPalette();
+  const { data: selectedPalette } = useGetPalette();
 
   const [showPromptCard, setShowPromptCard] = useState(false);
 
@@ -31,7 +31,6 @@ const FloatingActions = ({ className }: FloatingActionsProps) => {
         <div className="flex items-center gap-2">
           <ModeToggle className="mr-2" />
 
-          <Button variant="outline">Save</Button>
           <ExportDialog colors={selectedPalette?.colors}>
             <Button variant="outline">Export</Button>
           </ExportDialog>

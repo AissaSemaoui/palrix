@@ -1,15 +1,17 @@
 "use client";
-import { toast } from "react-hot-toast";
+
+import Link from "next/link";
 
 import ColorBox from "@/components/ColorBox";
 import Heading from "@/components/Heading";
-import Tile from "@/components/ui/tile";
 import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
+import Tile from "@/components/ui/tile";
 
 import { usePlaygroundActions } from "@/hooks/use-playground";
 import { cn } from "@/lib/utils";
 
+import { paths } from "@/config/navigations";
 import type { Palette } from "@/server/types";
 
 type PaletteCardProps = Palette & {
@@ -27,36 +29,38 @@ const PaletteDisplayCard = ({ className, ...palette }: PaletteCardProps) => {
 
   const { setSelectedPalette } = usePlaygroundActions();
 
-  const handleSelectPalette = () => {
-    setSelectedPalette(palette);
-    toast.success(`${palette.name} palette selected!`);
-  };
+  // const handleSelectPalette = () => {
+  //   setSelectedPalette(palette);
+  //   toast.success(`${palette.name} palette selected!`);
+  // };
 
   return (
-    <Tile
-      size="md"
-      className={cn(
-        "cursor-pointer space-y-2 border-none p-2 transition-all duration-100 hover:ring hover:ring-accent",
-        className,
-      )}
-      onClick={handleSelectPalette}
-    >
-      <div className="flex items-center justify-between gap-2">
-        <Heading type={5} className="capitalize">
-          {name}
-        </Heading>
-        <Button variant="secondary" size="md">
-          Select
-          <Icons.arrowRight className="ml-1 h-3 w-3 text-secondary-foreground" />
-        </Button>
-      </div>
+    <Link href={paths.dashboard.playground(palette.id)}>
+      <Tile
+        size="md"
+        className={cn(
+          "cursor-pointer space-y-2 border-none p-2 transition-all duration-100 hover:ring hover:ring-accent",
+          className,
+        )}
+        // onClick={handleSelectPalette}
+      >
+        <div className="flex items-center justify-between gap-2">
+          <Heading type={5} className="capitalize">
+            {name}
+          </Heading>
+          <Button variant="secondary" size="md">
+            Select
+            <Icons.arrowRight className="ml-1 h-3 w-3 text-secondary-foreground" />
+          </Button>
+        </div>
 
-      <div className="flex w-full max-w-full justify-stretch gap-1 overflow-x-hidden">
-        {formattedShades.map(({ shade, name }) => (
-          <ColorBox key={shade} color={shade} name={name} showCode={false} className="w-full" />
-        ))}
-      </div>
-    </Tile>
+        <div className="flex w-full max-w-full justify-stretch gap-1 overflow-x-hidden">
+          {formattedShades.map(({ shade, name }) => (
+            <ColorBox key={shade} color={shade} name={name} showCode={false} className="w-full" />
+          ))}
+        </div>
+      </Tile>
+    </Link>
   );
 };
 

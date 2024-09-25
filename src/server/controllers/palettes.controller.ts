@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { and, count, desc, eq } from "drizzle-orm";
 import httpStatus from "http-status";
 
 import { db } from "@server/db";
@@ -18,6 +18,21 @@ export const savePaletteController: ExpressMiddleware = async (req, res) => {
   res.status(httpStatus.CREATED).json(ApiResponse(newPalette));
 };
 
+export const getPaletteController: ExpressMiddleware = async (req, res) => {
+  console.log("we received a palette request?");
+
+  const userId = req.auth.userId;
+  const paletteId = req.params.paletteId;
+
+  const palette = await db
+    .select()
+    .from(palettes)
+    .where(and(eq(palettes.userId, userId), eq(palettes.id, paletteId)))
+    .limit(1);
+
+  return res.status(httpStatus.OK).json(ApiResponse(palette[0]));
+};
+
 export const getPalettesController: ExpressMiddleware = async (req, res) => {
   const userId = req.auth.userId;
 
@@ -26,7 +41,7 @@ export const getPalettesController: ExpressMiddleware = async (req, res) => {
   const pageIndex = Number(query.p ?? 1) - 1;
   const pageSize = Number(query.s ?? 10);
 
-  const historyPalettes = await db
+  const historyPalettesQuery = db
     .select()
     .from(palettes)
     .where(eq(palettes.userId, userId))
@@ -34,7 +49,16 @@ export const getPalettesController: ExpressMiddleware = async (req, res) => {
     .limit(pageSize)
     .offset(pageIndex * pageSize);
 
+  const historyPalettesCountQuery = db
+    .select({ count: count(palettes.id) })
+    .from(palettes)
+    .where(eq(palettes.userId, userId));
+
+  const [historyPalettes, historyPalettesCount] = await Promise.all([historyPalettesQuery, historyPalettesCountQuery]);
+
   console.log(historyPalettes.length);
 
-  return res.status(httpStatus.OK).json(ApiResponse(historyPalettes));
+  return res
+    .status(httpStatus.OK)
+    .json(ApiResponse(historyPalettes, { page: pageIndex, pageSize, totalCount: historyPalettesCount[0].count }));
 };

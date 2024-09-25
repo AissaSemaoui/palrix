@@ -4,6 +4,7 @@ export const paths = {
     root: "/dashboard",
     home: "/dashboard/playground",
     playground: (paletteId: string) => `/dashboard/playground/${paletteId}`,
+    history: "/dashboard/history",
     settings: "/dashboard/settings",
     profile: "/dashboard/profile",
   },

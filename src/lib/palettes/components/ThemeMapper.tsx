@@ -1,3 +1,4 @@
+import { useGetPalette } from "@/api-client/queries/useGetPalette";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,9 +13,8 @@ import {
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CSS_VARS_NAMES, DEFAULT_THEME, MAPPER_THEME, SHADES_NAMES } from "@/config/constants";
-import { useSelectedPalette } from "@/hooks/use-playground";
+import { useThemeCustomizer, useThemeCustomizerActions } from "@/hooks/use-theme-config";
 import { Popover, PopoverContent, PopoverTrigger } from "@/lib/examples/components/ui/popover";
-import { useThemeCustomizer, useThemeCustomizerActions } from "@/lib/examples/use-theme-config";
 import { Palette } from "@/server/types";
 import { ThemeMappingItem, ThemeMode, ThemeVariables } from "@/types";
 import React from "react";
@@ -35,7 +35,7 @@ const ThemeMapper = ({ children }: ThemeMapperProps) => {
   const { updateThemeMapping, setThemeConfig } = useThemeCustomizerActions();
   const themeMapping = useThemeCustomizer((state) => state.themeMapping);
 
-  const selectedPalette = useSelectedPalette();
+  const { data: selectedPalette } = useGetPalette();
 
   if (!selectedPalette) return;
 

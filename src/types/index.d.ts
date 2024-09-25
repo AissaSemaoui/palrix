@@ -1,15 +1,14 @@
 import {
-  DefinedInitialDataOptions,
   MutationFunction,
-  MutationOptions,
   QueryFunction,
   QueryKey,
-  QueryOptions,
+  UseMutationOptions,
+  UseQueryOptions,
   WithRequired,
 } from "@tanstack/react-query";
 import type { LucideIcon } from "lucide-react";
 
-import { Session, User } from "@/server/types";
+import { User } from "@/server/types";
 import { AxiosError } from "axios";
 
 type Maybe<T> = T | undefined;
@@ -23,20 +22,20 @@ interface NavItem {
   href: string;
   disabled?: boolean;
   fullMatch?: boolean;
+  Component?: React.ComponentType;
 }
 
-type CustomMutationOptions<TFunction extends MutationFunction<any, any>> = MutationOptions<
+type CustomMutationOptions<TFunction extends MutationFunction<any, any>> = UseMutationOptions<
   Awaited<ReturnType<TFunction>>,
   AxiosError,
   Parameters<TFunction>[0]
 >;
 
-type CustomQueryOptions<TFunction extends QueryFunction<any, any>> = QueryOptions<
+type CustomQueryOptions<TFunction extends QueryFunction<any, any>> = UseQueryOptions<
   Awaited<ReturnType<TFunction>>,
   AxiosError,
   Awaited<ReturnType<TFunction>>,
-  QueryKey,
-  DefinedInitialDataOptions<TFunction>
+  QueryKey
 >;
 
 type ThemeMode = "light" | "dark";
@@ -98,14 +97,14 @@ export {
   CustomMutationOptions,
   CustomQueryOptions,
   Maybe,
-  Optional,
   NavItem,
+  Optional,
+  Theme,
+  ThemeConfig,
+  ThemeMapping,
+  ThemeMappingItem,
+  ThemeMode,
+  ThemeVariables,
   User,
   WithRequired,
-  Theme,
-  ThemeVariables,
-  ThemeMode,
-  ThemeConfig,
-  ThemeMappingItem,
-  ThemeMapping,
 };
