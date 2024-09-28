@@ -19,6 +19,7 @@ export const users = pgTable("user", {
 export const palettes = pgTable("palette", {
   id: text("id").primaryKey().$defaultFn(createId),
   name: text("name").notNull(),
+  description: text("description").notNull().default(""),
   userId: text("user_id")
     .notNull()
     .references(() => users.id),

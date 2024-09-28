@@ -11,7 +11,7 @@ export const catchController =
     } catch (err) {
       const error = err as Error;
 
-      logger.error({ name: error.name, message: error.message, cause: error.cause }, trace);
+      logger.error({ ...error, cause: error.cause }, trace);
       console.log("within the controller error");
       next(error);
     }

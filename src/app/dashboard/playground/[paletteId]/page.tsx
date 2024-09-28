@@ -42,8 +42,6 @@ const PlaygroundPage = ({ params }: PlaygroundPageProps) => {
       />
 
       <div className="gap-4">
-        <section className="mb-2 ml-auto w-min"></section>
-
         <section className="mb-20 space-y-6">
           <Playground />
 

@@ -49,7 +49,10 @@ function memoize<T extends (...args: any[]) => any>(fn: T): T {
 
 // Color palette generation
 // Update the generateColorPalette function to pass colorSpace to interpolateRange
-export function generateColorPalette(primaryColor: string, config: Partial<ColorPaletteConfig> = {}): string[] {
+export function generateColorPalette(
+  primaryColor: string,
+  config: Partial<ColorPaletteConfig> = {},
+): { shades: string[] } {
   const fullConfig = { ...defaultConfig, ...config };
   const { lightnessRange, saturationRange, numShades, colorSpace, interpolationMethod } = fullConfig;
 
@@ -63,7 +66,9 @@ export function generateColorPalette(primaryColor: string, config: Partial<Color
   const lightnessMap = interpolateRange(lightnessRange, numShades, interpolationMethod, colorSpace);
   const saturationMap = interpolateRange(saturationRange, numShades, interpolationMethod, colorSpace);
 
-  return lightnessMap.map((l, i) => chroma[colorSpace](baseHue, saturationMap[i], l).hex());
+  const shades = lightnessMap.map((l, i) => chroma[colorSpace](baseHue, saturationMap[i], l).hex());
+
+  return { shades };
 }
 
 function interpolateRange(
@@ -134,7 +139,7 @@ export function getAnalogousColors(color: string): [string, string] {
 }
 
 // Named palette function
-export function getNamedPalette(name: string, primaryColor: string): string[] {
+export function getNamedPalette(name: string, primaryColor: string): { shades: string[] } {
   const palette = namedPalettes.find((p) => p.name.toLowerCase() === name.toLowerCase());
   if (!palette) {
     throw new Error(`Named palette not found: ${name}`);

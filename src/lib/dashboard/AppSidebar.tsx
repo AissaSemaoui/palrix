@@ -41,7 +41,7 @@ const items: SidebarNavItem[] = [
     title: "History",
     href: paths.dashboard.home,
     Component: () => (
-      <Anchor href={paths.dashboard.home} variant="default" className={sidebarItemVariants.inactive.className}>
+      <Anchor href={paths.dashboard.home} variant="outline" className={sidebarItemVariants.inactive.className}>
         <Icons.plus className="mr-2 h-5 w-5" />
         New Palette
       </Anchor>
@@ -53,7 +53,7 @@ const items: SidebarNavItem[] = [
     href: paths.dashboard.history,
     Component: () => (
       <HistoryPopover side="right">
-        <Button variant="outline" className={sidebarItemVariants.inactive.className}>
+        <Button variant="ghost" className={sidebarItemVariants.inactive.className}>
           <Icons.history className="mr-2 h-5 w-5" />
           History
         </Button>

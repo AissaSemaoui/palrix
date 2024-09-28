@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { EventHandler, useState } from "react";
 
 import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
@@ -9,24 +9,35 @@ import { Textarea } from "@/components/ui/textarea";
 import { useChatWithPalette } from "@/api-client/mutations/useChatWithPalette";
 import { cn } from "@/lib/utils";
 import Tile from "@/components/ui/tile";
+import { useParams } from "next/navigation";
+import { queryClient, queryKeys } from "@/api-client";
 
 type PaletteChatInputProps = {
   className?: string;
 };
 
 const PaletteChatInput = ({ className }: PaletteChatInputProps) => {
+  const params = useParams();
+  const paletteId = params.paletteId as string;
+
   const [promptInput, setPromptInput] = useState("");
 
-  const { mutate, isPending } = useChatWithPalette();
+  const { mutate, isPending } = useChatWithPalette(paletteId, {
+    onSuccess: (data) => {
+      console.log("chat success response : ", data);
+      queryClient.refetchQueries({ queryKey: queryKeys.getPalette(paletteId) });
+    },
+  });
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     mutate({
       userPrompt: promptInput,
     });
   };
 
   return (
-    <Tile className="-mb-2 bg-secondary pb-6">
+    <Tile className="-mb-2 bg-secondary pb-6 shadow-md">
       <form
         onSubmit={handleSubmit}
         className={cn(

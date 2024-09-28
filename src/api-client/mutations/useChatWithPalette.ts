@@ -1,13 +1,15 @@
 "use client";
 
-import { requests } from "@/api-client/requests";
+import { queryKeys, requests } from "@/api-client/requests";
 import { CustomMutationOptions } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
-type GeneratePalette = typeof requests.generatePalette;
+type ChatWithPalette = (
+  variables: Parameters<typeof requests.chatWithPalette>[1],
+) => ReturnType<typeof requests.chatWithPalette>;
 
-export const useChatWithPalette = (options?: CustomMutationOptions<GeneratePalette>) =>
+export const useChatWithPalette = (paletteId: string, options?: CustomMutationOptions<ChatWithPalette>) =>
   useMutation({
     ...options,
-    mutationFn: requests.generatePalette,
+    mutationFn: (data) => requests.chatWithPalette(paletteId, data),
   });

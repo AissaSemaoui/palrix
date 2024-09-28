@@ -3,7 +3,7 @@ import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import { axiosInstance } from "@/lib/axios";
 import { Palette } from "@/server/types";
 
-import { GeneratePaletteValidation } from "@/server/validations/generation.validation";
+import { ChatWithPaletteValidation, GeneratePaletteValidation } from "@/server/validations/generation.validation";
 
 import { type ApiResponseReturn } from "@/server/utils/response";
 
@@ -12,6 +12,8 @@ const makeRequests = (axios: AxiosInstance, config?: AxiosRequestConfig) => {
     signOut: () => axios.post<void>("/api/auth/logout", {}),
     generatePalette: (data: GeneratePaletteValidation["body"]) =>
       axios.post<ApiResponseReturn<Palette>>("/api/generate/palette", data).then((res) => res.data.data),
+    chatWithPalette: (paletteId: string, data: ChatWithPaletteValidation["body"]) =>
+      axios.post<ApiResponseReturn<Palette>>(`/api/generate/palette/${paletteId}`, data).then((res) => res.data.data),
     getPalettes: () => axios.get<ApiResponseReturn<Palette[], true>>("/api/palettes").then((res) => res.data.data),
     getPalette: (paletteId: string) =>
       axios.get<ApiResponseReturn<Palette>>(`/api/palettes/${paletteId}`).then((res) => res.data.data),

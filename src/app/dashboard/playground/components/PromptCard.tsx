@@ -69,11 +69,11 @@ const PromptCard = ({ className }: PromptCardProps) => {
 
   const { mutate, status } = useGeneratePalette({
     onSuccess: (data) => {
+      router.push(paths.dashboard.playground(data.id));
+
       queryClient.invalidateQueries({
         queryKey: queryKeys.getPalettes(),
       });
-
-      router.push(paths.dashboard.playground(data.id));
     },
   });
 
@@ -99,7 +99,7 @@ const PromptCard = ({ className }: PromptCardProps) => {
         onSubmit={handleGeneratePalette}
         loading={!isRandom.current && status === "pending"}
         disabled={status === "pending"}
-        className="border-purple-500"
+        className="border-purple-200"
       />
       <Button
         type="button"

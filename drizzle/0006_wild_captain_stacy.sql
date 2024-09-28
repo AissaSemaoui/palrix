@@ -1,0 +1,1 @@
+ALTER TABLE "palette" ALTER COLUMN "name" SET DEFAULT '';

@@ -15,7 +15,7 @@ const DashboardPage = () => {
           </p>
         </header>
         <section className="mx-auto max-w-screen-md">
-          <PromptCard className="w-full " />
+          <PromptCard className="w-full" />
         </section>
       </section>
     </BackgroundBoxes>

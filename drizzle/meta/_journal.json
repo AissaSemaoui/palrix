@@ -43,6 +43,20 @@
       "when": 1723453775538,
       "tag": "0005_bouncy_darkstar",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1727549614086,
+      "tag": "0006_wild_captain_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1727557837529,
+      "tag": "0007_classy_triton",
+      "breakpoints": true
     }
   ]
 }
