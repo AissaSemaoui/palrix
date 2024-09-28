@@ -8,7 +8,6 @@ import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
 import Tile from "@/components/ui/tile";
 
-import { usePlaygroundActions } from "@/hooks/use-playground";
 import { cn } from "@/lib/utils";
 
 import { paths } from "@/config/navigations";
@@ -26,13 +25,6 @@ const PaletteDisplayCard = ({ className, ...palette }: PaletteCardProps) => {
     shade: color.mainShade ?? color.shades?.[4] ?? color.shades?.[2] ?? color.shades?.[1] ?? color.shades?.[0],
     name: color.name,
   }));
-
-  const { setSelectedPalette } = usePlaygroundActions();
-
-  // const handleSelectPalette = () => {
-  //   setSelectedPalette(palette);
-  //   toast.success(`${palette.name} palette selected!`);
-  // };
 
   return (
     <Link href={paths.dashboard.playground(palette.id)}>

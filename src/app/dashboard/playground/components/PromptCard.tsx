@@ -1,50 +1,41 @@
 "use client";
 
-import React, { useDeferredValue, useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
-import Heading from "@/components/Heading";
-import { Textarea } from "@/components/ui/textarea";
 import { Icons } from "@/components/Icons";
-import { Illustrations } from "@/components/Illustrations";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 
-import { useGeneratePalette } from "@/api-client/mutations/useGeneratePalette";
-import { usePlaygroundActions, usePlaygroundStatus, usePrompt } from "@/hooks/use-playground";
 import { queryClient, queryKeys } from "@/api-client";
-import Tile from "@/components/ui/tile";
+import { useGeneratePalette } from "@/api-client/mutations/useGeneratePalette";
+import { paths } from "@/config/navigations";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 type PromptInputProps = {
-  onSubmit: () => void;
+  onSubmit: (prompt: string) => void;
   loading: boolean;
   disabled: boolean;
   className?: string;
 };
 
-type PromptCardProps = {};
+type PromptCardProps = {
+  className?: string;
+};
 
-export const PromptInput = ({ onSubmit, loading, className, disabled }: PromptInputProps) => {
-  const { setPrompt } = usePlaygroundActions();
-
+const PromptInput = ({ onSubmit, loading, className, disabled }: PromptInputProps) => {
   const [promptInput, setPromptInput] = useState("");
-
-  const deferredPrompt = useDeferredValue(promptInput);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit();
+    onSubmit(promptInput);
   };
-
-  useEffect(() => {
-    setPrompt(deferredPrompt);
-  }, [deferredPrompt]);
 
   return (
     <form
       onSubmit={handleSubmit}
       className={cn(
-        "relative w-full overflow-hidden rounded-sm border bg-background focus-within:ring-1 focus-within:ring-ring",
+        "relative w-full overflow-hidden rounded-md border bg-background focus-within:ring-1 focus-within:ring-ring",
         className,
       )}
     >
@@ -52,7 +43,7 @@ export const PromptInput = ({ onSubmit, loading, className, disabled }: PromptIn
         value={promptInput}
         onChange={(e) => setPromptInput(e.currentTarget.value)}
         id="prompt_input"
-        placeholder={`Describe your website in few words;
+        placeholder={`Describe your website in few words
 Ex. A coffee shop website`}
         className="h-full min-h-8 border-0 p-3 shadow-none focus-visible:ring-0"
       />
@@ -73,31 +64,22 @@ Ex. A coffee shop website`}
   );
 };
 
-const PromptCard = ({}: PromptCardProps) => {
-  const { setSelectedPalette, setStatus } = usePlaygroundActions();
-  const status = usePlaygroundStatus();
+const PromptCard = ({ className }: PromptCardProps) => {
+  const router = useRouter();
 
-  const prompt = usePrompt();
-
-  const { mutate } = useGeneratePalette({
-    onMutate: () => setStatus("loading"),
-    onSettled: () => setStatus("idle"),
+  const { mutate, status } = useGeneratePalette({
     onSuccess: (data) => {
-      setSelectedPalette(data);
-      setStatus("success");
       queryClient.invalidateQueries({
         queryKey: queryKeys.getPalettes(),
       });
-    },
-    onError: (error) => {
-      console.error(error);
-      setStatus("error");
+
+      router.push(paths.dashboard.playground(data.id));
     },
   });
 
   const isRandom = useRef(false);
 
-  const handleGeneratePalette = () => {
+  const handleGeneratePalette = (prompt: string) => {
     isRandom.current = false;
     mutate({
       userPrompt: prompt,
@@ -112,24 +94,26 @@ const PromptCard = ({}: PromptCardProps) => {
   };
 
   return (
-    <Tile shadow="lg" className="-mb-2 flex items-end gap-4 bg-secondary pb-6">
+    <div className={cn("flex flex-col gap-2", className)}>
       <PromptInput
         onSubmit={handleGeneratePalette}
-        loading={!isRandom.current && status === "loading"}
-        disabled={status === "loading"}
+        loading={!isRandom.current && status === "pending"}
+        disabled={status === "pending"}
+        className="border-purple-500"
       />
       <Button
         type="button"
         variant="outline"
         size="md"
         onClick={handleGenerateRandomPalette}
-        disabled={status === "loading"}
-        loading={isRandom.current && status === "loading"}
+        disabled={status === "pending"}
+        loading={isRandom.current && status === "pending"}
+        className="w-fit"
       >
         <Icons.refresh className="mr-2 h-4 w-4" />
         Random
       </Button>
-    </Tile>
+    </div>
   );
 };
 

@@ -7,10 +7,11 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import Tile from "@/components/ui/tile";
 import ExportDialog from "@/lib/palettes/components/ExportDialog";
-import PromptCard from "./PromptCard";
+import PromptCard from "../../components/PromptCard";
 
 import { useGetPalette } from "@/api-client/queries/useGetPalette";
 import { cn } from "@/lib/utils";
+import PaletteChatInput from "./PaletteChatInput";
 
 type FloatingActionsProps = {
   className?: string;
@@ -25,7 +26,7 @@ const FloatingActions = ({ className }: FloatingActionsProps) => {
 
   return (
     <div className={cn("w-full max-w-screen-md px-4", className)} id="floating-actions">
-      {showPromptCard && <PromptCard />}
+      {showPromptCard && <PaletteChatInput />}
 
       <Tile shadow="lg" className="flex items-center justify-between border-2 border-purple-600">
         <div className="flex items-center gap-2">
@@ -37,7 +38,7 @@ const FloatingActions = ({ className }: FloatingActionsProps) => {
         </div>
 
         <Button size="lg" onClick={() => setShowPromptCard((prev) => !prev)}>
-          Generate New Palette
+          Chat with your palette
           {showPromptCard ? (
             <Icons.chevronDown className="ml-2 h-4 w-4" />
           ) : (

@@ -37,10 +37,15 @@ const sidebarItemVariants = {
 
 const items: SidebarNavItem[] = [
   {
-    Icon: Icons.playground,
-    title: "Playground",
+    Icon: Icons.history,
+    title: "History",
     href: paths.dashboard.home,
-    fullMatch: false,
+    Component: () => (
+      <Anchor href={paths.dashboard.home} variant="default" className={sidebarItemVariants.inactive.className}>
+        <Icons.plus className="mr-2 h-5 w-5" />
+        New Palette
+      </Anchor>
+    ),
   },
   {
     Icon: Icons.history,
@@ -48,13 +53,19 @@ const items: SidebarNavItem[] = [
     href: paths.dashboard.history,
     Component: () => (
       <HistoryPopover side="right">
-        <Button variant={"outline"} className={sidebarItemVariants.inactive.className}>
+        <Button variant="outline" className={sidebarItemVariants.inactive.className}>
           <Icons.history className="mr-2 h-5 w-5" />
           History
         </Button>
       </HistoryPopover>
     ),
   },
+  // {
+  //   Icon: Icons.playground,
+  //   title: "Playground",
+  //   href: paths.dashboard.home,
+  //   fullMatch: false,
+  // },
   {
     Icon: Icons.settings,
     title: "Settings",

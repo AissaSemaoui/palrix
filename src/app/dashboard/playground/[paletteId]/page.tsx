@@ -1,14 +1,17 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
+import FloatingActions from "./components/FloatingActions";
 
 import AppPage from "@/lib/dashboard/AppPage";
 import Playground from "@/lib/palettes/components/Playground";
 import HistoryPopover from "@/lib/palettes/components/HistoryPopover";
-import FloatingActions from "./components/FloatingActions";
 
 import { useGetPalette } from "@/api-client/queries/useGetPalette";
+import { useThemeCustomizerActions } from "@/hooks/use-theme-config";
 
 type PlaygroundPageProps = {
   params: {
@@ -18,6 +21,12 @@ type PlaygroundPageProps = {
 
 const PlaygroundPage = ({ params }: PlaygroundPageProps) => {
   const { data, isLoading, isError } = useGetPalette(params.paletteId, { refetchOnMount: true });
+  const { generateThemes } = useThemeCustomizerActions();
+
+  useEffect(() => {
+    if (!data) return;
+    generateThemes(data);
+  }, [data]);
 
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h1>Error...</h1>;

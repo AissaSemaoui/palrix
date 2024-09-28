@@ -1,10 +1,9 @@
-import { DEFAULT_THEME, MAPPER_THEME } from "@/config/constants";
-import { usePlayground } from "@/hooks/use-playground";
+import { DEFAULT_THEME } from "@/config/constants";
 import { themes } from "@/lib/examples/themes";
 import { Palette } from "@/server/types";
 import { Theme, ThemeConfig, ThemeMapping, ThemeMappingItem, ThemeMode, ThemeVariables } from "@/types";
 import { create } from "zustand";
-import { generateThemeFromColor, generateThemeFromMapping } from "../lib/examples/generateThemeFromColor";
+import { generateThemeFromColor } from "../lib/examples/generateThemeFromColor";
 
 type UseThemeCustomizer = {
   themeConfig: ThemeConfig;
@@ -116,30 +115,30 @@ export const useThemeCustomizer = create<UseThemeCustomizer>((set) => ({
   generateThemes: (palette) => set({ themes: palette.colors.map(generateThemeFromColor) }),
 }));
 
-let themeCustomizerInit = false;
-useThemeCustomizer.subscribe((state, prevState) => {
-  if (state.themeMapping !== prevState.themeMapping || !themeCustomizerInit) {
-    const selectedPalette = usePlayground.getState().selectedPalette;
-    themeCustomizerInit = true;
+// let themeCustomizerInit = false;
+// useThemeCustomizer.subscribe((state, prevState) => {
+//   if (state.themeMapping !== prevState.themeMapping || !themeCustomizerInit) {
+//     const selectedPalette = usePlayground.getState().selectedPalette;
+//     themeCustomizerInit = true;
 
-    if (!selectedPalette) return;
+//     if (!selectedPalette) return;
 
-    state.upsertTheme(generateThemeFromMapping(selectedPalette, state.themeMapping));
-  }
-});
+//     state.upsertTheme(generateThemeFromMapping(selectedPalette, state.themeMapping));
+//   }
+// });
 
-let playgroundInit = false;
-usePlayground.subscribe((state, prevState) => {
-  if (state.selectedPalette !== prevState.selectedPalette || !playgroundInit) {
-    if (!state.selectedPalette) return;
+// let playgroundInit = false;
+// usePlayground.subscribe((state, prevState) => {
+//   if (state.selectedPalette !== prevState.selectedPalette || !playgroundInit) {
+//     if (!state.selectedPalette) return;
 
-    console.log("did it generate themes : ", state.selectedPalette);
+//     console.log("did it generate themes : ", state.selectedPalette);
 
-    useThemeCustomizer.getState().generateThemes(state.selectedPalette);
-  }
-  playgroundInit = true;
-  console.log(state, prevState);
-});
+//     useThemeCustomizer.getState().generateThemes(state.selectedPalette);
+//   }
+//   playgroundInit = true;
+//   console.log(state, prevState);
+// });
 
 export const useThemeConfig = () => useThemeCustomizer((state) => state.themeConfig);
 
