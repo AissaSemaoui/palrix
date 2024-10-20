@@ -10,6 +10,7 @@ import { errorHandler } from "@server/middlewares/errorHandler.middleware";
 import { nextApp, nextHandler } from "@server/next_app";
 import { generationRoutes, palettesRoutes, webhookRoutes } from "@server/routes";
 import { logger } from "@server/utils/logger";
+import { ApiError } from "./utils/errors";
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,6 +25,12 @@ app.use(express.json());
 
 app.use("/api/palettes", palettesRoutes);
 app.use("/api/generate", generationRoutes);
+
+app.all("/api/*", () => {
+  console.log("this is not found!");
+
+  throw new ApiError("Not Found!", 404);
+});
 
 app.use((req, res) => nextHandler(req, res));
 

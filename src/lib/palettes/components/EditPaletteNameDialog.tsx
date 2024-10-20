@@ -14,20 +14,24 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Loader } from "@/components/ui/loader";
 
 type EditPaletteNameDialogProps = React.PropsWithChildren<{
   defaultName?: string;
+  onSubmit: (name: string) => void;
+  isLoading?: boolean;
 }>;
 
-const EditPaletteNameDialog = ({ defaultName, children }: EditPaletteNameDialogProps) => {
-  const [paletteName, setPaletteName] = useState(defaultName);
+const EditPaletteNameDialog = ({ defaultName, onSubmit, isLoading, children }: EditPaletteNameDialogProps) => {
+  const [paletteName, setPaletteName] = useState(defaultName ?? "");
 
   const handleUpdatePaletteName = () => {
     console.log(paletteName);
+    onSubmit(paletteName);
   };
 
   useEffect(() => {
-    setPaletteName(defaultName);
+    if (defaultName) setPaletteName(defaultName);
   }, [defaultName]);
 
   return (
@@ -48,10 +52,16 @@ const EditPaletteNameDialog = ({ defaultName, children }: EditPaletteNameDialogP
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline" disabled={isLoading}>
+              Cancel
+            </Button>
           </DialogClose>
 
-          <Button onClick={handleUpdatePaletteName}>Save</Button>
+          <DialogClose asChild>
+            <Button onClick={handleUpdatePaletteName} disabled={isLoading}>
+              {isLoading ? <Loader /> : "Save"}
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -63,7 +63,7 @@ export const updatePalette = async (paletteId: string, userId: string, payload: 
     const palette = await getPalette(paletteId, userId);
 
     newColors = palette.colors;
-    payload.colors.forEach((c) => {
+    colors.forEach((c) => {
       const oldColor = newColors[c.index];
       newColors[c.index] = {
         ...oldColor,

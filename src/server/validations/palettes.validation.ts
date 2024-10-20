@@ -39,12 +39,14 @@ export const updatePaletteValidation = z.object({
   }),
   body: z.object({
     payload: z.object({
-      colors: z.array(
-        z.object({
-          index: z.number(),
-          updates: paletteInsertSchema.shape.colors.element,
-        }),
-      ),
+      colors: z
+        .array(
+          z.object({
+            index: z.number(),
+            updates: paletteInsertSchema.shape.colors.element.partial(),
+          }),
+        )
+        .optional(),
       ...paletteInsertSchema.omit({ id: true, createdAt: true, updatedAt: true, colors: true }).partial().shape,
     }),
   }),

@@ -4,11 +4,11 @@ import { logger } from "../utils/logger";
 
 type ErrorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => void;
 
-export const errorHandler: ErrorHandler = async (err, req, res, next) => {
+export const errorHandler: ErrorHandler = async (err: Error & { status?: number }, req, res, next) => {
   logger.error(err);
 
   if (err) {
-    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
+    return res.status(err.status ?? httpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 
   next();

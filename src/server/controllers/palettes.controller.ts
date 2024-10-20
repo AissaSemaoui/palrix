@@ -23,15 +23,17 @@ export const createPaletteController: ExpressMiddleware = async (req, res) => {
 };
 
 export const updatePaletteController: ExpressMiddleware = async (req, res) => {
-  console.log("we received a palette request?");
+  console.log("we received an update palette request?");
 
   const userId = req.auth.userId;
   const paletteId = req.params.paletteId;
   const body = req.body as UpdatePaletteValidation["body"];
 
-  await updatePalette(paletteId, userId, body.payload);
+  console.log("before palette update!");
+  const palette = await updatePalette(paletteId, userId, body.payload);
+  console.log("after palette update!", palette);
 
-  return res.status(httpStatus.OK);
+  return res.status(httpStatus.OK).json(ApiResponse(palette));
 };
 
 export const getPaletteController: ExpressMiddleware = async (req, res) => {

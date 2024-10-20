@@ -14,20 +14,24 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Loader } from "@/components/ui/loader";
 
 type EditColorNameDialogProps = React.PropsWithChildren<{
   defaultName?: string;
+  onSubmit: (name: string) => void;
+  isLoading?: boolean;
 }>;
 
-const EditColorNameDialog = ({ defaultName, children }: EditColorNameDialogProps) => {
+const EditColorNameDialog = ({ defaultName, onSubmit, isLoading, children }: EditColorNameDialogProps) => {
   const [colorName, setColorName] = useState(defaultName);
 
   const handleUpdateColorName = () => {
     console.log(colorName);
+    if (colorName) onSubmit(colorName);
   };
 
   useEffect(() => {
-    setColorName(defaultName);
+    if (defaultName) setColorName(defaultName);
   }, [defaultName]);
 
   return (
@@ -48,10 +52,14 @@ const EditColorNameDialog = ({ defaultName, children }: EditColorNameDialogProps
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline" disabled={isLoading}>
+              Cancel
+            </Button>
           </DialogClose>
 
-          <Button onClick={handleUpdateColorName}>Save</Button>
+          <Button onClick={handleUpdateColorName} disabled={isLoading}>
+            {isLoading ? <Loader /> : "Save"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

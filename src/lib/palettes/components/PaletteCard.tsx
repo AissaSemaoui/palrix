@@ -21,11 +21,27 @@ import { FormItem } from "@/components/ui/form";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { CardContent } from "@/components/ui/card";
+import { useUpdatePalette } from "@/api-client/mutations/useUpdatePalette";
+import { queryClient, queryKeys } from "@/api-client";
+import toast from "react-hot-toast";
 
 type PaletteCardProps = Pick<Palette["colors"][number], "name" | "shades" | "mainShade"> &
-  Pick<Palette, "primaryShade">;
+  Pick<Palette, "primaryShade"> & {
+    paletteId: Palette["id"];
+    index: number;
+  };
 
-const PaletteCard = ({ name, shades, mainShade }: PaletteCardProps) => {
+const PaletteCard = ({ paletteId, index, name, shades, mainShade }: PaletteCardProps) => {
+  const { mutate: updatePaletteAsync, isPending } = useUpdatePalette(paletteId, {
+    onSuccess: () => {
+      toast.success("Color Updated Successfully!");
+      queryClient.invalidateQueries({ queryKey: queryKeys.getPalette(paletteId) });
+    },
+    onError: (error) => {
+      toast.error(error?.message);
+    },
+  });
+
   const { setThemeConfig } = useThemeCustomizerActions();
   const [showShadeCustomizer, setShowShadeCustomizer] = useState(false);
 
@@ -40,6 +56,19 @@ const PaletteCard = ({ name, shades, mainShade }: PaletteCardProps) => {
     setThemeConfig({ theme: name });
   };
 
+  const handleUpdateColorName = (colorName: string) => {
+    updatePaletteAsync({
+      colors: [
+        {
+          index,
+          updates: {
+            name: colorName,
+          },
+        },
+      ],
+    });
+  };
+
   return (
     <article className="border-none">
       <div className="mb-3 flex items-end gap-2 px-2">
@@ -49,7 +78,7 @@ const PaletteCard = ({ name, shades, mainShade }: PaletteCardProps) => {
               {name}
             </Heading>
 
-            <EditColorNameDialog defaultName={name}>
+            <EditColorNameDialog defaultName={name} onSubmit={handleUpdateColorName} isLoading={isPending}>
               <Button variant="ghost" size="icon-sm">
                 <Icons.edit className="h-3 w-3" />
               </Button>

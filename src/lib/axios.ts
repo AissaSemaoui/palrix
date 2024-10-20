@@ -1,13 +1,10 @@
-import axios, { AxiosError } from "axios";
-import httpStatus from "http-status";
-
-import { queryClient, queryKeys } from "@/api-client";
+import axios from "axios";
 
 export const axiosInstance = axios.create({
-  withCredentials: true,
+  withCredentials: false,
 });
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error: AxiosError) => {},
+  // (error: AxiosError) => {},
 );
