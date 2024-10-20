@@ -12,8 +12,12 @@ export const paletteInsertSchema = createInsertSchema(palettes, {
   ),
 });
 
-export const savePaletteValidation = z.object({
+export const createPaletteValidation = z.object({
   body: paletteInsertSchema,
+});
+
+export const savePaletteValidation = z.object({
+  body: paletteInsertSchema.omit({ userId: true, createdAt: true, updatedAt: true }),
 });
 
 export const getPalettesValidation = z.object({
@@ -33,7 +37,17 @@ export const updatePaletteValidation = z.object({
   params: z.object({
     paletteId: z.string(),
   }),
-  body: paletteInsertSchema.omit({ id: true, createdAt: true, updatedAt: true }).partial(),
+  body: z.object({
+    payload: z.object({
+      colors: z.array(
+        z.object({
+          index: z.number(),
+          updates: paletteInsertSchema.shape.colors.element,
+        }),
+      ),
+      ...paletteInsertSchema.omit({ id: true, createdAt: true, updatedAt: true, colors: true }).partial().shape,
+    }),
+  }),
 });
 
 export const deletePaletteValidation = z.object({
@@ -42,6 +56,7 @@ export const deletePaletteValidation = z.object({
   }),
 });
 
+export type CreatePaletteValidation = z.infer<typeof createPaletteValidation>;
 export type SavePaletteValidation = z.infer<typeof savePaletteValidation>;
 export type GetPalettesValidation = z.infer<typeof getPalettesValidation>;
 export type GetPaletteValidation = z.infer<typeof getPaletteValidation>;

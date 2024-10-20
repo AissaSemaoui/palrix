@@ -16,6 +16,7 @@ interface PaletteGenerationAiResponse {
   name: string;
   primaryShade: number;
   description: string;
+  comment: string;
   colors: {
     name: string;
     shade: string;
@@ -31,6 +32,8 @@ type PaletteDraft = Omit<Palette, "userId" | "createdAt" | "updatedAt">;
 
 export const generatePalette = async ({ userPrompt }: GeneratePaletteValidation["body"]): Promise<PaletteDraft> => {
   const { id, content, total_tokens } = await sendAiPrompt(PALETTE_GENERATION_PROMPT, userPrompt);
+
+  console.log("here is the content? : ", content);
 
   console.time("Generating Duration");
   const paletteObj: PaletteGenerationAiResponse = JSON.parse(content);
@@ -52,6 +55,7 @@ export const generatePalette = async ({ userPrompt }: GeneratePaletteValidation[
   }));
 
   console.log(total_tokens);
+  console.log(paletteObj);
 
   return {
     id,
@@ -78,8 +82,6 @@ export const chatWithPalette = async (paletteId: string, userPrompt: string): Pr
     JSON.stringify({ palette: selectedPalette, userPrompt }),
   );
 
-  console.log(content);
-
   console.time("Generating Duration");
   const paletteObj: PaletteGenerationAiResponse = JSON.parse(content);
   console.timeEnd("Generating Duration");
@@ -93,13 +95,14 @@ export const chatWithPalette = async (paletteId: string, userPrompt: string): Pr
       lightnessRange: [0.99, 0.05],
       saturationRange: [1, 0.5],
       ...c.config,
-      interpolationMethod: "linear",
+      interpolationMethod: "bezier",
     }).shades,
     mainShade: String(chroma(c.shade).get("hex")),
     // shades: generateShades(c.shade, maxShades, [0.98, 0.2], [1, 0.3]),
   }));
 
   console.log(total_tokens);
+  console.log(paletteObj);
 
   return {
     id,

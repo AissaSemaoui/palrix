@@ -3,19 +3,35 @@ import httpStatus from "http-status";
 
 import { db } from "@server/db";
 import { palettes } from "@server/db/schema";
-import { savePalette } from "@server/services/palettes.service";
+import { createPalette, updatePalette } from "@server/services/palettes.service";
 import type { ExpressMiddleware } from "@server/types";
 import { ApiResponse } from "@server/utils/response";
-import { GetPalettesValidation, SavePaletteValidation } from "@server/validations/palettes.validation";
+import {
+  GetPalettesValidation,
+  CreatePaletteValidation,
+  UpdatePaletteValidation,
+} from "@server/validations/palettes.validation";
 
-export const savePaletteController: ExpressMiddleware = async (req, res) => {
+export const createPaletteController: ExpressMiddleware = async (req, res) => {
   console.log("received a request from palette controller");
 
-  const body = req.body as SavePaletteValidation["body"];
+  const body = req.body as CreatePaletteValidation["body"];
 
-  const newPalette = await savePalette(body);
+  const newPalette = await createPalette(body);
 
-  res.status(httpStatus.CREATED).json(ApiResponse(newPalette));
+  return res.status(httpStatus.CREATED).json(ApiResponse(newPalette));
+};
+
+export const updatePaletteController: ExpressMiddleware = async (req, res) => {
+  console.log("we received a palette request?");
+
+  const userId = req.auth.userId;
+  const paletteId = req.params.paletteId;
+  const body = req.body as UpdatePaletteValidation["body"];
+
+  await updatePalette(paletteId, userId, body.payload);
+
+  return res.status(httpStatus.OK);
 };
 
 export const getPaletteController: ExpressMiddleware = async (req, res) => {

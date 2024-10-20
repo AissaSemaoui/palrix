@@ -12,6 +12,7 @@ import HistoryPopover from "@/lib/palettes/components/HistoryPopover";
 
 import { useGetPalette } from "@/api-client/queries/useGetPalette";
 import { useThemeCustomizerActions } from "@/hooks/use-theme-config";
+import { paletteInsertSchema } from "@/server/validations/palettes.validation";
 
 type PlaygroundPageProps = {
   params: {
@@ -32,6 +33,7 @@ const PlaygroundPage = ({ params }: PlaygroundPageProps) => {
   if (isError) return <h1>Error...</h1>;
 
   console.log("playground page: ", data);
+  console.log("palette schema : ", paletteInsertSchema.shape);
 
   return (
     <AppPage>

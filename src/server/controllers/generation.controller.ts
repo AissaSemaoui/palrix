@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 
 import { chatWithPalette, generatePalette } from "@server/services/generation.service";
-import { savePalette, updatePalette } from "@server/services/palettes.service";
+import { createPalette, savePalette, updatePalette } from "@server/services/palettes.service";
 import { AuthError } from "@server/utils/errors";
 import { ApiResponse } from "@server/utils/response";
 import { ChatWithPaletteValidation, GeneratePaletteValidation } from "@server/validations/generation.validation";
@@ -19,12 +19,12 @@ export const generatePaletteController: ExpressMiddleware = async (req, res, nex
 
   const paletteDraft = await generatePalette(body);
 
-  const savedPalette = await savePalette({
+  const createdPalette = await createPalette({
     userId,
     ...paletteDraft,
   });
 
-  res.status(httpStatus.OK).json(ApiResponse(savedPalette));
+  res.status(httpStatus.OK).json(ApiResponse(createdPalette));
 };
 
 export const chatWithPaletteController: ExpressMiddleware = async (req, res, next) => {
@@ -37,12 +37,9 @@ export const chatWithPaletteController: ExpressMiddleware = async (req, res, nex
   const paletteId = (req.params as ChatWithPaletteValidation["params"]).paletteId;
   const body = req.body as ChatWithPaletteValidation["body"];
 
-  const { id, ...paletteDraft } = await chatWithPalette(paletteId, body.userPrompt);
+  const { id, ...palettePayload } = await chatWithPalette(paletteId, body.userPrompt);
 
-  const updatedPalette = await updatePalette(paletteId, {
-    userId,
-    ...paletteDraft,
-  });
+  const updatedPalette = await savePalette(paletteId, userId, palettePayload);
 
   res.status(httpStatus.OK).json(ApiResponse(updatedPalette));
 };

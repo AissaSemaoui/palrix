@@ -16,13 +16,14 @@ export const PALETTE_GENERATION_PROMPT =
   
   Generate two alternative palettes to choose from.
   
-  Provide only the JSON output without additional commentary.
+  Provide only the JSON output without additional commentary, if you've a comment you can add it on the comment property as it's referenced on the JSON format
   Your response should strictly be in the following JSON format:
   
   {
     "name": "App Type/Theme",
     "primaryShade": 0,
     "description": "Brief description of the color choice and how it satisfy the user needs... without hard writing the color codes",
+    comment: "Add your comment here...",
     "colors": [
       {
         "name": "primary",
@@ -55,13 +56,14 @@ Consider the following when making changes:
 - Consistency: Keep the overall theme and feel of the app consistent unless explicitly requested otherwise.
 - Explain your reasoning: For each changed color, provide a brief explanation of your adjustment.
 
-Provide only the JSON output without additional commentary.
+if you've a comment you can add it on the comment property as it's referenced on the JSON format.
 Your response should be strictly in the following JSON format:
 
 {
   "name": "Remains same...",
   "primaryShade": "Remains same...",
   "description": "Brief description of the color choice and how it satisfy the user needs... without hard writing the color codes",
+  comment: "Add your comment here...",
   "colors": [
     {
       "name": "primary",
