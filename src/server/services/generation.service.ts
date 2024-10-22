@@ -50,7 +50,7 @@ export const generatePalette = async ({ userPrompt }: GeneratePaletteValidation[
       ...c.config,
       interpolationMethod: "linear",
     }).shades,
-    mainShade: String(chroma(c.shade).get("hex")),
+    mainShade: chroma(c.shade).hsl(),
     // shades: generateShades(c.shade, maxShades, [0.98, 0.2], [1, 0.3]),
   }));
 
@@ -97,7 +97,7 @@ export const chatWithPalette = async (paletteId: string, userPrompt: string): Pr
       ...c.config,
       interpolationMethod: "bezier",
     }).shades,
-    mainShade: String(chroma(c.shade).get("hex")),
+    mainShade: chroma(c.shade).hsl(),
     // shades: generateShades(c.shade, maxShades, [0.98, 0.2], [1, 0.3]),
   }));
 

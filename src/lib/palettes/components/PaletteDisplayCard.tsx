@@ -48,7 +48,7 @@ const PaletteDisplayCard = ({ className, ...palette }: PaletteCardProps) => {
 
         <div className="flex w-full max-w-full justify-stretch gap-1 overflow-x-hidden">
           {formattedShades.map(({ shade, name }) => (
-            <ColorBox key={shade} color={shade} name={name} showCode={false} className="w-full" />
+            <ColorBox key={name} color={shade} name={name} showCode={false} className="w-full" />
           ))}
         </div>
       </Tile>

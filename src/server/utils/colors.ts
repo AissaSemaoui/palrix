@@ -1,4 +1,6 @@
 import chroma, { Color } from "chroma-js";
+import { Shade } from "../types";
+import { formatColor } from "@/lib/utils";
 
 // Types and Interfaces
 type ColorSpace = "hsl" | "rgb" | "lab";
@@ -52,7 +54,7 @@ function memoize<T extends (...args: any[]) => any>(fn: T): T {
 export function generateColorPalette(
   primaryColor: string,
   config: Partial<ColorPaletteConfig> = {},
-): { shades: string[] } {
+): { shades: Shade[] } {
   const fullConfig = { ...defaultConfig, ...config };
   const { lightnessRange, saturationRange, numShades, colorSpace, interpolationMethod } = fullConfig;
 
@@ -66,7 +68,7 @@ export function generateColorPalette(
   const lightnessMap = interpolateRange(lightnessRange, numShades, interpolationMethod, colorSpace);
   const saturationMap = interpolateRange(saturationRange, numShades, interpolationMethod, colorSpace);
 
-  const shades = lightnessMap.map((l, i) => chroma[colorSpace](baseHue, saturationMap[i], l).hex());
+  const shades = lightnessMap.map((l, i) => chroma[colorSpace](baseHue, saturationMap[i], l).hsl());
 
   return { shades };
 }
@@ -139,7 +141,7 @@ export function getAnalogousColors(color: string): [string, string] {
 }
 
 // Named palette function
-export function getNamedPalette(name: string, primaryColor: string): { shades: string[] } {
+export function getNamedPalette(name: string, primaryColor: string): { shades: Shade[] } {
   const palette = namedPalettes.find((p) => p.name.toLowerCase() === name.toLowerCase());
   if (!palette) {
     throw new Error(`Named palette not found: ${name}`);
@@ -148,13 +150,13 @@ export function getNamedPalette(name: string, primaryColor: string): { shades: s
 }
 
 // Palette preview function
-export function generatePalettePreview(palette: string[]): string {
+export function generatePalettePreview(palette: Shade[]): string {
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="300" height="100%">
       ${palette
         .map(
           (color, i) => `
-        <rect x="${i * 30}" y="0" width="30" height="50" fill="${color}" />
+        <rect x="${i * 30}" y="0" width="30" height="50" fill="${formatColor(color)}" />
       `,
         )
         .join("")}

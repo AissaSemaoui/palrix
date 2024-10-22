@@ -1,7 +1,7 @@
 import chroma, { type ColorSpaces } from "chroma-js";
 
 import { SHADES_NAMES } from "@/config/constants";
-import type { Palette, ExportFormat, ColorSpace } from "@/server/types";
+import type { Palette, ExportFormat, ColorSpace, Shade } from "@/server/types";
 
 type ColorInput = Palette["colors"][number] | Palette["colors"];
 
@@ -23,9 +23,9 @@ export const generateColorExport = (
   }
 };
 
-const formatColor = (c: string[], colorSpace: ColorSpace, fullFormat: boolean) =>
+const formatColor = (c: Shade[], colorSpace: ColorSpace, fullFormat: boolean) =>
   c.map((shade) => {
-    const result = chroma(shade)[colorSpace]();
+    const result = chroma.hsl(...shade)[colorSpace]();
 
     const formattedColor = getStringFormatBySpace(result, colorSpace, fullFormat);
 
@@ -100,7 +100,7 @@ const getStringFormatBySpace = <T extends ColorSpace>(
   return fullFormat ? formatted : formatted.split("(")[1].split(")")[0];
 };
 
-export const generateSingleColorExport = (color: Palette["colors"][number], format: ExportFormat): string => {
+export const generateSingleColorExport = (color: { name: string; shades: string[] }, format: ExportFormat): string => {
   const { name, shades } = color;
 
   switch (format) {

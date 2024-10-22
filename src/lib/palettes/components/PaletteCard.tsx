@@ -4,26 +4,23 @@ import Image from "next/image";
 
 import ColorBox from "@/components/ColorBox";
 import Heading from "@/components/Heading";
-import Tile from "@/components/ui/tile";
 import { Button } from "@/components/ui/button";
+import Tile from "@/components/ui/tile";
 import ExportDialog from "./ExportDialog";
 
+import { queryClient, queryKeys } from "@/api-client";
+import { useUpdatePalette } from "@/api-client/mutations/useUpdatePalette";
+import { Icons } from "@/components/Icons";
 import { SHADES_NAMES } from "@/config/constants";
+import { useThemeCustomizerActions } from "@/hooks/use-theme-config";
+import { cn } from "@/lib/utils";
 import type { Palette } from "@/server/types";
 import { generatePalettePreview } from "@/server/utils/colors";
-import UiExamplesDrawer from "./UiExamplesDrawer";
-import { useThemeCustomizerActions } from "@/hooks/use-theme-config";
-import { Icons } from "@/components/Icons";
-import EditColorNameDialog from "./EditColorNameDialog";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { FormItem } from "@/components/ui/form";
-import { Slider } from "@/components/ui/slider";
-import { Label } from "@/components/ui/label";
-import { CardContent } from "@/components/ui/card";
-import { useUpdatePalette } from "@/api-client/mutations/useUpdatePalette";
-import { queryClient, queryKeys } from "@/api-client";
 import toast from "react-hot-toast";
+import EditColorNameDialog from "./EditColorNameDialog";
+import ShadesCustomizer from "./ShadesCustomizer";
+import UiExamplesDrawer from "./UiExamplesDrawer";
 
 type PaletteCardProps = Pick<Palette["colors"][number], "name" | "shades" | "mainShade"> &
   Pick<Palette, "primaryShade"> & {
@@ -43,11 +40,12 @@ const PaletteCard = ({ paletteId, index, name, shades, mainShade }: PaletteCardP
   });
 
   const { setThemeConfig } = useThemeCustomizerActions();
-  const [showShadeCustomizer, setShowShadeCustomizer] = useState(false);
+  const [showShadesCustomizer, setShowShadesCustomizer] = useState(false);
+  const [customShades, setCustomShades] = useState(shades);
 
   const primaryColor = mainShade ?? shades?.[5] ?? shades?.[4];
 
-  const formattedShades = shades.map((sh, i) => ({
+  const formattedShades = customShades.map((sh, i) => ({
     shade: sh,
     name: SHADES_NAMES[i],
   }));
@@ -105,34 +103,23 @@ const PaletteCard = ({ paletteId, index, name, shades, mainShade }: PaletteCardP
       <Tile size="md" className="relative rounded-lg shadow-none">
         <div className="mb-2 grid grid-cols-12 gap-1 md:grid-cols-11">
           {formattedShades.map(({ shade, name }) => (
-            <ColorBox key={shade} color={shade} name={name} className="col-span-4 w-full sm:col-span-2 md:col-span-1" />
+            <ColorBox key={name} color={shade} name={name} className="col-span-4 w-full sm:col-span-2 md:col-span-1" />
           ))}
         </div>
         <div className="flex justify-end">
           <Button
             size="icon-sm"
             variant="outline"
-            className={cn("h-6 w-6 rounded-full transition-all", showShadeCustomizer && "-rotate-90")}
-            onClick={() => setShowShadeCustomizer((prev) => !prev)}
+            className={cn("h-6 w-6 rounded-full transition-all", showShadesCustomizer && "-rotate-90")}
+            onClick={() => setShowShadesCustomizer((prev) => !prev)}
           >
             <Icons.chevronLeft className="h-4 w-4" />
           </Button>
         </div>
       </Tile>
 
-      {showShadeCustomizer && (
-        <Tile className="-mt-2 rounded-lg bg-secondary pb-2 pt-8">
-          <CardContent className="space-y-6">
-            <FormItem className="flex items-center gap-2">
-              <Label>Saturation</Label>
-              <Slider step={1} />
-            </FormItem>
-            <FormItem className="flex items-center gap-2">
-              <Label>Lightness</Label>
-              <Slider step={1} />
-            </FormItem>
-          </CardContent>
-        </Tile>
+      {showShadesCustomizer && (
+        <ShadesCustomizer shades={customShades} onUpdateShades={(newShades) => setCustomShades(newShades)} />
       )}
     </article>
   );

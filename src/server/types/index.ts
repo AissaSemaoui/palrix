@@ -9,10 +9,12 @@ export enum UserRoles {
   SUPER_ADMIN = "super_admin",
 }
 
+export type Shade = [number, number, number];
+
 export interface Color {
   name: string;
-  shades: string[];
-  mainShade?: string;
+  shades: Shade[];
+  mainShade?: Shade;
 }
 
 export type Palette = typeof palettes.$inferSelect;

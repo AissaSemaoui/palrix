@@ -7,12 +7,13 @@ import Tile from "@/components/ui/tile";
 import ClickableTooltip from "@/components/ui/ClickableTooltip";
 import If from "./If";
 
-import { cn, copyToClipboard } from "@/lib/utils";
+import { cn, copyToClipboard, formatColor } from "@/lib/utils";
+import { Shade } from "@/server/types";
 
-interface ColorBoxProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ColorBoxProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "color"> {
   name?: string;
   size?: "sm" | "md" | "lg";
-  color: CSSProperties["backgroundColor"];
+  color: Shade;
   readOnly?: boolean;
   showCode?: boolean;
   showName?: boolean;
@@ -44,18 +45,20 @@ const ColorBox = ({
   showName = true,
   ...props
 }: ColorBoxProps) => {
-  const handleCopy = () => copyToClipboard(color);
+  const formattedColor = formatColor(color);
+
+  const handleCopy = () => copyToClipboard(formatColor(color));
 
   return (
     <div className={cn("w-fit", className)}>
-      <ClickableTooltip content={`${color} copied!`} disabled={readOnly}>
+      <ClickableTooltip content={`${formattedColor} copied!`} disabled={readOnly}>
         <Tile
           className={colorBoxVariants({ size, className })}
           {...props}
           shadow="sm"
           onClick={handleCopy}
           style={{
-            backgroundColor: color,
+            backgroundColor: formattedColor,
           }}
         />
       </ClickableTooltip>
@@ -65,7 +68,7 @@ const ColorBox = ({
         </p>
       </If>
       <If condition={showCode}>
-        <p className="pl-1 text-xs font-medium text-muted-foreground">{color}</p>
+        <p className="pl-1 text-xs font-medium text-muted-foreground">{formattedColor}</p>
       </If>
     </div>
   );
