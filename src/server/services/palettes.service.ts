@@ -10,7 +10,8 @@ import {
   type CreatePaletteValidation,
 } from "@server/validations/palettes.validation";
 import { and, eq } from "drizzle-orm";
-import { Color, Palette } from "../types";
+import { Color } from "../types";
+import { generateUpdatedPaletteColors } from "@/lib/palettes/utils/helpers";
 
 type CreatePalettePayload = CreatePaletteValidation["body"];
 type SavePalettePayload = SavePaletteValidation["body"];
@@ -62,14 +63,7 @@ export const updatePalette = async (paletteId: string, userId: string, payload: 
   if (colors) {
     const palette = await getPalette(paletteId, userId);
 
-    newColors = palette.colors;
-    colors.forEach((c) => {
-      const oldColor = newColors[c.index];
-      newColors[c.index] = {
-        ...oldColor,
-        ...c.updates,
-      };
-    });
+    newColors = generateUpdatedPaletteColors(palette.colors, colors);
   }
 
   const [udpatedPalette] = await db

@@ -13,6 +13,7 @@ import HistoryPopover from "@/lib/palettes/components/HistoryPopover";
 import { useGetPalette } from "@/api-client/queries/useGetPalette";
 import { useThemeCustomizerActions } from "@/hooks/use-theme-config";
 import { paletteInsertSchema } from "@/server/validations/palettes.validation";
+import PlaygroundProvider from "@/lib/providers/PlaygroundProvider";
 
 type PlaygroundPageProps = {
   params: {
@@ -21,7 +22,7 @@ type PlaygroundPageProps = {
 };
 
 const PlaygroundPage = ({ params }: PlaygroundPageProps) => {
-  const { data, isLoading, isError } = useGetPalette(params.paletteId, { refetchOnMount: true });
+  const { data, isLoading, isError, isSuccess } = useGetPalette(params.paletteId, { refetchOnMount: true });
   const { generateThemes } = useThemeCustomizerActions();
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const PlaygroundPage = ({ params }: PlaygroundPageProps) => {
   }, [data]);
 
   if (isLoading) return <h1>Loading...</h1>;
-  if (isError) return <h1>Error...</h1>;
+  if (isError || !isSuccess) return <h1>Error...</h1>;
 
   console.log("playground page: ", data);
   console.log("palette schema : ", paletteInsertSchema.shape);
@@ -43,13 +44,15 @@ const PlaygroundPage = ({ params }: PlaygroundPageProps) => {
         leftSection={<HistoryButton />}
       />
 
-      <div className="gap-4">
-        <section className="mb-20 space-y-6">
-          <Playground />
+      <PlaygroundProvider defaultPalette={data}>
+        <div className="gap-4">
+          <section className="mb-20 space-y-6">
+            <Playground />
 
-          <FloatingActions className="fixed bottom-4" />
-        </section>
-      </div>
+            <FloatingActions className="fixed bottom-4" />
+          </section>
+        </div>
+      </PlaygroundProvider>
     </AppPage>
   );
 };

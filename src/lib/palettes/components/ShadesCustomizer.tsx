@@ -4,8 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import Tile from "@/components/ui/tile";
-import { Palette, Shade } from "@/server/types";
-import chroma from "chroma-js";
+import { Shade } from "@/server/types";
 
 interface ColorSliderProps {
   label: string;
@@ -31,15 +30,16 @@ const ShadesCustomizer = ({ shades, onUpdateShades }: ShadesCustomizerProps) => 
   console.log("default shadesLightness: ", shadesLightness);
 
   function interpolateRange([start, end]: [number, number], steps: number): number[] {
-    return Array.from({ length: steps }, (_, i) => start + (i / (steps - 1)) * (end - start));
+    return Array.from({ length: steps }, (_, i) => {
+      const value = start + (i / (steps - 1)) * (end - start);
+      // Multiply by 100, round, then divide by 100 to get precise 2 decimal places
+      // return value;
+      return Math.floor(value * 100) / 100;
+    });
   }
 
   const handleSaturationChange = ([startSaturation, endSaturation]: [number, number]) => {
     console.log("value : ", startSaturation, endSaturation);
-
-    const saturationStep = (endSaturation - startSaturation) / 100 / shades.length;
-
-    console.log("saturationStep: ", saturationStep);
 
     const saturationMap = interpolateRange([startSaturation / 100, endSaturation / 100], shades.length).reverse();
 
@@ -124,6 +124,7 @@ function ColorSlider({ label, value, onChange }: ColorSliderProps) {
           type="number"
           min={0}
           max={100}
+          step={1}
           value={value[0].toFixed()}
           onChange={(e) => handleInputChange(0, e.target.value)}
           className="h-6 w-16 text-xs"
@@ -133,6 +134,7 @@ function ColorSlider({ label, value, onChange }: ColorSliderProps) {
           type="number"
           min={0}
           max={100}
+          step={1}
           value={value[1].toFixed()}
           onChange={(e) => handleInputChange(1, e.target.value)}
           className="h-6 w-16 text-xs"

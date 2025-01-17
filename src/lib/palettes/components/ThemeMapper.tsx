@@ -1,4 +1,3 @@
-import { useGetPalette } from "@/api-client/queries/useGetPalette";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,8 +12,10 @@ import {
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CSS_VARS_NAMES, DEFAULT_THEME, MAPPER_THEME, SHADES_NAMES } from "@/config/constants";
+import { usePlayground } from "@/hooks/use-playground";
 import { useThemeCustomizer, useThemeCustomizerActions } from "@/hooks/use-theme-config";
 import { Popover, PopoverContent, PopoverTrigger } from "@/lib/examples/components/ui/popover";
+import { formatColor } from "@/lib/utils";
 import { Palette } from "@/server/types";
 import { ThemeMappingItem, ThemeMode, ThemeVariables } from "@/types";
 import React from "react";
@@ -35,7 +36,7 @@ const ThemeMapper = ({ children }: ThemeMapperProps) => {
   const { updateThemeMapping, setThemeConfig } = useThemeCustomizerActions();
   const themeMapping = useThemeCustomizer((state) => state.themeMapping);
 
-  const { data: selectedPalette } = useGetPalette();
+  const { currentPalette: selectedPalette } = usePlayground();
 
   if (!selectedPalette) return;
 
@@ -126,7 +127,8 @@ const ColorDropdown = ({
           <span
             className="mr-2 h-3 w-3 rounded-full"
             style={{
-              background: selectedColor?.shades[shadeIndex] ?? `hsl(${DEFAULT_THEME.cssVars[themeMode][cssVar]})`,
+              background:
+                formatColor(selectedColor?.shades[shadeIndex]) ?? `hsl(${DEFAULT_THEME.cssVars[themeMode][cssVar]})`,
             }}
           />
           {selectedColor ? `${selectedColor.name}-${SHADES_NAMES[shadeIndex]}` : `-`}
@@ -136,7 +138,7 @@ const ColorDropdown = ({
         {colors.map((color, colorIdx) => (
           <DropdownMenuSub key={color.name}>
             <DropdownMenuSubTrigger className="capitalize">
-              <span className="mr-2 h-3 w-3 rounded-full" style={{ background: color.mainShade }} />
+              <span className="mr-2 h-3 w-3 rounded-full" style={{ background: formatColor(color.mainShade) }} />
               {color.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
@@ -146,12 +148,12 @@ const ColorDropdown = ({
               >
                 {color.shades.map((shade, idx) => (
                   <DropdownMenuRadioItem
-                    key={shade}
+                    key={idx}
                     className="DropdownMenuRadioItem"
                     value={String(idx)}
                     onSelect={(e) => e.preventDefault()}
                   >
-                    <span className="mr-2 h-3 w-3 rounded-full" style={{ background: shade }} />
+                    <span className="mr-2 h-3 w-3 rounded-full" style={{ background: formatColor(shade) }} />
                     {SHADES_NAMES[idx]}
                   </DropdownMenuRadioItem>
                 ))}

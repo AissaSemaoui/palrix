@@ -12,17 +12,16 @@ import PromptCard from "../../components/PromptCard";
 import { useGetPalette } from "@/api-client/queries/useGetPalette";
 import { cn } from "@/lib/utils";
 import PaletteChatInput from "./PaletteChatInput";
+import { usePlayground } from "@/hooks/use-playground";
 
 type FloatingActionsProps = {
   className?: string;
 };
 
 const FloatingActions = ({ className }: FloatingActionsProps) => {
-  const { data: selectedPalette } = useGetPalette();
+  const { currentPalette } = usePlayground();
 
   const [showPromptCard, setShowPromptCard] = useState(false);
-
-  if (!selectedPalette) return;
 
   return (
     <div className={cn("w-full max-w-screen-md px-4", className)} id="floating-actions">
@@ -32,7 +31,7 @@ const FloatingActions = ({ className }: FloatingActionsProps) => {
         <div className="flex items-center gap-2">
           <ModeToggle className="mr-2" />
 
-          <ExportDialog colors={selectedPalette?.colors}>
+          <ExportDialog colors={currentPalette?.colors}>
             <Button variant="outline">Export</Button>
           </ExportDialog>
         </div>

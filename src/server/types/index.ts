@@ -15,6 +15,7 @@ export interface Color {
   name: string;
   shades: Shade[];
   mainShade?: Shade;
+  explanation: string;
 }
 
 export type Palette = typeof palettes.$inferSelect;

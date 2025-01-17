@@ -68,7 +68,15 @@ export function generateColorPalette(
   const lightnessMap = interpolateRange(lightnessRange, numShades, interpolationMethod, colorSpace);
   const saturationMap = interpolateRange(saturationRange, numShades, interpolationMethod, colorSpace);
 
-  const shades = lightnessMap.map((l, i) => chroma[colorSpace](baseHue, saturationMap[i], l).hsl());
+  const shades = lightnessMap.map(
+    (l, i) =>
+      chroma[colorSpace](baseHue, saturationMap[i], l)
+        .hsl()
+        .slice(0, 3)
+        .map((v) => Number(v.toFixed(2))) as Shade,
+  );
+
+  console.log("shades: ", shades);
 
   return { shades };
 }

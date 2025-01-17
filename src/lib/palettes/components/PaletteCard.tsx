@@ -14,21 +14,22 @@ import { Icons } from "@/components/Icons";
 import { SHADES_NAMES } from "@/config/constants";
 import { useThemeCustomizerActions } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
-import type { Palette } from "@/server/types";
+import type { Palette, Shade } from "@/server/types";
 import { generatePalettePreview } from "@/server/utils/colors";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import EditColorNameDialog from "./EditColorNameDialog";
 import ShadesCustomizer from "./ShadesCustomizer";
 import UiExamplesDrawer from "./UiExamplesDrawer";
+import { usePlayground } from "@/hooks/use-playground";
 
-type PaletteCardProps = Pick<Palette["colors"][number], "name" | "shades" | "mainShade"> &
+type PaletteCardProps = Palette["colors"][number] &
   Pick<Palette, "primaryShade"> & {
     paletteId: Palette["id"];
     index: number;
   };
 
-const PaletteCard = ({ paletteId, index, name, shades, mainShade }: PaletteCardProps) => {
+const PaletteCard = ({ paletteId, index, name, shades, mainShade, explanation }: PaletteCardProps) => {
   const { mutate: updatePaletteAsync, isPending } = useUpdatePalette(paletteId, {
     onSuccess: () => {
       toast.success("Color Updated Successfully!");
@@ -38,6 +39,8 @@ const PaletteCard = ({ paletteId, index, name, shades, mainShade }: PaletteCardP
       toast.error(error?.message);
     },
   });
+
+  const { updatePalette } = usePlayground();
 
   const { setThemeConfig } = useThemeCustomizerActions();
   const [showShadesCustomizer, setShowShadesCustomizer] = useState(false);
@@ -67,6 +70,20 @@ const PaletteCard = ({ paletteId, index, name, shades, mainShade }: PaletteCardP
     });
   };
 
+  const handleUpdateShades = (newShades: Shade[]) => {
+    setCustomShades(newShades);
+    updatePalette({
+      colors: [
+        {
+          index,
+          updates: {
+            shades: newShades,
+          },
+        },
+      ],
+    });
+  };
+
   return (
     <article className="border-none">
       <div className="mb-3 flex items-end gap-2 px-2">
@@ -83,7 +100,9 @@ const PaletteCard = ({ paletteId, index, name, shades, mainShade }: PaletteCardP
             </EditColorNameDialog>
           </div>
 
-          <Image src={generatePalettePreview(shades)} width={70} height={6} alt="palette preview" />
+          <Image src={generatePalettePreview(shades)} width={70} height={6} alt="palette preview" className="mb-1" />
+
+          <p className="text-xs text-muted-foreground">{explanation}</p>
         </div>
         <div className="ml-auto flex gap-2">
           <UiExamplesDrawer>
@@ -92,7 +111,7 @@ const PaletteCard = ({ paletteId, index, name, shades, mainShade }: PaletteCardP
             </Button>
           </UiExamplesDrawer>
 
-          <ExportDialog colors={{ name, shades, mainShade }}>
+          <ExportDialog colors={{ name, shades, mainShade, explanation }}>
             <Button variant="link" size="sm">
               Export
             </Button>
@@ -118,9 +137,7 @@ const PaletteCard = ({ paletteId, index, name, shades, mainShade }: PaletteCardP
         </div>
       </Tile>
 
-      {showShadesCustomizer && (
-        <ShadesCustomizer shades={customShades} onUpdateShades={(newShades) => setCustomShades(newShades)} />
-      )}
+      {showShadesCustomizer && <ShadesCustomizer shades={customShades} onUpdateShades={handleUpdateShades} />}
     </article>
   );
 };

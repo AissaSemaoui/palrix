@@ -25,6 +25,7 @@ interface PaletteGenerationAiResponse {
       saturationRange?: [number, number];
       interpolationMethod?: "bezier" | "linear";
     };
+    explanation: string;
   }[];
 }
 
@@ -33,7 +34,7 @@ type PaletteDraft = Omit<Palette, "userId" | "createdAt" | "updatedAt">;
 export const generatePalette = async ({ userPrompt }: GeneratePaletteValidation["body"]): Promise<PaletteDraft> => {
   const { id, content, total_tokens } = await sendAiPrompt(PALETTE_GENERATION_PROMPT, userPrompt);
 
-  console.log("here is the content? : ", content);
+  console.dir(content, { depth: Infinity });
 
   console.time("Generating Duration");
   const paletteObj: PaletteGenerationAiResponse = JSON.parse(content);
@@ -47,10 +48,11 @@ export const generatePalette = async ({ userPrompt }: GeneratePaletteValidation[
       numShades: maxShades,
       lightnessRange: [0.99, 0.05],
       saturationRange: [1, 0.5],
-      ...c.config,
       interpolationMethod: "linear",
+      ...c.config,
     }).shades,
     mainShade: chroma(c.shade).hsl(),
+    explanation: c.explanation,
     // shades: generateShades(c.shade, maxShades, [0.98, 0.2], [1, 0.3]),
   }));
 
@@ -95,9 +97,10 @@ export const chatWithPalette = async (paletteId: string, userPrompt: string): Pr
       lightnessRange: [0.99, 0.05],
       saturationRange: [1, 0.5],
       ...c.config,
-      interpolationMethod: "bezier",
+      interpolationMethod: "linear",
     }).shades,
     mainShade: chroma(c.shade).hsl(),
+    explanation: c.explanation,
     // shades: generateShades(c.shade, maxShades, [0.98, 0.2], [1, 0.3]),
   }));
 

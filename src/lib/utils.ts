@@ -7,6 +7,9 @@ export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
-export const formatColor = (shade: Shade) => chroma.hsl(...shade).hex();
+export const formatColor = (shade?: Shade) => {
+  if (!shade) return;
+  return chroma.hsl(...shade).hex();
+};
 
 export const copyToClipboard = (content?: string) => navigator.clipboard.writeText(content ?? "");

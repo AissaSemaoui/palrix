@@ -13,32 +13,26 @@ import NewColorDialog from "./NewColorDialog";
 import { useUpdatePalette } from "@/api-client/mutations/useUpdatePalette";
 import toast from "react-hot-toast";
 import { queryClient, queryKeys } from "@/api-client";
+import PlaygroundProvider from "@/lib/providers/PlaygroundProvider";
+import { Palette } from "@/server/types";
+import { usePlayground } from "@/hooks/use-playground";
 
-type PlaygroundProps = {
+interface PlaygroundProps {
   className?: string;
-};
+}
 
 const Playground = ({ className }: PlaygroundProps) => {
-  const { data: selectedPalette } = useGetPalette();
-  const { mutate: updatePaletteAsync, isPending } = useUpdatePalette(selectedPalette?.id, {
+  const { currentPalette } = usePlayground();
+
+  const { mutate: updatePaletteAsync, isPending } = useUpdatePalette(currentPalette.id, {
     onSuccess: () => {
       toast.success("Palette Updated Successfully!");
-      queryClient.invalidateQueries({ queryKey: queryKeys.getPalette(selectedPalette?.id!) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.getPalette(currentPalette.id) });
     },
     onError: (error) => {
       toast.error(error?.message);
     },
   });
-
-  console.log("selectedPalette: ", selectedPalette);
-
-  if (!selectedPalette) {
-    return (
-      <Tile className="text-center">
-        <Heading type={2}>No Palette Selected yet!</Heading>
-      </Tile>
-    );
-  }
 
   const handleUpdatePaletteName = (paletteName: string) => {
     updatePaletteAsync({
@@ -51,10 +45,10 @@ const Playground = ({ className }: PlaygroundProps) => {
       <div className="mb-4 mt-8 py-2">
         <div className="flex w-fit items-center gap-4">
           <div className="flex items-center gap-1">
-            <Heading type={2}>{selectedPalette.name}</Heading>
+            <Heading type={2}>{currentPalette.name}</Heading>
 
             <EditPaletteNameDialog
-              defaultName={selectedPalette.name}
+              defaultName={currentPalette.name}
               onSubmit={handleUpdatePaletteName}
               isLoading={isPending}
             >
@@ -74,17 +68,17 @@ const Playground = ({ className }: PlaygroundProps) => {
           </div>
         </div>
 
-        <p className="text-sm font-normal text-light"> {selectedPalette.description}</p>
+        <p className="text-sm font-normal text-light"> {currentPalette.description}</p>
       </div>
 
       <div className="mb-8 space-y-6">
-        {selectedPalette.colors.map((c, index) => (
+        {currentPalette.colors.map((c, index) => (
           <PaletteCard
             key={c.name}
-            paletteId={selectedPalette.id}
+            paletteId={currentPalette.id}
             index={index}
             {...c}
-            primaryShade={selectedPalette.primaryShade}
+            primaryShade={currentPalette.primaryShade}
           />
         ))}
       </div>
