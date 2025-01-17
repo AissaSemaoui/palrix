@@ -5,7 +5,7 @@
 
 ##### steps to install
 
-- fill in environment variables, env.ts file
+- fill in environment variables, environments.ts file
 
 - ``` npm install ```
 - ``` npm run db:generate ```
@@ -15,4 +15,4 @@
 #### for auth: 
 since we're using webhooks, you need to create an ngrok account and get a link to forward requests into localhost
 
-setup create/update/delete user webhooks and use the ngrok link with webhook path
+setup create/update/delete user clerk webhooks and use the ngrok link with webhook path
