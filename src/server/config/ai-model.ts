@@ -1,25 +1,21 @@
-import Anthropic from "@anthropic-ai/sdk";
-
-import env from "@environments";
-
-const anthropic = new Anthropic({
-  apiKey: env.ai.modelApiKey,
-});
+import { generateText } from "ai";
+import { anthropic } from "@ai-sdk/anthropic";
 
 export const sendAiPrompt = async (systemPrompt: string, userPrompt?: string) => {
-  const msg = await anthropic.messages.create({
+  const message = await generateText({
+    model: anthropic("claude-3-5-sonnet-latest"),
+    // model: deepseek("deepseek-chat"),
     system: systemPrompt,
     messages: userPrompt ? [{ role: "user", content: userPrompt }] : [],
-    model: "claude-3-5-sonnet-20241022",
-    max_tokens: 3000,
+    maxTokens: 3000,
     temperature: 1,
   });
 
   return {
-    id: msg.id,
-    content: msg.content[0].text,
-    input_tokens: msg.usage.input_tokens,
-    output_tokens: msg.usage.output_tokens,
-    total_tokens: msg.usage.input_tokens + msg.usage.output_tokens,
+    id: message.response.id,
+    content: message.text,
+    input_tokens: message.usage.promptTokens,
+    output_tokens: message.usage.promptTokens,
+    total_tokens: message.usage.totalTokens,
   };
 };
