@@ -1,11 +1,18 @@
-# PALRIX : The AI Palette Generator SAAS
+# Palrix: The AI Palette Generator SaaS
 
-#### The project is in progress and will be available for launch soon
+Palrix is an AI-powered palette generator SaaS that creates beautiful, intelligent color palettes for designers, developers, and creative professionals. Built with a unique hybrid architecture combining Next.js frontend with Express.js backend in a single repository.
+
+> [!NOTE]
+> This project is in progress and will be available for the launch soon.
+
+#### Architecture
+The architecture is quite unique, and it was a bit challenging; I attempted to combine Next.js and an Express server within a single repository to avoid the complexity of managing workspaces and inter-package linking for an MVP. 
+The starting point is `src/server/index.ts`. It serves the Express server and the Next.js app.
 
 
-##### steps to install
+##### Steps to install
 
-- fill in environment variables, environments.ts file
+- Fill in environment variables, `environments.ts` file
 
 - ``` npm install ```
 - ``` npm run db:generate ```
@@ -13,6 +20,6 @@
 - ``` npm run dev ``` 
 
 #### for auth: 
-since we're using webhooks, you need to create an ngrok account and get a link to forward requests into localhost
+Since we're using webhooks, you need to create an ngrok account and get a link to forward requests to localhost
 
-setup create/update/delete user clerk webhooks and use the ngrok link with webhook path
+Set up create/update/delete user clerk webhooks and use the ngrok link for webhook path
